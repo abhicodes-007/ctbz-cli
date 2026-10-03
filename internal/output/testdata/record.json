@@ -1,0 +1,19 @@
+{
+  "razao_social": "FULANO TECNOLOGIA LTDA",
+  "cnpj": "22222222000122",
+  "abertura": "2026-07-20",
+  "login_em": "2026-10-03T00:11:55Z",
+  "ramos_atividade": [
+    "SERVICO",
+    "COMERCIO"
+  ],
+  "mensalidade": 139.00,
+  "inscricao_estadual": null,
+  "outras_empresas": [
+    {
+      "cnpj": "11111111000111",
+      "razao_social": "FULANO MEI",
+      "situacao": "INATIVO"
+    }
+  ]
+}

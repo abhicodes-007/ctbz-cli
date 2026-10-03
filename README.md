@@ -26,6 +26,7 @@ Requer Go 1.24+.
 | `CTBZ_OTP_TIMEOUT` | quanto esperar pelo `CTBZ_OTP_CMD` (padrão `3m`)                          |
 | `CTBZ_CNPJ`        | empresa a selecionar quando o usuário tem mais de uma                     |
 | `CTBZ_HOME`        | onde guardar a sessão (padrão `~/.config/ctbz`)                           |
+| `CTBZ_OUTPUT`      | formato de saída padrão: `table` (padrão), `json` ou `csv`                |
 | `CTBZ_VERBOSE=1`   | mostra as tentativas do `CTBZ_OTP_CMD`                                     |
 
 A sessão (cookies `__C` e `oauth-token`) fica em `$CTBZ_HOME/session.json` com
@@ -80,11 +81,36 @@ cada `ctbz login` gera um e-mail novo, e só o código mais recente vale.
 ```sh
 ctbz status              # dados da sessão e se ela ainda é válida
 ctbz empresa             # resumo da empresa selecionada
-ctbz empresa --json      # resposta completa de /api/plataforma/dadosempresa/get
 ctbz api menu/get        # qualquer endpoint; caminho relativo → /api/plataforma/
 ctbz api -X POST -d @corpo.json /api/plataforma/algum/endpoint
 ctbz logout              # apaga a sessão local
 ```
+
+## Formatos de saída
+
+Todo comando que imprime dados aceita `-o`/`--output` (antes ou depois do comando) ou a
+variável `CTBZ_OUTPUT`:
+
+| Formato | Para | Valores em reais | Datas | CNPJ |
+|---|---|---|---|---|
+| `table` (padrão) | pessoas | `R$ 1.234,56` | `20/10/2026` | `00.000.000/0000-00` |
+| `json` | scripts (`jq`) | `1234.56` | `2026-10-20` (horários em RFC 3339) | só dígitos |
+| `csv` | planilhas | `1234.56` | `2026-10-20` | só dígitos |
+
+```sh
+ctbz empresa -o json | jq -r .certificado_validade
+ctbz -o csv status > sessao.csv
+export CTBZ_OUTPUT=json        # muda o padrão
+```
+
+- **stdout recebe só dados**; mensagens, progresso e erros vão para stderr.
+- Em JSON, os campos saem na ordem da tabela e campos sem valor saem como `null`.
+- Em CSV, a primeira linha traz os nomes dos campos (os mesmos do JSON). Valores aninhados
+  (ex.: `outras_empresas`) saem como JSON dentro da célula, e listas simples separadas por `; `.
+- `ctbz empresa --json` é atalho para `-o json`. A resposta crua da API continua disponível em
+  `ctbz api dadosempresa/get`.
+- `ctbz api` sai em JSON por padrão e ignora `CTBZ_OUTPUT`. Com `-o table` ou `-o csv`, listas
+  de objetos viram tabelas. `--raw` imprime o corpo exatamente como veio.
 
 Códigos de saída: `0` sucesso, `1` erro, `3` login pendente (aguardando OTP ou CNPJ).
 

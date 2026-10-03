@@ -1,0 +1,4 @@
+imposto,cnpj,vencimento,valor,pago,obs
+DAS,22222222000122,2026-10-20,1234.50,false,"inclui juros, multa"
+INSS – pró-labore,22222222000122,2026-11-20,0.00,true,
+IRRF,,,1234567.89,,"aspas ""duplas"""

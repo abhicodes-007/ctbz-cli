@@ -11,27 +11,35 @@ import (
 	"os"
 	"os/signal"
 	"strings"
-	"text/tabwriter"
 	"time"
 
 	"github.com/edusouza/ctbz-cli/internal/ctbz"
+	"github.com/edusouza/ctbz-cli/internal/output"
 	"golang.org/x/term"
 )
 
 const usage = `ctbz — CLI para a Contabilizei
 
 Uso:
-  ctbz login [--otp N] [--otp-cmd CMD] [--cnpj CNPJ]   autentica (usuário/senha + OTP)
-  ctbz status                                          mostra a sessão atual e testa se ainda vale
-  ctbz empresa [--json]                                dados da empresa selecionada
-  ctbz api [-X MÉTODO] [-d CORPO] CAMINHO              chama uma URL da plataforma com a sessão
-  ctbz logout                                          apaga a sessão local
+  ctbz [-o FORMATO] COMANDO [flags]
+
+Comandos:
+  login [--otp N] [--otp-cmd CMD] [--cnpj CNPJ]   autentica (usuário/senha + OTP)
+  status                                          mostra a sessão atual e testa se ainda vale
+  empresa                                         dados da empresa selecionada
+  api [-X MÉTODO] [-d CORPO] CAMINHO              chama uma URL da plataforma com a sessão
+  logout                                          apaga a sessão local
+
+Saída:
+  -o, --output FORMATO   table (padrão), json ou csv; vale antes ou depois do comando.
+                         Dados vão para stdout; mensagens e progresso, para stderr.
 
 Variáveis de ambiente:
   CTBZ_USER, CTBZ_PASSWORD   credenciais (e-mail ou CPF, e senha)
   CTBZ_OTP_CMD               comando que imprime o OTP (habilita login e re-login automáticos)
   CTBZ_CNPJ                  empresa a selecionar quando houver mais de uma
   CTBZ_HOME                  diretório da sessão (padrão: ~/.config/ctbz)
+  CTBZ_OUTPUT                formato de saída padrão (table, json ou csv)
   CTBZ_VERBOSE=1             mostra progresso do --otp-cmd
 `
 
@@ -39,19 +47,23 @@ func main() {
 	ctx, stop := signal.NotifyContext(context.Background(), os.Interrupt)
 	defer stop()
 
-	if len(os.Args) < 2 {
+	rest, err := parseGlobalFlags(os.Args[1:])
+	if err != nil {
+		fmt.Fprintln(os.Stderr, "erro:", err)
+		os.Exit(2)
+	}
+	if len(rest) == 0 {
 		fmt.Fprint(os.Stderr, usage)
 		os.Exit(2)
 	}
-	var err error
-	args := os.Args[2:]
-	switch os.Args[1] {
+	args := rest[1:]
+	switch rest[0] {
 	case "login":
 		err = cmdLogin(ctx, args)
 	case "logout":
 		err = cmdLogout()
 	case "status":
-		err = cmdStatus(ctx)
+		err = cmdStatus(ctx, args)
 	case "empresa":
 		err = cmdEmpresa(ctx, args)
 	case "api":
@@ -59,7 +71,7 @@ func main() {
 	case "help", "-h", "--help":
 		fmt.Print(usage)
 	default:
-		fmt.Fprintf(os.Stderr, "comando desconhecido: %s\n\n%s", os.Args[1], usage)
+		fmt.Fprintf(os.Stderr, "comando desconhecido: %s\n\n%s", rest[0], usage)
 		os.Exit(2)
 	}
 	switch {
@@ -82,11 +94,20 @@ func cmdLogout() error {
 	if err := store.Clear(); err != nil {
 		return err
 	}
-	fmt.Println("Sessão local removida.")
+	fmt.Fprintln(os.Stderr, "Sessão local removida.")
 	return nil
 }
 
-func cmdStatus(ctx context.Context) error {
+func cmdStatus(ctx context.Context, args []string) error {
+	fs := flag.NewFlagSet("status", flag.ContinueOnError)
+	format := addOutputFlag(fs, defaultFormat())
+	if err := fs.Parse(args); err != nil {
+		return err
+	}
+	f, err := output.ParseFormat(*format)
+	if err != nil {
+		return err
+	}
 	store, err := ctbz.DefaultStore()
 	if err != nil {
 		return err
@@ -95,28 +116,37 @@ func cmdStatus(ctx context.Context) error {
 	if err != nil {
 		return err
 	}
-	fmt.Println(describeSession(sess))
-	fmt.Println("Login em:", sess.CreatedAt.Local().Format(time.DateTime))
-	if exp := sess.ExpiresAt(); !exp.IsZero() {
-		fmt.Println("Cookies expiram em:", exp.Local().Format(time.DateTime))
-	}
+	situacao := "válida"
 	c := sess.Client()
 	if _, err := c.API(ctx, "GET", "appbar/get", nil); err != nil {
-		if errors.Is(err, ctbz.ErrUnauthorized) {
-			fmt.Println("Situação: EXPIRADA — rode `ctbz login`")
-			return nil
+		if !errors.Is(err, ctbz.ErrUnauthorized) {
+			return err
 		}
-		return err
+		situacao = "expirada"
+		fmt.Fprintln(os.Stderr, "Sessão expirada: rode `ctbz login`.")
+	} else {
+		saveCookies(store, sess, c)
 	}
-	saveCookies(store, sess, c)
-	fmt.Println("Situação: válida")
-	return nil
+	info := sessionInfo(sess)
+	rec := &output.Record{}
+	rec.Add("empresa", "Empresa", info.RazaoSocial).
+		Add("cnpj", "CNPJ", output.NewCNPJ(sess.CNPJ)).
+		Add("usuario", "Usuário", info.Email).
+		Add("login_em", "Login em", output.DateTime{Time: sess.CreatedAt}).
+		Add("expira_em", "Expira em", output.DateTime{Time: sess.ExpiresAt()}).
+		Add("situacao", "Situação", situacao)
+	return output.Write(os.Stdout, f, rec)
 }
 
 func cmdEmpresa(ctx context.Context, args []string) error {
 	fs := flag.NewFlagSet("empresa", flag.ContinueOnError)
-	asJSON := fs.Bool("json", false, "imprime a resposta JSON completa")
+	format := addOutputFlag(fs, defaultFormat())
+	fs.BoolFunc("json", "atalho para --output json", func(string) error { *format = "json"; return nil })
 	if err := fs.Parse(args); err != nil {
+		return err
+	}
+	f, err := output.ParseFormat(*format)
+	if err != nil {
 		return err
 	}
 	resp, err := authedAPI(ctx, "GET", "dadosempresa/get", nil)
@@ -125,9 +155,6 @@ func cmdEmpresa(ctx context.Context, args []string) error {
 	}
 	if resp.Status != 200 {
 		return &ctbz.HTTPError{Step: "dadosempresa/get", Status: resp.Status, Body: resp.Body}
-	}
-	if *asJSON {
-		return printJSON(os.Stdout, resp.Body)
 	}
 	var data struct {
 		EmpresaAtual struct {
@@ -155,39 +182,44 @@ func cmdEmpresa(ctx context.Context, args []string) error {
 		return fmt.Errorf("resposta inesperada de dadosempresa/get: %w", err)
 	}
 	e := data.EmpresaAtual
-	w := tabwriter.NewWriter(os.Stdout, 0, 0, 2, ' ', 0)
-	fmt.Fprintf(w, "Razão social:\t%s\n", e.RazaoSocial)
-	fmt.Fprintf(w, "CNPJ:\t%s\n", e.CNPJ)
-	fmt.Fprintf(w, "Situação:\t%s\n", e.StatusEmpresa)
-	fmt.Fprintf(w, "Regime tributário:\t%s\n", e.RegimeTributario)
-	if e.InscricaoMunicipal != "" {
-		fmt.Fprintf(w, "Inscrição municipal:\t%s\n", e.InscricaoMunicipal)
-	}
-	if len(e.RamosAtividade) > 0 {
-		fmt.Fprintf(w, "Ramos de atividade:\t%s\n", strings.Join(e.RamosAtividade, ", "))
-	}
-	if e.Plano != "" {
-		fmt.Fprintf(w, "Plano:\t%s\n", e.Plano)
-	}
+	var certSituacao any
+	var certValidade output.Date
 	if e.Certificado != nil {
-		fmt.Fprintf(w, "Certificado digital:\t%s (validade %s)\n", e.Certificado.Status.Descricao, e.Certificado.DataValidade)
+		certSituacao = e.Certificado.Status.Descricao
+		certValidade, _ = output.ParseDate(e.Certificado.DataValidade)
 	}
-	if len(data.Empresas) > 1 {
-		fmt.Fprintf(w, "Outras empresas:\t\n")
-		for _, o := range data.Empresas {
-			if ctbz.OnlyDigits(o.CNPJ) != ctbz.OnlyDigits(e.CNPJ) {
-				fmt.Fprintf(w, "  %s\t%s (%s)\n", o.CNPJ, o.RazaoSocial, o.StatusEmpresa)
-			}
+	outras := []output.Record{}
+	for _, o := range data.Empresas {
+		if ctbz.OnlyDigits(o.CNPJ) == ctbz.OnlyDigits(e.CNPJ) {
+			continue
 		}
+		r := output.Record{}
+		r.Add("cnpj", "CNPJ", output.NewCNPJ(o.CNPJ)).
+			Add("razao_social", "Razão social", o.RazaoSocial).
+			Add("situacao", "Situação", o.StatusEmpresa)
+		outras = append(outras, r)
 	}
-	return w.Flush()
+	rec := &output.Record{}
+	rec.Add("razao_social", "Razão social", e.RazaoSocial).
+		Add("cnpj", "CNPJ", output.NewCNPJ(e.CNPJ)).
+		Add("situacao", "Situação", e.StatusEmpresa).
+		Add("regime_tributario", "Regime tributário", e.RegimeTributario).
+		Add("inscricao_municipal", "Inscrição municipal", nilIfEmpty(e.InscricaoMunicipal)).
+		Add("ramos_atividade", "Ramos de atividade", nonNil(e.RamosAtividade)).
+		Add("plano", "Plano", nilIfEmpty(e.Plano)).
+		Add("certificado_situacao", "Certificado digital", certSituacao).
+		Add("certificado_validade", "Validade do certificado", certValidade).
+		Add("outras_empresas", "Outras empresas", outras)
+	return output.Write(os.Stdout, f, rec)
 }
 
 func cmdAPI(ctx context.Context, args []string) error {
 	fs := flag.NewFlagSet("api", flag.ContinueOnError)
 	method := fs.String("X", "GET", "método HTTP")
 	data := fs.String("d", "", "corpo JSON da requisição (use @arquivo para ler de um arquivo ou @- para stdin)")
-	raw := fs.Bool("raw", false, "não formata a resposta JSON")
+	raw := fs.Bool("raw", false, "imprime o corpo da resposta como veio, sem formatar")
+	// Para explorar a API o padrão é JSON; só um -o explícito muda o formato.
+	format := addOutputFlag(fs, explicitFormatOr("json"))
 	fs.Usage = func() {
 		fmt.Fprint(fs.Output(), `Uso: ctbz api [-X MÉTODO] [-d CORPO] CAMINHO
 
@@ -196,6 +228,9 @@ CAMINHO relativo é resolvido contra o BFF da plataforma (/api/plataforma/):
   ctbz api menu/get
 Caminhos absolutos alcançam as demais APIs do app:
   ctbz api /api/legado/...
+
+A resposta sai em JSON formatado. Com -o table ou -o csv, listas de objetos
+viram tabelas (uma coluna por campo). --raw imprime o corpo exatamente como veio.
 
 Flags:
 `)
@@ -208,6 +243,10 @@ Flags:
 		fs.Usage()
 		return errors.New("informe exatamente um CAMINHO")
 	}
+	f, err := output.ParseFormat(*format)
+	if err != nil {
+		return err
+	}
 	body, err := readBody(*data)
 	if err != nil {
 		return err
@@ -216,12 +255,15 @@ Flags:
 	if err != nil {
 		return err
 	}
-	if !*raw && json.Valid(resp.Body) {
-		if err := printJSON(os.Stdout, resp.Body); err != nil {
+	if parsed, perr := output.FromJSON(resp.Body); !*raw && perr == nil {
+		if err := output.Write(os.Stdout, f, parsed); err != nil {
 			return err
 		}
 	} else {
 		os.Stdout.Write(resp.Body)
+		if !*raw && len(resp.Body) > 0 && resp.Body[len(resp.Body)-1] != '\n' {
+			os.Stdout.WriteString("\n")
+		}
 	}
 	if resp.Status >= 400 {
 		return fmt.Errorf("HTTP %d", resp.Status)
@@ -291,20 +333,14 @@ func readBody(arg string) ([]byte, error) {
 	}
 }
 
-func printJSON(w io.Writer, data []byte) error {
-	var v any
-	if err := json.Unmarshal(data, &v); err != nil {
-		_, err = w.Write(data)
-		return err
-	}
-	enc := json.NewEncoder(w)
-	enc.SetIndent("", "  ")
-	enc.SetEscapeHTML(false)
-	return enc.Encode(v)
+type sessInfo struct {
+	Email       string
+	RazaoSocial string
+	CNPJ        string
 }
 
-// describeSession resume a sessão a partir dos dados do localStorage.
-func describeSession(sess *ctbz.Session) string {
+// sessionInfo lê usuário e empresa dos dados do localStorage salvos no login.
+func sessionInfo(sess *ctbz.Session) sessInfo {
 	var login struct {
 		Email   string `json:"email"`
 		Empresa struct {
@@ -315,14 +351,24 @@ func describeSession(sess *ctbz.Session) string {
 	if raw, ok := sess.Storage["l"]; ok {
 		_ = json.Unmarshal(raw, &login)
 	}
-	parts := []string{}
-	if login.Empresa.RazaoSocial != "" {
-		parts = append(parts, fmt.Sprintf("%s (CNPJ %s)", login.Empresa.RazaoSocial, login.Empresa.CNPJ))
-	} else if sess.CNPJ != "" {
-		parts = append(parts, "CNPJ "+sess.CNPJ)
+	info := sessInfo{Email: login.Email, RazaoSocial: login.Empresa.RazaoSocial, CNPJ: login.Empresa.CNPJ}
+	if info.CNPJ == "" {
+		info.CNPJ = sess.CNPJ
 	}
-	if login.Email != "" {
-		parts = append(parts, "usuário "+login.Email)
+	return info
+}
+
+// describeSession resume a sessão numa linha (mensagens em stderr).
+func describeSession(sess *ctbz.Session) string {
+	info := sessionInfo(sess)
+	parts := []string{}
+	if info.RazaoSocial != "" {
+		parts = append(parts, fmt.Sprintf("%s (CNPJ %s)", info.RazaoSocial, output.FormatCNPJ(output.NewCNPJ(info.CNPJ))))
+	} else if info.CNPJ != "" {
+		parts = append(parts, "CNPJ "+output.FormatCNPJ(output.NewCNPJ(info.CNPJ)))
+	}
+	if info.Email != "" {
+		parts = append(parts, "usuário "+info.Email)
 	}
 	if len(parts) == 0 {
 		return "sessão ativa"

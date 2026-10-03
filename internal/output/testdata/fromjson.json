@@ -1,0 +1,20 @@
+[
+  {
+    "id": 4801207998644224,
+    "nome": {
+      "label": "DAS"
+    },
+    "valor": 12.3,
+    "ativo": true,
+    "extra": null
+  },
+  {
+    "id": 2,
+    "nome": {
+      "label": "<IRRF> & cia"
+    },
+    "valor": null,
+    "ativo": null,
+    "extra": null
+  }
+]

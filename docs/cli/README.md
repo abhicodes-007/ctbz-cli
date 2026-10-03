@@ -7,7 +7,8 @@ interno.
 
 ```text
 cmd/ctbz/
-  main.go        subcomandos (status, empresa, api, logout), re-login automático, saída
+  main.go        subcomandos (status, empresa, api, logout), re-login automático
+  output.go      flags -o/--output (global e por comando) e precedência de formato
   login.go       orquestração do login: retomada, fontes de OTP, escolha de empresa
 internal/ctbz/
   client.go      HTTP: cookies manuais, redirecionamentos manuais, API(), erros
@@ -15,6 +16,11 @@ internal/ctbz/
   session.go     persistência (session.json, pending.json)
 internal/otp/
   otp.go         extração de 6 dígitos, comando com polling, prompt
+internal/output/
+  output.go      formatos, List, Record, Scalar e Write
+  values.go      tipos de valor (Money, Date, DateTime, CNPJ) e formatação por formato
+  render.go      renderizadores: tabela alinhada, JSON ordenado, CSV
+  fromjson.go    JSON arbitrário → List/Record (ordem dos campos e números preservados)
 scripts/
   otp-gmail-gws.sh       OTP a partir do Gmail (gws)
   extrair-endpoints.py   gera docs/api/catalogo.md
@@ -83,6 +89,29 @@ As credenciais (`CTBZ_USER`, `CTBZ_PASSWORD`) nunca são gravadas.
 - **Re-login automático** só com `CTBZ_OTP_CMD`: sem ele, um 401 vira erro com
   instrução, em vez de pedir um OTP no meio de outro comando.
 
+## Saída
+
+Todos os comandos montam os dados como `output.List` (várias linhas) ou `output.Record`
+(um registro) e chamam `output.Write(os.Stdout, formato, dados)`. Assim, um comando novo
+ganha os três formatos sem código extra.
+
+- **Tipos de valor**: use `output.Money`, `output.Date`, `output.DateTime` e `output.CNPJ` em
+  vez de strings formatadas. Cada formato decide a apresentação (ex.: `Money` vira
+  `R$ 1.234,56` na tabela e `1234.56` no JSON/CSV).
+- **Chaves** (`Key`) em `snake_case` português sem acento (`razao_social`), estáveis entre
+  versões: são o contrato com scripts. **Rótulos** (`Label`/`Header`) são livres.
+- **Precedência do formato**: `-o` antes do comando > `-o` do comando > `CTBZ_OUTPUT` >
+  `table`. O `ctbz api` usa JSON como padrão e ignora `CTBZ_OUTPUT`.
+- **JSON** é gerado à mão (`marshalRecord`) para manter a ordem dos campos; `FromJSON` usa
+  `json.Decoder.Token` e `UseNumber`, porque IDs da Contabilizei têm 16 dígitos e perderiam
+  precisão como `float64`.
+- **Tabela**: alinhamento por contagem de runas (acentos), números e valores à direita, campos
+  vazios de um registro omitidos, listas de objetos aninhadas viram subtabelas indentadas.
+- **stdout só com dados**: `login` e `logout` não imprimem nada em stdout; avisos (ex.: sessão
+  expirada no `status`) vão para stderr.
+- **Testes**: `internal/output/testdata/*.{table,json,csv}` são golden files. Para regravá-los
+  após uma mudança intencional: `go test ./internal/output -update`.
+
 ## Códigos de saída
 
 | Código | Situação |
@@ -101,6 +130,9 @@ go test ./...
 - `internal/ctbz`: servidor `httptest` que imita as telas reais (com dados fictícios):
   senha errada → `#incorreto`, OTP errado → 404, seleção de empresa, decodificação do
   `localStorage` com acentos e símbolos, 401 sem cookies.
+- `internal/output`: golden files dos três formatos (lista, registro, JSON arbitrário e
+  aninhado), formatação de reais, zero negativo, listas vazias.
+- `cmd/ctbz`: precedência de `-o`/`CTBZ_OUTPUT`, `--json` como atalho, stdout só com dados.
 - `internal/otp`: extração do código, polling com falhas seguidas de sucesso, timeout
   preservando o último erro útil, prompt.
 - `cmd/ctbz`: fluxo completo com `--otp-cmd` e fluxo em etapas (pendente → `--otp` →

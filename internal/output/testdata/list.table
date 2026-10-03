@@ -1,0 +1,4 @@
+Imposto            CNPJ                Vencimento            Valor  Pago  Observação
+DAS                22.222.222/0001-22  20/10/2026      R$ 1.234,50  não   inclui juros, multa
+INSS – pró-labore  22.222.222/0001-22  20/11/2026          R$ 0,00  sim
+IRRF                                               R$ 1.234.567,89        aspas "duplas"

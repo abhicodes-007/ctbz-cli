@@ -59,7 +59,7 @@ Flags:
 	if err != nil {
 		return err
 	}
-	fmt.Printf("Login concluído: %s\n", describeSession(sess))
+	fmt.Fprintf(os.Stderr, "Login concluído: %s\n", describeSession(sess))
 	return nil
 }
 

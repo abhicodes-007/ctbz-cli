@@ -1,0 +1,5 @@
+esteMes:
+  id  valor           vencimento
+   1  {"label":10.5}
+   2                  20/10/2026
+tags:  ["a","b"]

@@ -18,7 +18,7 @@ Labels usadas: `épico`, `versão: vX.Y`, `contexto: …`, `tipo: funcionalidade
 
 | Versão | Contexto | Épico | Funcionalidades | Situação |
 |---|---|---|---|---|
-| **v0.1** | Login e dados da empresa | [#1](https://github.com/edusouza/ctbz-cli/issues/1) | 8 | em andamento (3/8) |
+| **v0.1** | Login e dados da empresa | [#1](https://github.com/edusouza/ctbz-cli/issues/1) | 8 | em andamento (4/8) |
 | **v0.2** | Impostos | [#10](https://github.com/edusouza/ctbz-cli/issues/10) | 6 | planejada |
 | **v0.3** | Pendências, rotinas e atendimento | [#17](https://github.com/edusouza/ctbz-cli/issues/17) | 5 | planejada |
 | **v0.4** | Mensalidade e pagamentos da Contabilizei | [#23](https://github.com/edusouza/ctbz-cli/issues/23) | 4 | planejada |
@@ -39,7 +39,7 @@ Base da CLI: autenticar na Contabilizei (usuário/senha + OTP por e-mail + sele�
 | ✅ | [#2](https://github.com/edusouza/ctbz-cli/issues/2) | Login com usuário, senha e OTP por e-mail | funcionalidade |
 | ✅ | [#3](https://github.com/edusouza/ctbz-cli/issues/3) | Comandos básicos: status, empresa, api e logout | funcionalidade |
 | ✅ | [#4](https://github.com/edusouza/ctbz-cli/issues/4) | Documentação da engenharia reversa em docs/ | documentação |
-| ⬜ | [#5](https://github.com/edusouza/ctbz-cli/issues/5) | Saída padronizada: --output table|json|csv | infra |
+| ✅ | [#5](https://github.com/edusouza/ctbz-cli/issues/5) | Saída padronizada: --output table\|json\|csv | infra |
 | ⬜ | [#6](https://github.com/edusouza/ctbz-cli/issues/6) | Testes de contrato da API | infra |
 | ⬜ | [#7](https://github.com/edusouza/ctbz-cli/issues/7) | Listar empresas do usuário e trocar de empresa | funcionalidade |
 | ⬜ | [#8](https://github.com/edusouza/ctbz-cli/issues/8) | Dados completos da empresa: sócios, endereço, atividades e certificado | funcionalidade |

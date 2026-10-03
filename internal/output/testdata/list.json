@@ -1,0 +1,26 @@
+[
+  {
+    "imposto": "DAS",
+    "cnpj": "22222222000122",
+    "vencimento": "2026-10-20",
+    "valor": 1234.50,
+    "pago": false,
+    "obs": "inclui juros, multa"
+  },
+  {
+    "imposto": "INSS – pró-labore",
+    "cnpj": "22222222000122",
+    "vencimento": "2026-11-20",
+    "valor": 0.00,
+    "pago": true,
+    "obs": null
+  },
+  {
+    "imposto": "IRRF",
+    "cnpj": null,
+    "vencimento": null,
+    "valor": 1234567.89,
+    "pago": null,
+    "obs": "aspas \"duplas\""
+  }
+]
