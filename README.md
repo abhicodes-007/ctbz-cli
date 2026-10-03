@@ -94,6 +94,7 @@ ctbz impostos historico --ano 2026             # guias de meses anteriores
 ctbz impostos faturamento                      # faturamento, pró-labore e Fator R (12 meses)
 ctbz impostos parcelamentos                    # parcelamentos de impostos
 ctbz impostos debitos                          # débitos federais em aberto?
+ctbz pendencias                                # pendências abertas, com alerta de prazo
 ctbz api menu/get        # qualquer endpoint; caminho relativo → /api/plataforma/
 ctbz api -X POST -d @corpo.json /api/plataforma/algum/endpoint
 ctbz logout              # apaga a sessão local
@@ -131,7 +132,7 @@ export CTBZ_OUTPUT=json        # muda o padrão
 
 Códigos de saída: `0` sucesso, `1` erro, `2` uso incorreto (comando, flag ou argumento inválido),
 `3` login pendente (aguardando OTP ou CNPJ), `4` atenção (ex.: impostos em atraso com
-`--fail-on-atraso`).
+`--fail-on-atraso`, pendências vencidas com `--fail-on-vencidas`).
 
 Guia de uso por contexto: [`docs/guia`](docs/guia/README.md).
 
