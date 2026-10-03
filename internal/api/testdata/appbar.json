@@ -1,0 +1,22 @@
+{
+  "contaDigital": {
+    "bs2": null,
+    "ctbzBank": {
+      "aceite": true,
+      "agencia": "0000",
+      "aliasBank": false,
+      "banco": "BANCO_CTBZ",
+      "conta": "000000000",
+      "dataInicioAbertura": null,
+      "integracao": false,
+      "link": null,
+      "notificacaoConclusaoVisualizada": false,
+      "possuiContaCadastrada": false,
+      "saldo": null,
+      "statusAbertura": "ABERTURA_FINALIZADA"
+    },
+    "hasRollout": true
+  },
+  "uploadDocumentoAtivo": false,
+  "zendeskUrl": "https://exemplo.invalid/arquivo"
+}

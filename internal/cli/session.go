@@ -63,6 +63,13 @@ func getJSON(ctx context.Context, s streams, path string, v any) error {
 	return nil
 }
 
+// sessionGetter implementa api.Getter com a sessão salva (e re-login automático).
+type sessionGetter struct{ s streams }
+
+func (g sessionGetter) GetJSON(ctx context.Context, path string, v any) error {
+	return getJSON(ctx, g.s, path, v)
+}
+
 // saveCookies persiste cookies renovados pelo servidor durante as chamadas.
 func saveCookies(store *ctbz.Store, sess *ctbz.Session, c *ctbz.Client, errOut io.Writer) {
 	sess.Cookies = c.Cookies

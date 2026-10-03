@@ -15,7 +15,7 @@ Convenções do dia a dia. Decisões maiores estão nos [ADRs](adr/README.md).
 - [ ] Testes cobrindo o comportamento novo (incluindo erro e caso vazio)
 - [ ] Documentação de usuário atualizada (`README.md` e/ou página em `docs/`, com entrada no `mkdocs.yml`)
 - [ ] Referência de comandos regenerada, se a CLI mudou (`go run ./tools/gendocs`)
-- [ ] Linha no `CHANGELOG.md` em `[Unreleased]` ([ADR-0003](adr/0003-versionamento-e-changelog.md))
+- [ ] Linha no `CHANGELOG.md` em `[Unreleased]` quando o usuário perceber a mudança ([ADR-0003](adr/0003-versionamento-e-changelog.md))
 - [ ] ADR novo, se houve decisão com alternativas razoáveis
 - [ ] Nenhum dado pessoal real (CPF, CNPJ, nomes, e-mails, endereços, valores) em código, testes ou docs
 
@@ -31,7 +31,8 @@ Convenções do dia a dia. Decisões maiores estão nos [ADRs](adr/README.md).
 
 - Tabelas de casos (`for _, tc := range ...`) e `t.Run` quando houver vários cenários.
 - HTTP: `httptest.Server`; nunca chamar a Contabilizei real em `go test` comum.
-- Respostas da API: fixtures **anonimizadas** em `testdata/`.
+- Respostas da API: fixtures **anonimizadas** em `internal/api/testdata/`, geradas e
+  revisadas como descrito em [Testes de contrato](contratos.md).
 - Formatos de saída: golden files (`go test ./internal/output -update` regrava).
 
 ## Segurança

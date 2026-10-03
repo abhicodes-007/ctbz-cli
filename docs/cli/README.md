@@ -14,6 +14,13 @@ internal/cli/
   session.go     chamadas autenticadas (re-login automático), dados da sessão
   status.go, empresa.go, api.go, logout.go, version.go   um arquivo por comando
   docs.go        gerador da referência de comandos (docs/referencia)
+internal/api/
+  api.go         Getter, registro de endpoints (Endpoints) para os contratos
+  empresa.go     caminhos, tipos de resposta e BuscarXxx de um contexto
+  testdata/      fixtures anonimizadas (go run ./tools/capture)
+internal/contract/
+  contract.go    verificação de contrato por reflexão (removido, tipo mudou, novo)
+  anon.go        anonimização das fixtures
 internal/ctbz/
   client.go      HTTP: cookies manuais, redirecionamentos manuais, API(), erros
   login.go       etapas do login e parsers de HTML/localStorage
@@ -26,6 +33,7 @@ internal/output/
   render.go      renderizadores: tabela alinhada, JSON ordenado, CSV
   fromjson.go    JSON arbitrário → List/Record (ordem dos campos e números preservados)
 tools/gendocs/   regenera docs/referencia
+tools/capture/   grava fixtures anonimizadas para os contratos
 scripts/
   otp-gmail-gws.sh       OTP a partir do Gmail (gws)
   extrair-endpoints.py   gera docs/api/catalogo.md
@@ -41,7 +49,8 @@ Go 1.24; versões mais novas exigem Go 1.26.
 1. Criar `internal/cli/<comando>.go` com `func newXxxCmd() *cobra.Command` e registrá-lo em
    `NewRootCmd` (ou no comando pai).
 2. `Short` curto no imperativo/descritivo, `Long` e `Example` em português.
-3. Ler a API com `getJSON(ctx, streams, caminho, &resposta)` e montar um `output.Record`
+3. Ler a API com uma função de `internal/api` (`api.BuscarXxx(ctx, sessionGetter{s})`,
+   ver [Testes de contrato](../contratos.md)) e montar um `output.Record`
    ou `output.List` ([ADR-0006](../adr/0006-saida-padronizada.md)); escrever com
    `output.Write(s.out, formato, dados)`, formato vindo de `outputFormat(cmd, "")`.
 4. Testes com `execCLI` e `fakeAPI` (ver `internal/cli/output_test.go`).
