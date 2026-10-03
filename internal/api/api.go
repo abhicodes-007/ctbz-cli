@@ -81,6 +81,8 @@ func Endpoints() []Endpoint {
 		{Name: "contas_usuario", LivePath: PathContasUsuario, Type: []ContaUsuario{}},
 		{Name: "extratos", LivePath: PathExtratos, Type: []Extrato{}},
 		{Name: "contas_bancarias", LivePath: PathContasBancarias, Type: ContasBancarias{}},
+		{Name: "documentos_tipos", LivePath: PathTiposDocumento(AreaDocumentosContabeis), Type: []TipoDocumento{}},
+		{Name: "documentos_enviados", LivePath: PathDocumentosEnviados("EXTRATO_BANCARIO_MOVIMENTACOES", 12, 0), Type: PaginaDocumentos{}},
 		{Name: "distribuicao_lucros", LivePath: PathDistribuicaoLucros, Type: DistribuicaoLucros{}},
 		{Name: "restricoes_informe", LivePath: PathRestricoesInforme(2025), Type: RestricoesInforme{}},
 		{Name: "socios_informe", LivePath: PathSociosInforme(2025), Type: []SocioInforme{}},

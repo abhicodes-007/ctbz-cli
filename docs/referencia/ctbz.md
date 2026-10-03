@@ -16,6 +16,7 @@ Dados vão para stdout no formato escolhido com -o; mensagens e progresso vão p
 - [`ctbz chamados`](ctbz_chamados.md): Lista os chamados de atendimento (em andamento ou finalizados)
 - [`ctbz contas`](ctbz_contas.md): Lista o plano de contas usado para classificar os lançamentos
 - [`ctbz contas-bancarias`](ctbz_contas-bancarias.md): Lista as contas bancárias cadastradas da empresa
+- [`ctbz documentos`](ctbz_documentos.md): Lista os tipos de documento aceitos e os documentos enviados
 - [`ctbz empresa`](ctbz_empresa.md): Mostra os dados da empresa selecionada
 - [`ctbz empresas`](ctbz_empresas.md): Lista as empresas do usuário, marcando a atual
 - [`ctbz extratos`](ctbz_extratos.md): Lista a situação dos extratos bancários por mês e conta
