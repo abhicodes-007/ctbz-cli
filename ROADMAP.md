@@ -20,7 +20,7 @@ Labels usadas: `épico`, `versão: vX.Y`, `contexto: …`, `tipo: funcionalidade
 |---|---|---|---|---|
 | **v0.1** | Login e dados da empresa | [#1](https://github.com/edusouza/ctbz-cli/issues/1) | 8 | em andamento (7/8) |
 | **v0.2** | Impostos | [#10](https://github.com/edusouza/ctbz-cli/issues/10) | 6 | concluída |
-| **v0.3** | Pendências, rotinas e atendimento | [#17](https://github.com/edusouza/ctbz-cli/issues/17) | 5 | planejada |
+| **v0.3** | Pendências, rotinas e atendimento | [#17](https://github.com/edusouza/ctbz-cli/issues/17) | 5 | concluída |
 | **v0.4** | Mensalidade e pagamentos da Contabilizei | [#23](https://github.com/edusouza/ctbz-cli/issues/23) | 4 | planejada |
 | **v0.5** | Notas fiscais | [#28](https://github.com/edusouza/ctbz-cli/issues/28) | 5 | planejada |
 | **v0.6** | Pró-labore e distribuição de lucros | [#34](https://github.com/edusouza/ctbz-cli/issues/34) | 5 | planejada |
@@ -72,11 +72,11 @@ O que a empresa precisa resolver: pendências abertas, rotinas e obrigações do
 
 | | Issue | Funcionalidade | Tipo |
 |---|---|---|---|
-| ⬜ | [#18](https://github.com/edusouza/ctbz-cli/issues/18) | Listar pendências da empresa | funcionalidade |
-| ⬜ | [#19](https://github.com/edusouza/ctbz-cli/issues/19) | Central de rotinas e obrigações do mês | funcionalidade |
-| ⬜ | [#20](https://github.com/edusouza/ctbz-cli/issues/20) | Pendências de conciliação fiscal | funcionalidade |
-| ⬜ | [#21](https://github.com/edusouza/ctbz-cli/issues/21) | Chamados de atendimento | funcionalidade |
-| ⬜ | [#22](https://github.com/edusouza/ctbz-cli/issues/22) | Resumo geral: o que precisa de atenção | funcionalidade |
+| ✅ | [#18](https://github.com/edusouza/ctbz-cli/issues/18) | Listar pendências da empresa | funcionalidade |
+| ✅ | [#19](https://github.com/edusouza/ctbz-cli/issues/19) | Central de rotinas e obrigações do mês | funcionalidade |
+| ✅ | [#20](https://github.com/edusouza/ctbz-cli/issues/20) | Pendências de conciliação fiscal | funcionalidade |
+| ✅ | [#21](https://github.com/edusouza/ctbz-cli/issues/21) | Chamados de atendimento | funcionalidade |
+| ✅ | [#22](https://github.com/edusouza/ctbz-cli/issues/22) | Resumo geral: o que precisa de atenção | funcionalidade |
 
 Fora de escopo: Resolver pendência, aceitar termos, abrir chamado (escrita).
 

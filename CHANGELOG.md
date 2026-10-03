@@ -7,6 +7,8 @@ usa [Versionamento Semântico](https://semver.org/lang/pt-BR/).
 
 ## [Unreleased]
 
+## [0.3.0] - 2026-10-03
+
 ### Added
 
 - `ctbz pendencias`: pendências da empresa com tipo, detalhe, criação, prazo e situação;
@@ -66,6 +68,7 @@ usa [Versionamento Semântico](https://semver.org/lang/pt-BR/).
   categoria, salário-base e data de entrada.
 - `ctbz empresa atividades`: CNAEs da empresa, a principal e os anexos do Simples Nacional.
 
-[Unreleased]: https://github.com/edusouza/ctbz-cli/compare/v0.2.0...HEAD
+[Unreleased]: https://github.com/edusouza/ctbz-cli/compare/v0.3.0...HEAD
+[0.3.0]: https://github.com/edusouza/ctbz-cli/compare/v0.2.0...v0.3.0
 [0.2.0]: https://github.com/edusouza/ctbz-cli/compare/v0.1.0...v0.2.0
 [0.1.0]: https://github.com/edusouza/ctbz-cli/releases/tag/v0.1.0
