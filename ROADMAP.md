@@ -23,7 +23,7 @@ Labels usadas: `épico`, `versão: vX.Y`, `contexto: …`, `tipo: funcionalidade
 | **v0.3** | Pendências, rotinas e atendimento | [#17](https://github.com/edusouza/ctbz-cli/issues/17) | 5 | concluída |
 | **v0.4** | Mensalidade e pagamentos da Contabilizei | [#23](https://github.com/edusouza/ctbz-cli/issues/23) | 4 | concluída |
 | **v0.5** | Notas fiscais | [#28](https://github.com/edusouza/ctbz-cli/issues/28) | 5 | concluída |
-| **v0.6** | Pró-labore e distribuição de lucros | [#34](https://github.com/edusouza/ctbz-cli/issues/34) | 5 | planejada |
+| **v0.6** | Pró-labore e distribuição de lucros | [#34](https://github.com/edusouza/ctbz-cli/issues/34) | 5 | concluída |
 | **v0.7** | Contabilidade: relatórios, caixa e extratos | [#40](https://github.com/edusouza/ctbz-cli/issues/40) | 6 | planejada |
 | **v0.8** | Documentos e certificado digital | [#47](https://github.com/edusouza/ctbz-cli/issues/47) | 2 | planejada |
 | **v1.0** | Estabilidade e distribuição (futuro) | [#50](https://github.com/edusouza/ctbz-cli/issues/50) | 3 | planejada |
@@ -119,11 +119,11 @@ Remuneração dos sócios: pró-labore atual e histórico, parâmetros (INSS, IR
 
 | | Issue | Funcionalidade | Tipo |
 |---|---|---|---|
-| ⬜ | [#35](https://github.com/edusouza/ctbz-cli/issues/35) | Pró-labore atual e histórico | funcionalidade |
-| ⬜ | [#36](https://github.com/edusouza/ctbz-cli/issues/36) | Parâmetros de cálculo do pró-labore | funcionalidade |
-| ⬜ | [#37](https://github.com/edusouza/ctbz-cli/issues/37) | Distribuição de lucros | funcionalidade |
-| ⬜ | [#38](https://github.com/edusouza/ctbz-cli/issues/38) | Informe e comprovante de rendimentos dos sócios | investigação |
-| ⬜ | [#39](https://github.com/edusouza/ctbz-cli/issues/39) | Fator R e simulador de impostos (leitura) | funcionalidade |
+| ✅ | [#35](https://github.com/edusouza/ctbz-cli/issues/35) | Pró-labore atual e histórico | funcionalidade |
+| ✅ | [#36](https://github.com/edusouza/ctbz-cli/issues/36) | Parâmetros de cálculo do pró-labore | funcionalidade |
+| ✅ | [#37](https://github.com/edusouza/ctbz-cli/issues/37) | Distribuição de lucros | funcionalidade |
+| ✅ | [#38](https://github.com/edusouza/ctbz-cli/issues/38) | Informe e comprovante de rendimentos dos sócios | investigação |
+| ✅ | [#39](https://github.com/edusouza/ctbz-cli/issues/39) | Fator R e simulador de impostos (leitura) | funcionalidade |
 
 Fora de escopo: Alterar ou zerar pró-labore, ativar gestão inteligente, registrar distribuição (escrita).
 
