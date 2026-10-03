@@ -19,3 +19,4 @@ decisão nova, copie o [modelo](template.md) e use o próximo número (ver [ADR-
 | [0012](0012-prazos-e-alertas.md) | Alertas de prazo calculados pela CLI e código 4 | aceita |
 | [0013](0013-sem-retentativa-com-fonte-alternativa.md) | Sem retentativa; fonte alternativa para erros conhecidos | aceita |
 | [0014](0014-ci-no-github-actions.md) | CI no GitHub Actions com as mesmas verificações locais | aceita |
+| [0015](0015-releases-com-goreleaser.md) | Releases com GoReleaser e notas tiradas do CHANGELOG | aceita |

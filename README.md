@@ -10,13 +10,14 @@ Próximas versões e funcionalidades: [ROADMAP.md](ROADMAP.md).
 
 ## Instalação
 
+Baixe o binário do seu sistema na [página de releases](https://github.com/edusouza/ctbz-cli/releases)
+(Linux, macOS e Windows, amd64 e arm64; confira com `checksums.txt`), ou instale com Go 1.24+:
+
 ```sh
 go install github.com/edusouza/ctbz-cli/cmd/ctbz@latest
 # ou, a partir do clone:
 go build -o ctbz ./cmd/ctbz
 ```
-
-Requer Go 1.24+.
 
 ## Configuração
 

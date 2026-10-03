@@ -69,3 +69,7 @@ Depois do merge em `main`, quem faz o merge cria a tag no commit de merge:
 ```sh
 git tag -a vX.Y.0 -m "vX.Y.0" && git push origin vX.Y.0
 ```
+
+A tag dispara `.github/workflows/release.yml` ([ADR-0015](adr/0015-releases-com-goreleaser.md)):
+testes, binários do GoReleaser e uma release no GitHub cujas notas são a seção da versão no
+CHANGELOG. Para conferir as notas antes da tag: `go run ./tools/releasenotes vX.Y.0`.

@@ -33,6 +33,7 @@ internal/output/
   render.go      renderizadores: tabela alinhada, JSON ordenado, CSV
   fromjson.go    JSON arbitrário → List/Record (ordem dos campos e números preservados)
 tools/gendocs/   regenera docs/referencia
+tools/releasenotes/  notas da release a partir do CHANGELOG.md
 tools/capture/   grava fixtures anonimizadas para os contratos
 scripts/
   otp-gmail-gws.sh       OTP a partir do Gmail (gws)

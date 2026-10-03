@@ -7,6 +7,11 @@ usa [Versionamento Semântico](https://semver.org/lang/pt-BR/).
 
 ## [Unreleased]
 
+### Added
+
+- Binários para Linux, macOS e Windows (amd64 e arm64) na página de releases, gerados a
+  cada versão.
+
 ## [0.8.0] - 2026-10-03
 
 ### Added
