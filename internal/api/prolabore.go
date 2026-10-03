@@ -75,3 +75,20 @@ func BuscarProlaboreHistorico(ctx context.Context, g Getter, idSocio int64) ([]P
 	}
 	return *h, nil
 }
+
+const PathProlaboreParametros = "prolabore/init"
+
+// ProlaboreParametros são os valores usados no cálculo do pró-labore, já formatados pela
+// API ("R$ 1.621,00"), exceto a porcentagem do INSS.
+type ProlaboreParametros struct {
+	SalarioMinimo                          string  `json:"salarioMinimo"`
+	ValorMaximoContribuicaoInss            string  `json:"valorMaximoContribuicaoInss"`
+	ValorMaximoProlabore                   string  `json:"valorMaximoProlabore"`
+	PorcentagemInss                        float64 `json:"porcentagemInss"`
+	ValorMinimoProlaboreParaIncidenciaIrrf string  `json:"valorMinimoProlaboreParaIncidenciaIrrf"`
+}
+
+// BuscarProlaboreParametros lê prolabore/init.
+func BuscarProlaboreParametros(ctx context.Context, g Getter) (*ProlaboreParametros, error) {
+	return get[ProlaboreParametros](ctx, g, PathProlaboreParametros)
+}
