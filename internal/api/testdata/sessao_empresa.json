@@ -1,0 +1,34 @@
+{
+  "cnpj": "00000000000000",
+  "dataAbertura": 1784581200000,
+  "endereco": {
+    "bairro": "LOGRADOURO EXEMPLO",
+    "cep": "00000000",
+    "complemento": "LOGRADOURO EXEMPLO",
+    "logradouro": "LOGRADOURO EXEMPLO",
+    "municipio": {
+      "nome": "FULANO DE TAL",
+      "uf": {
+        "id": "PR"
+      }
+    },
+    "numero": "0000"
+  },
+  "inscricaoEstadual": null,
+  "inscricaoMunicipal": "00000000",
+  "naturezaJuridica": {
+    "codReceita": "206-2",
+    "descricao": "Sociedade Empresária Limitada"
+  },
+  "nomeFantasia": "",
+  "optanteSimples": true,
+  "ramosAtividade": [
+    "SERVICO"
+  ],
+  "razaoSocial": "FULANO DE TAL",
+  "regimeTributario": "SIMPLES",
+  "responsabilidadeInicial": {
+    "ano": 2026,
+    "mes": 7
+  }
+}

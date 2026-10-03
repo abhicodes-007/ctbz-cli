@@ -1,6 +1,9 @@
 package cli
 
 import (
+	"fmt"
+	"strings"
+
 	"github.com/spf13/cobra"
 
 	"github.com/edusouza/ctbz-cli/internal/api"
@@ -34,16 +37,34 @@ A resposta crua da API está em "ctbz api dadosempresa/get".`,
 			if err != nil {
 				return err
 			}
-			return output.Write(s.out, f, empresaRecord(data))
+			cadastro, err := empresaDaSessao()
+			if err != nil {
+				fmt.Fprintln(s.err, "aviso:", err)
+				cadastro = &api.EmpresaSessao{}
+			}
+			return output.Write(s.out, f, empresaRecord(data, cadastro))
 		},
 	}
 	cmd.Flags().BoolVar(&asJSON, "json", false, "atalho para -o json")
-	cmd.AddCommand(newEmpresaUsarCmd())
+	cmd.AddCommand(newEmpresaUsarCmd(), newEmpresaCertificadoCmd(), newEmpresaSociosCmd(), newEmpresaAtividadesCmd())
 	return cmd
 }
 
-// empresaRecord monta a saída de "ctbz empresa".
-func empresaRecord(d *api.DadosEmpresa) *output.Record {
+// empresaDaSessao lê os dados cadastrais gravados no login.
+func empresaDaSessao() (*api.EmpresaSessao, error) {
+	store, err := ctbz.DefaultStore()
+	if err != nil {
+		return nil, err
+	}
+	sess, err := store.LoadSession()
+	if err != nil {
+		return nil, err
+	}
+	return api.EmpresaDaSessao(sess.Storage)
+}
+
+// empresaRecord monta a saída de "ctbz empresa": dados atuais da API e cadastro do login.
+func empresaRecord(d *api.DadosEmpresa, c *api.EmpresaSessao) *output.Record {
 	e := d.EmpresaAtual
 	var certSituacao any
 	var certValidade output.Date
@@ -67,11 +88,53 @@ func empresaRecord(d *api.DadosEmpresa) *output.Record {
 		Add("cnpj", "CNPJ", output.NewCNPJ(e.CNPJ)).
 		Add("situacao", "Situação", e.StatusEmpresa).
 		Add("regime_tributario", "Regime tributário", e.RegimeTributario).
+		Add("nome_fantasia", "Nome fantasia", nilIfEmpty(c.NomeFantasia)).
+		Add("natureza_juridica", "Natureza jurídica", naturezaJuridica(c)).
+		Add("abertura", "Abertura", dateFromMillis(c.DataAbertura)).
+		Add("inicio_contabilidade", "Início na Contabilizei", competencia(c.ResponsabilidadeInicial.Mes, c.ResponsabilidadeInicial.Ano)).
 		Add("inscricao_municipal", "Inscrição municipal", nilIfEmpty(e.InscricaoMunicipal)).
+		Add("inscricao_estadual", "Inscrição estadual", nilIfEmpty(c.InscricaoEstadual)).
+		Add("endereco", "Endereço", nilIfEmpty(endereco(c))).
 		Add("ramos_atividade", "Ramos de atividade", nonNil(e.RamosAtividade)).
 		Add("plano", "Plano", nilIfEmpty(e.Plano)).
 		Add("certificado_situacao", "Certificado digital", certSituacao).
 		Add("certificado_validade", "Validade do certificado", certValidade).
 		Add("outras_empresas", "Outras empresas", outras)
 	return rec
+}
+
+func naturezaJuridica(c *api.EmpresaSessao) any {
+	n := c.NaturezaJuridica
+	if n.Descricao == "" {
+		return nil
+	}
+	return n.Descricao + " (" + n.CodReceita + ")"
+}
+
+// endereco junta o endereço numa linha: "Rua X, 10, Apto 1 - Bairro, Cidade/UF, CEP 00000-000".
+func endereco(c *api.EmpresaSessao) string {
+	e := c.Endereco
+	var parts []string
+	rua := strings.TrimSpace(strings.Join(nonEmpty(e.Logradouro, e.Numero, e.Complemento), ", "))
+	if rua != "" && e.Bairro != "" {
+		rua += " - " + e.Bairro
+	}
+	parts = nonEmpty(rua)
+	if e.Municipio.Nome != "" {
+		parts = append(parts, e.Municipio.Nome+"/"+e.Municipio.UF.ID)
+	}
+	if cep := ctbz.OnlyDigits(e.CEP); len(cep) == 8 {
+		parts = append(parts, "CEP "+cep[:5]+"-"+cep[5:])
+	}
+	return strings.Join(parts, ", ")
+}
+
+func nonEmpty(ss ...string) []string {
+	var out []string
+	for _, s := range ss {
+		if s = strings.TrimSpace(s); s != "" {
+			out = append(out, s)
+		}
+	}
+	return out
 }

@@ -57,3 +57,4 @@ nav:
       - "0008 Cobra": adr/0008-cobra-para-a-arvore-de-comandos.md
       - "0009 Camada api": adr/0009-camada-api-tipada.md
       - "0010 Contratos": adr/0010-testes-de-contrato.md
+      - "0011 Fixtures podadas": adr/0011-fixtures-podadas-ao-contrato.md

@@ -236,3 +236,63 @@ func dedupe(fs []Finding) []Finding {
 	}
 	return out
 }
+
+// Prune remove da resposta os campos que o tipo não declara, mantendo a estrutura.
+// Fixtures podadas guardam só o que a CLI usa: menos dados reais para revisar e
+// testes de contrato offline que verificam exatamente o contrato.
+func Prune(data []byte, v any) ([]byte, error) {
+	dec := json.NewDecoder(bytes.NewReader(data))
+	dec.UseNumber()
+	var doc any
+	if err := dec.Decode(&doc); err != nil {
+		return nil, fmt.Errorf("resposta não é JSON: %w", err)
+	}
+	doc = prune(doc, reflect.TypeOf(v))
+	var buf bytes.Buffer
+	enc := json.NewEncoder(&buf)
+	enc.SetEscapeHTML(false)
+	enc.SetIndent("", "  ")
+	if err := enc.Encode(doc); err != nil {
+		return nil, err
+	}
+	return buf.Bytes(), nil
+}
+
+func prune(val any, t reflect.Type) any {
+	for t.Kind() == reflect.Pointer {
+		t = t.Elem()
+	}
+	switch t.Kind() {
+	case reflect.Struct:
+		obj, ok := val.(map[string]any)
+		if !ok {
+			return val
+		}
+		out := map[string]any{}
+		for _, f := range fields(t) {
+			if child, ok := obj[f.name]; ok {
+				out[f.name] = prune(child, f.typ)
+			}
+		}
+		return out
+	case reflect.Slice, reflect.Array:
+		items, ok := val.([]any)
+		if !ok {
+			return val
+		}
+		for i := range items {
+			items[i] = prune(items[i], t.Elem())
+		}
+		return items
+	case reflect.Map:
+		obj, ok := val.(map[string]any)
+		if !ok {
+			return val
+		}
+		for k, item := range obj {
+			obj[k] = prune(item, t.Elem())
+		}
+		return obj
+	}
+	return val
+}

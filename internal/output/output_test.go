@@ -118,6 +118,16 @@ func TestFormatBRL(t *testing.T) {
 	}
 }
 
+func TestCPF(t *testing.T) {
+	c := NewCPF("123.456.789-01")
+	if c != "12345678901" || FormatCPF(c) != "123.456.789-01" || cellText(c, FormatCSV) != "12345678901" {
+		t.Errorf("CPF: %q %q", c, FormatCPF(c))
+	}
+	if raw, _ := marshal(CPF("")); string(raw) != "null" {
+		t.Errorf("CPF vazio em JSON = %s", raw)
+	}
+}
+
 func TestParseFormat(t *testing.T) {
 	for _, s := range []string{"table", "JSON", " csv "} {
 		if _, err := ParseFormat(s); err != nil {

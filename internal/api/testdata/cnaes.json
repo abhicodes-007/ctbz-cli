@@ -1,0 +1,59 @@
+[
+  {
+    "anexos": [
+      {
+        "ativo": true,
+        "codTabelaSimples": 5,
+        "principal": false
+      },
+      {
+        "ativo": true,
+        "codTabelaSimples": 3,
+        "principal": false
+      }
+    ],
+    "cnae": {
+      "codigo": "6319400",
+      "descricao": "Portais, provedores de conteúdo e outros serviços de informação na internet",
+      "tipoRamoAtividade": "SERVICO"
+    }
+  },
+  {
+    "anexos": [
+      {
+        "ativo": true,
+        "codTabelaSimples": 5,
+        "principal": true
+      },
+      {
+        "ativo": true,
+        "codTabelaSimples": 3,
+        "principal": true
+      }
+    ],
+    "cnae": {
+      "codigo": "6209100",
+      "descricao": "Suporte técnico, manutenção e outros serviços em tecnologia da informação",
+      "tipoRamoAtividade": "SERVICO"
+    }
+  },
+  {
+    "anexos": [
+      {
+        "ativo": true,
+        "codTabelaSimples": 3,
+        "principal": false
+      },
+      {
+        "ativo": true,
+        "codTabelaSimples": 5,
+        "principal": false
+      }
+    ],
+    "cnae": {
+      "codigo": "6311900",
+      "descricao": "Tratamento de dados, provedores de serviços de aplicação e serviços de hospedagem na internet",
+      "tipoRamoAtividade": "SERVICO"
+    }
+  }
+]

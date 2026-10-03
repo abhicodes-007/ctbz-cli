@@ -1,6 +1,11 @@
 package api
 
-import "context"
+import (
+	"context"
+	"encoding/json"
+	"errors"
+	"fmt"
+)
 
 const (
 	PathDadosEmpresa = "dadosempresa/get"
@@ -68,4 +73,128 @@ func BuscarMenu(ctx context.Context, g Getter) ([]MenuItem, error) {
 		return nil, err
 	}
 	return *items, nil
+}
+
+// EmpresaSessao é a empresa selecionada, como o login a grava no localStorage do
+// navegador (chave "e"). Não é um endpoint: vem de ctbz.Session.Storage e reflete o
+// momento do login. Tem dados cadastrais que nenhuma leitura da API devolve.
+type EmpresaSessao struct {
+	CNPJ             string `json:"cnpj"`
+	RazaoSocial      string `json:"razaoSocial"`
+	NomeFantasia     string `json:"nomeFantasia" contract:"optional"`
+	RegimeTributario string `json:"regimeTributario"`
+	OptanteSimples   bool   `json:"optanteSimples"`
+	NaturezaJuridica struct {
+		CodReceita string `json:"codReceita"`
+		Descricao  string `json:"descricao"`
+	} `json:"naturezaJuridica"`
+	InscricaoMunicipal string   `json:"inscricaoMunicipal"`
+	InscricaoEstadual  string   `json:"inscricaoEstadual"`
+	DataAbertura       int64    `json:"dataAbertura"`
+	RamosAtividade     []string `json:"ramosAtividade"`
+	// Competência em que a Contabilizei assumiu a contabilidade.
+	ResponsabilidadeInicial struct {
+		Mes int `json:"mes"`
+		Ano int `json:"ano"`
+	} `json:"responsabilidadeInicial"`
+	Endereco struct {
+		Logradouro  string `json:"logradouro"`
+		Numero      string `json:"numero"`
+		Complemento string `json:"complemento"`
+		Bairro      string `json:"bairro"`
+		CEP         string `json:"cep"`
+		Municipio   struct {
+			Nome string `json:"nome"`
+			UF   struct {
+				ID string `json:"id"`
+			} `json:"uf"`
+		} `json:"municipio"`
+	} `json:"endereco"`
+}
+
+// EmpresaDaSessao decodifica a empresa gravada pelo login.
+func EmpresaDaSessao(storage map[string]json.RawMessage) (*EmpresaSessao, error) {
+	raw, ok := storage["e"]
+	if !ok {
+		return nil, errors.New("a sessão não tem os dados da empresa; rode `ctbz login` de novo")
+	}
+	var e EmpresaSessao
+	if err := json.Unmarshal(raw, &e); err != nil {
+		return nil, fmt.Errorf("dados da empresa na sessão: %w", err)
+	}
+	return &e, nil
+}
+
+const PathCertificadoStatus = "certificado/status"
+
+// CertificadoStatus é a resposta de certificado/status.
+type CertificadoStatus struct {
+	Situacao       string `json:"situacao"`
+	Valido         bool   `json:"valido"`
+	AptoRenovacao  bool   `json:"aptoRenovacao"`
+	DataVencimento *int64 `json:"dataVencimento"` // epoch em ms; nulo sem certificado
+	MensagemErro   string `json:"mensagemErro"`
+}
+
+// BuscarCertificadoStatus lê certificado/status.
+func BuscarCertificadoStatus(ctx context.Context, g Getter) (*CertificadoStatus, error) {
+	return get[CertificadoStatus](ctx, g, PathCertificadoStatus)
+}
+
+// Caminhos no monolito legado (/api/legado/).
+const (
+	PathSocios = "/api/legado/socio/list"
+	PathCNAEs  = "/api/legado/notafiscal/cnaeanexosmultiplos/list"
+)
+
+// Socio é um item de socio/list. A resposta real traz muitos dados pessoais
+// (documentos, filiação, dependentes); só os campos abaixo são lidos.
+type Socio struct {
+	ID                 int64   `json:"id"`
+	Nome               string  `json:"nome"`
+	CPF                string  `json:"cpf"`
+	Administrador      bool    `json:"administrador"`
+	ResponsavelReceita bool    `json:"responsavelReceita"`
+	PossuiProLabore    bool    `json:"possuiProLabore"`
+	SalarioBase        float64 `json:"salarioBase"`
+	DataAdmissao       int64   `json:"dataAdmissao"`
+	Categoria          struct {
+		Descricao string `json:"descricao"`
+	} `json:"categoria"`
+	SituacaoColaborador struct {
+		Descricao string `json:"descricao"`
+	} `json:"situacaoColaborador"`
+}
+
+// BuscarSocios lê a lista de sócios da empresa.
+func BuscarSocios(ctx context.Context, g Getter) ([]Socio, error) {
+	s, err := get[[]Socio](ctx, g, PathSocios)
+	if err != nil {
+		return nil, err
+	}
+	return *s, nil
+}
+
+// CNAEEmpresa é um item de notafiscal/cnaeanexosmultiplos/list: um CNAE da empresa e os
+// anexos do Simples Nacional em que ele pode ser tributado.
+type CNAEEmpresa struct {
+	CNAE struct {
+		Codigo            string `json:"codigo"`
+		Descricao         string `json:"descricao"`
+		TipoRamoAtividade string `json:"tipoRamoAtividade"`
+	} `json:"cnae"`
+	Anexos []struct {
+		CodTabelaSimples int  `json:"codTabelaSimples"`
+		Ativo            bool `json:"ativo"`
+		Principal        bool `json:"principal"`
+	} `json:"anexos"`
+}
+
+// BuscarCNAEs lê os CNAEs da empresa.
+func BuscarCNAEs(ctx context.Context, g Getter) ([]CNAEEmpresa, error) {
+	c, err := get[[]CNAEEmpresa](ctx, g, PathCNAEs)
+	if err != nil {
+		return nil, err
+	}
+	return *c, nil
 }

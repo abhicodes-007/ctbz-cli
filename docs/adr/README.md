@@ -15,3 +15,4 @@ decisão nova, copie o [modelo](template.md) e use o próximo número (ver [ADR-
 | [0008](0008-cobra-para-a-arvore-de-comandos.md) | Cobra para a árvore de comandos | aceita |
 | [0009](0009-camada-api-tipada.md) | Camada `internal/api` com tipos de resposta e funções de leitura | aceita |
 | [0010](0010-testes-de-contrato.md) | Testes de contrato derivados dos tipos, com fixtures anonimizadas | aceita |
+| [0011](0011-fixtures-podadas-ao-contrato.md) | Fixtures podadas ao contrato | aceita |

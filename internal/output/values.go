@@ -23,6 +23,21 @@ type DateTime struct{ time.Time }
 // CNPJ guarda só os dígitos. Tabela: "00.000.000/0000-00"; JSON/CSV: dígitos.
 type CNPJ string
 
+// CPF guarda só os dígitos. Tabela: "000.000.000-00"; JSON/CSV: dígitos.
+type CPF string
+
+// NewCPF remove a pontuação de um CPF.
+func NewCPF(s string) CPF { return CPF(NewCNPJ(s)) }
+
+// FormatCPF aplica a máscara 000.000.000-00 quando há 11 dígitos.
+func FormatCPF(c CPF) string {
+	s := string(c)
+	if len(s) != 11 {
+		return s
+	}
+	return s[0:3] + "." + s[3:6] + "." + s[6:9] + "-" + s[9:11]
+}
+
 // NewCNPJ remove a pontuação de um CNPJ.
 func NewCNPJ(s string) CNPJ {
 	var b strings.Builder
@@ -118,6 +133,11 @@ func cellText(v any, f Format) string {
 	case CNPJ:
 		if table {
 			return FormatCNPJ(x)
+		}
+		return string(x)
+	case CPF:
+		if table {
+			return FormatCPF(x)
 		}
 		return string(x)
 	case []string:

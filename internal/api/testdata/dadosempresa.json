@@ -1,41 +1,14 @@
 {
-  "chamados": [
-    {
-      "created_at": "22/07/2026",
-      "id": "00000000",
-      "status": "closed",
-      "subject": "TEXTO EXEMPLO",
-      "url": "https://exemplo.invalid/arquivo"
-    },
-    {
-      "created_at": "24/05/2023",
-      "id": "00000000",
-      "status": "closed",
-      "subject": "TEXTO EXEMPLO",
-      "url": "https://exemplo.invalid/arquivo"
-    },
-    {
-      "created_at": "03/05/2023",
-      "id": "00000000",
-      "status": "closed",
-      "subject": "TEXTO EXEMPLO",
-      "url": "https://exemplo.invalid/arquivo"
-    }
-  ],
   "empresaAtual": {
     "certificado": {
       "dataValidade": "22/07/2027",
       "status": {
-        "descricao": "Ativo",
-        "id": "ATIVO"
-      },
-      "valido": true
+        "descricao": "Ativo"
+      }
     },
     "cnpj": "00.000.000/0000-00",
-    "id": 1000000000000001,
     "inscricaoMunicipal": "00000000",
     "plano": "Básico",
-    "planoCategoria": "BASICO",
     "ramosAtividade": [],
     "razaoSocial": "FULANO DE TAL",
     "regimeTributario": "Simples Nacional",
@@ -43,50 +16,14 @@
   },
   "empresas": [
     {
-      "certificado": null,
       "cnpj": "00000000000000",
-      "id": 1000000000000001,
-      "inscricaoMunicipal": null,
-      "plano": null,
-      "planoCategoria": null,
-      "ramosAtividade": [
-        "SERVICO"
-      ],
       "razaoSocial": "FULANO DE TAL",
-      "regimeTributario": null,
       "statusEmpresa": "ATIVO"
     },
     {
-      "certificado": null,
       "cnpj": "00000000000000",
-      "id": 1000000000000002,
-      "inscricaoMunicipal": null,
-      "plano": null,
-      "planoCategoria": null,
-      "ramosAtividade": [
-        "SERVICO"
-      ],
       "razaoSocial": "FULANO DE TAL",
-      "regimeTributario": null,
       "statusEmpresa": "INATIVO"
-    }
-  ],
-  "mgm": {
-    "responsavelId": 1000000000000003,
-    "scoreCredit": 0
-  },
-  "pendencias": [
-    {
-      "dataCriacao": 1784665522412,
-      "dataLimite": "21/07/2026",
-      "detalhe": "<texto omitido>",
-      "id": 1000000000000004,
-      "situacaoPendencia": {
-        "descricao": "Pendente",
-        "id": "PENDENTE"
-      },
-      "tipoPendenciaCodigo": 43,
-      "tipoPendenciaTitulo": "Cadastre o PIS para ativar o pró-labore automático"
     }
   ]
 }

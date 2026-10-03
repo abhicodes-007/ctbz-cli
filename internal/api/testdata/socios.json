@@ -1,0 +1,18 @@
+[
+  {
+    "administrador": true,
+    "categoria": {
+      "descricao": "Sócio com Prolabore"
+    },
+    "cpf": "00000000000",
+    "dataAdmissao": 1782907200000,
+    "id": 1000000000000001,
+    "nome": "FULANO DE TAL",
+    "possuiProLabore": false,
+    "responsavelReceita": true,
+    "salarioBase": 1000,
+    "situacaoColaborador": {
+      "descricao": "Ativo"
+    }
+  }
+]

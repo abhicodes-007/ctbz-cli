@@ -86,7 +86,7 @@ func TestAnonymize(t *testing.T) {
 	  "cnpj": "12.345.678/0001-90",
 	  "cpf": "12345678901",
 	  "email": "pessoa@gmail.com",
-	  "endereco": {"logradouro": "RUA DE VERDADE", "cep": "80000123"},
+	  "endereco": {"logradouro": "RUA DE VERDADE", "numero": "1234", "cep": "80000123"},
 	  "id": 4801207998644224,
 	  "outroId": 4801207998644224,
 	  "dataAbertura": 1784581200000,
@@ -104,7 +104,7 @@ func TestAnonymize(t *testing.T) {
 		t.Fatal(err)
 	}
 	s := string(out)
-	for _, leaked := range []string{"EMPRESA REAL", "12.345.678", "12345678901", "pessoa@gmail", "RUA DE VERDADE", "80000123", "4801207998644224", "9876.54", "storage.exemplo", "5e3050a5", "assunto real"} {
+	for _, leaked := range []string{"EMPRESA REAL", "12.345.678", "12345678901", "pessoa@gmail", "RUA DE VERDADE", `"1234"`, "80000123", "4801207998644224", "9876.54", "storage.exemplo", "5e3050a5", "assunto real"} {
 		if strings.Contains(s, leaked) {
 			t.Errorf("vazou %q:\n%s", leaked, s)
 		}
@@ -124,5 +124,28 @@ func TestAnonymize(t *testing.T) {
 	again, _ := Anonymize([]byte(in))
 	if string(again) != s {
 		t.Error("anonimização não é determinística")
+	}
+}
+
+func TestPrune(t *testing.T) {
+	in := `{"cnpj":"1","segredo":"x","itens":[{"id":1,"label":"a","cpf":"123"}],"opcional":null,"ativo":true}`
+	out, err := Prune([]byte(in), resposta{})
+	if err != nil {
+		t.Fatal(err)
+	}
+	s := string(out)
+	for _, gone := range []string{"segredo", `"cpf"`} {
+		if strings.Contains(s, gone) {
+			t.Errorf("campo não declarado ficou: %s\n%s", gone, s)
+		}
+	}
+	for _, kept := range []string{`"cnpj": "1"`, `"label": "a"`, `"opcional": null`, `"ativo": true`} {
+		if !strings.Contains(s, kept) {
+			t.Errorf("faltou %s:\n%s", kept, s)
+		}
+	}
+	r, _ := Check(out, resposta{})
+	if len(r.Added()) != 0 {
+		t.Errorf("fixture podada não deveria ter campos novos: %v", r.Added())
 	}
 }
