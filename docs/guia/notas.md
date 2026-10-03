@@ -40,6 +40,26 @@ ctbz notas tomadores consulta 00.000.000/0001-91   # cadastro de um CNPJ na Rece
   fantasia, abertura, atividade principal, natureza jurídica, situação cadastral, opção pelo
   Simples, endereço e contatos. Serve para conferir um cliente antes de emitir a nota.
 
+## Configuração do emissor e alíquotas
+
+```sh
+ctbz notas config       # emissor habilitado, versão, instabilidade, certificado
+ctbz notas aliquotas    # alíquota, ISS, Fator R e item de serviço por atividade
+```
+
+```text
+Mercado  Tipo     CNAE       Atividade          Item   Descrição do item                         Alíquota (%)  ISS (%)  Fator R (%)  Anexo fixo
+interno  servico  6204-0/00  Consultoria em TI  01.06  Assessoria e consultoria em informática.             6     2.01      33.3333  não
+externo  servico  6204-0/00  Consultoria em TI  01.06  Assessoria e consultoria em informática.          3.05        0      33.3333  não
+```
+
+- `config` diz se o emissor está habilitado e se a Contabilizei reporta **instabilidade**
+  com a prefeitura (quando é melhor esperar para emitir), além da validade do certificado
+  digital usado na emissão.
+- `aliquotas` traz, por atividade, o item da lista de serviços (LC 116) usado na nota, a
+  alíquota do Simples, a parte que é ISS e o Fator R usado no cálculo. O mercado `externo`
+  (tomador no exterior) não tem ISS.
+
 ## PDF e XML das notas
 
 A API do painel não oferece o PDF nem o XML das NFS-e emitidas: a Contabilizei envia o

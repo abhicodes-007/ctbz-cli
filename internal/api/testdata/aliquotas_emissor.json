@@ -1,0 +1,73 @@
+{
+  "externo": {
+    "comercio": [],
+    "servico": [
+      {
+        "aliquotaBase": 1234.56,
+        "aliquotaISS": 0,
+        "anexoFixo": false,
+        "codigoCnae": "6204000",
+        "codigoItemServico": "01.06",
+        "descricaoCnae": "Consultoria em tecnologia da informação",
+        "descricaoItemServico": "Assessoria e consultoria em informática.",
+        "fatorR": 33.3333
+      },
+      {
+        "aliquotaBase": 1234.56,
+        "aliquotaISS": 0,
+        "anexoFixo": false,
+        "codigoCnae": "6201501",
+        "codigoItemServico": "01.02",
+        "descricaoCnae": "Desenvolvimento de programas de computador sob encomenda",
+        "descricaoItemServico": "Programação",
+        "fatorR": 33.3333
+      },
+      {
+        "aliquotaBase": 1234.56,
+        "aliquotaISS": 0,
+        "anexoFixo": false,
+        "codigoCnae": "6202300",
+        "codigoItemServico": "01.04",
+        "descricaoCnae": "Desenvolvimento e licenciamento de programas de computador customizáveis",
+        "descricaoItemServico": "Elaboração de programas de computadores, inclusive de jogos eletrônicos, independentemente da arquitetura construtiva da máquina em que o programa será executado, incluindo tablets, smartphones e congêneres",
+        "fatorR": 33.3333
+      }
+    ]
+  },
+  "interno": {
+    "comercio": [],
+    "servico": [
+      {
+        "aliquotaBase": 1000,
+        "aliquotaISS": 2.01,
+        "anexoFixo": false,
+        "codigoCnae": "6204000",
+        "codigoItemServico": "01.06",
+        "descricaoCnae": "Consultoria em tecnologia da informação",
+        "descricaoItemServico": "Assessoria e consultoria em informática.",
+        "fatorR": 33.3333
+      },
+      {
+        "aliquotaBase": 1000,
+        "aliquotaISS": 2.01,
+        "anexoFixo": false,
+        "codigoCnae": "6201501",
+        "codigoItemServico": "01.02",
+        "descricaoCnae": "Desenvolvimento de programas de computador sob encomenda",
+        "descricaoItemServico": "Programação",
+        "fatorR": 33.3333
+      },
+      {
+        "aliquotaBase": 1000,
+        "aliquotaISS": 2.01,
+        "anexoFixo": false,
+        "codigoCnae": "6202300",
+        "codigoItemServico": "01.04",
+        "descricaoCnae": "Desenvolvimento e licenciamento de programas de computador customizáveis",
+        "descricaoItemServico": "Elaboração de programas de computadores, inclusive de jogos eletrônicos, independentemente da arquitetura construtiva da máquina em que o programa será executado, incluindo tablets, smartphones e congêneres",
+        "fatorR": 33.3333
+      }
+    ]
+  },
+  "regimeTributario": "SIMPLES"
+}

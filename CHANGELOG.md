@@ -14,6 +14,9 @@ usa [Versionamento Semântico](https://semver.org/lang/pt-BR/).
   `--numero`; total do período no stderr.
 - `ctbz notas tomadores`: tomadores cadastrados no emissor; `consulta CNPJ` mostra o cadastro
   de um CNPJ na Receita (situação cadastral, atividade, Simples, endereço).
+- `ctbz notas config`: emissor habilitado, versão, instabilidade reportada, certificado e
+  município; `ctbz notas aliquotas`: alíquota, ISS, Fator R e item de serviço por atividade,
+  para tomadores no Brasil e no exterior.
 
 ## [0.4.0] - 2026-10-03
 
