@@ -38,6 +38,7 @@ tools/capture/   grava fixtures anonimizadas para os contratos
 scripts/
   otp-gmail-gws.sh       OTP a partir do Gmail (gws)
   extrair-endpoints.py   gera docs/api/catalogo.md
+  monitorar.sh           contratos ao vivo + catálogo (job de monitoramento)
 ```
 
 Dependências: [Cobra](https://github.com/spf13/cobra) para a árvore de comandos

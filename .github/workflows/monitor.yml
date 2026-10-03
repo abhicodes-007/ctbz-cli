@@ -1,0 +1,61 @@
+name: Monitoramento
+
+# Detecta mudanças da Contabilizei na API (contratos ao vivo) e no front (catálogo de
+# endpoints) e abre uma issue quando algo muda. Ver docs/monitoramento.md.
+on:
+  schedule:
+    - cron: "17 9 * * 1" # segundas, 09:17 UTC
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  issues: write
+
+concurrency:
+  group: monitoramento
+
+jobs:
+  monitorar:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-go@v5
+        with:
+          go-version-file: go.mod
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Login na Contabilizei
+        env:
+          CTBZ_USER: ${{ secrets.CTBZ_USER }}
+          CTBZ_PASSWORD: ${{ secrets.CTBZ_PASSWORD }}
+          CTBZ_CNPJ: ${{ secrets.CTBZ_CNPJ }}
+          CTBZ_OTP_CMD: ${{ secrets.CTBZ_OTP_CMD }}
+          CTBZ_OTP_TIMEOUT: 5m
+        run: |
+          if [ -z "$CTBZ_USER" ] || [ -z "$CTBZ_PASSWORD" ] || [ -z "$CTBZ_OTP_CMD" ]; then
+            echo "::error::Configure os segredos CTBZ_USER, CTBZ_PASSWORD e CTBZ_OTP_CMD (docs/monitoramento.md)."
+            exit 1
+          fi
+          export CTBZ_HOME="$RUNNER_TEMP/ctbz"
+          echo "CTBZ_HOME=$CTBZ_HOME" >> "$GITHUB_ENV"
+          go run ./cmd/ctbz login
+
+      - name: Contratos ao vivo e catálogo
+        id: verificar
+        run: sh scripts/monitorar.sh | tee "$RUNNER_TEMP/relatorio.md"
+
+      - name: Abrir ou atualizar a issue
+        if: failure() && steps.verificar.outcome == 'failure'
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          titulo="Monitoramento: a Contabilizei mudou a API ou o front"
+          printf '\n[Execução](%s/%s/actions/runs/%s)\n' "$GITHUB_SERVER_URL" "$GITHUB_REPOSITORY" "$GITHUB_RUN_ID" >> "$RUNNER_TEMP/relatorio.md"
+          num=$(gh issue list --state open --search "\"$titulo\" in:title" --json number --jq '.[0].number // empty')
+          if [ -n "$num" ]; then
+            gh issue comment "$num" --body-file "$RUNNER_TEMP/relatorio.md"
+          else
+            gh issue create --title "$titulo" --body-file "$RUNNER_TEMP/relatorio.md"
+          fi

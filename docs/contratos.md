@@ -48,3 +48,8 @@ Quando a conta usada para capturar não tem exemplos de um campo (ex.: uma lista
 declare-o como `json.RawMessage`. O contrato aceita qualquer valor nele, a poda o mantém
 inteiro (a anonimização continua valendo) e o comando o mostra como a API o devolve
 (`output.FromJSON`). Quando houver dados reais, troque por um tipo.
+
+## Monitoramento
+
+Os contratos ao vivo rodam toda semana no job de monitoramento, que abre uma issue quando
+algum quebra. Ver [Monitoramento da API](monitoramento.md).
