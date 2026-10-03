@@ -41,7 +41,7 @@ O histórico mensal está em "ctbz prolabore historico".`,
 			return output.Write(s.out, f, prolaboreRecord(c, d))
 		},
 	}
-	cmd.AddCommand(newProlaboreHistoricoCmd())
+	cmd.AddCommand(newProlaboreHistoricoCmd(), newProlaboreParametrosCmd())
 	return cmd
 }
 
@@ -153,4 +153,34 @@ func brlOuTexto(s string) any {
 		return v
 	}
 	return nilIfEmpty(s)
+}
+
+func newProlaboreParametrosCmd() *cobra.Command {
+	return &cobra.Command{
+		Use:   "parametros",
+		Short: "Mostra os valores usados no cálculo do pró-labore (INSS e IRRF)",
+		Long: `Mostra os parâmetros que a Contabilizei usa para calcular o pró-labore: salário mínimo
+(pró-labore mínimo), alíquota do INSS do sócio, contribuição máxima ao INSS, pró-labore a
+partir do qual a contribuição atinge o teto e o valor a partir do qual incide IRRF.`,
+		Example: `  ctbz prolabore parametros`,
+		Args:    exactArgs(0, "nenhum argumento"),
+		RunE: func(cmd *cobra.Command, _ []string) error {
+			f, err := outputFormat(cmd, "")
+			if err != nil {
+				return err
+			}
+			s := streamsOf(cmd)
+			p, err := api.BuscarProlaboreParametros(cmd.Context(), sessionGetter{s})
+			if err != nil {
+				return err
+			}
+			rec := &output.Record{}
+			rec.Add("salario_minimo", "Salário mínimo", brlOuTexto(p.SalarioMinimo))
+			rec.Add("inss_aliquota", "Alíquota do INSS (%)", p.PorcentagemInss)
+			rec.Add("inss_contribuicao_maxima", "Contribuição máxima ao INSS", brlOuTexto(p.ValorMaximoContribuicaoInss))
+			rec.Add("prolabore_teto_inss", "Pró-labore no teto do INSS", brlOuTexto(p.ValorMaximoProlabore))
+			rec.Add("irrf_a_partir_de", "IRRF a partir de", brlOuTexto(p.ValorMinimoProlaboreParaIncidenciaIrrf))
+			return output.Write(s.out, f, rec)
+		},
+	}
 }

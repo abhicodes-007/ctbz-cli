@@ -12,6 +12,8 @@ usa [Versionamento Semântico](https://semver.org/lang/pt-BR/).
 - `ctbz prolabore`: tipo de gerenciamento, total, competências do painel e, por sócio, valor,
   responsável na Receita, gestão, atualização e dependentes; `historico` lista pró-labore e
   descontos por competência (`--ano`, `--socio`).
+- `ctbz prolabore parametros`: salário mínimo, alíquota e teto do INSS e o valor a partir
+  do qual incide IRRF.
 
 ## [0.5.0] - 2026-10-03
 

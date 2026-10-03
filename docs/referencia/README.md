@@ -42,6 +42,7 @@ Gerada a partir da própria CLI (`go run ./tools/gendocs`); não edite à mão.
 | [`ctbz plano proposta`](ctbz_plano_proposta.md) | Exporta a proposta do plano contratado, com a tabela de preços (HTML ou texto) |
 | [`ctbz prolabore`](ctbz_prolabore.md) | Mostra o pró-labore vigente por sócio e o tipo de gerenciamento |
 | [`ctbz prolabore historico`](ctbz_prolabore_historico.md) | Lista o histórico mensal de pró-labore dos sócios |
+| [`ctbz prolabore parametros`](ctbz_prolabore_parametros.md) | Mostra os valores usados no cálculo do pró-labore (INSS e IRRF) |
 | [`ctbz resumo`](ctbz_resumo.md) | Mostra numa lista só o que precisa de atenção |
 | [`ctbz rotinas`](ctbz_rotinas.md) | Lista as rotinas e obrigações do mês (da empresa e da Contabilizei) |
 | [`ctbz status`](ctbz_status.md) | Mostra a sessão atual e testa se ainda é válida |

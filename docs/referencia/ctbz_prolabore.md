@@ -25,6 +25,7 @@ ctbz prolabore
 ## Subcomandos
 
 - [`ctbz prolabore historico`](ctbz_prolabore_historico.md): Lista o histórico mensal de pró-labore dos sócios
+- [`ctbz prolabore parametros`](ctbz_prolabore_parametros.md): Mostra os valores usados no cálculo do pró-labore (INSS e IRRF)
 
 ## Flags globais
 
