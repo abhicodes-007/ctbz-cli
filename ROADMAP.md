@@ -21,7 +21,7 @@ Labels usadas: `épico`, `versão: vX.Y`, `contexto: …`, `tipo: funcionalidade
 | **v0.1** | Login e dados da empresa | [#1](https://github.com/edusouza/ctbz-cli/issues/1) | 8 | em andamento (7/8) |
 | **v0.2** | Impostos | [#10](https://github.com/edusouza/ctbz-cli/issues/10) | 6 | concluída |
 | **v0.3** | Pendências, rotinas e atendimento | [#17](https://github.com/edusouza/ctbz-cli/issues/17) | 5 | concluída |
-| **v0.4** | Mensalidade e pagamentos da Contabilizei | [#23](https://github.com/edusouza/ctbz-cli/issues/23) | 4 | planejada |
+| **v0.4** | Mensalidade e pagamentos da Contabilizei | [#23](https://github.com/edusouza/ctbz-cli/issues/23) | 4 | concluída |
 | **v0.5** | Notas fiscais | [#28](https://github.com/edusouza/ctbz-cli/issues/28) | 5 | planejada |
 | **v0.6** | Pró-labore e distribuição de lucros | [#34](https://github.com/edusouza/ctbz-cli/issues/34) | 5 | planejada |
 | **v0.7** | Contabilidade: relatórios, caixa e extratos | [#40](https://github.com/edusouza/ctbz-cli/issues/40) | 6 | planejada |
@@ -88,10 +88,10 @@ A relação financeira com a própria Contabilizei: mensalidade atual, faturas, 
 
 | | Issue | Funcionalidade | Tipo |
 |---|---|---|---|
-| ⬜ | [#24](https://github.com/edusouza/ctbz-cli/issues/24) | Mensalidade e fatura atual | funcionalidade |
-| ⬜ | [#25](https://github.com/edusouza/ctbz-cli/issues/25) | Histórico de pagamentos e débito automático | funcionalidade |
-| ⬜ | [#26](https://github.com/edusouza/ctbz-cli/issues/26) | Situação de inadimplência | funcionalidade |
-| ⬜ | [#27](https://github.com/edusouza/ctbz-cli/issues/27) | Plano e contrato de serviço | funcionalidade |
+| ✅ | [#24](https://github.com/edusouza/ctbz-cli/issues/24) | Mensalidade e fatura atual | funcionalidade |
+| ✅ | [#25](https://github.com/edusouza/ctbz-cli/issues/25) | Histórico de pagamentos e débito automático | funcionalidade |
+| ✅ | [#26](https://github.com/edusouza/ctbz-cli/issues/26) | Situação de inadimplência | funcionalidade |
+| ✅ | [#27](https://github.com/edusouza/ctbz-cli/issues/27) | Plano e contrato de serviço | funcionalidade |
 
 Fora de escopo: Pagar fatura, cadastrar cartão, trocar plano (escrita).
 
