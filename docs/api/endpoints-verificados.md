@@ -50,6 +50,7 @@ Legenda: ✅ 200 · ⚠️ responde, mas precisa de parâmetro ou não está lib
 | `impostos/v5/historico-impostos/guias` | ✅ | `impostos` |
 | `impostos/v5/historico-impostos/anos-vigentes` | ✅ | lista de anos |
 | `impostos/v5/historico-impostos/faturamento-mensal` | ✅ | `faturamentoMensal` |
+| `impostos/v5/historico-impostos/dados-grafico?ano=AAAA` | ✅ | `meses{"1".."12": {totalPago}}` — usado por `ctbz impostos faturamento` |
 | `impostos/v2/historico-impostos/init` | ✅ | `emDia, quantidadeGuiasVencidas` |
 | `impostos/v2/historico-impostos/guias?pagina=1` | ✅ | `paginaAtual, totalPaginas, competencias[{competencia, guias[{id, imposto, impostoDescricao, competencia{mes,ano}, dataVencimento, valorPrincipal, valorPago, status, tipo, codigoBarras…}]}]`; aceita `status`, `mes` (1–12), `ano` — usado por `ctbz impostos historico` |
 | `impostos/v2/historico-impostos/guias` (sem `pagina`) | ❌ 560 | `{identificador, detalhe, dataHora}` |

@@ -240,3 +240,17 @@ func BuscarHistoricoGuias(ctx context.Context, g Getter, f FiltroHistorico) ([]G
 
 // maxPaginas protege contra paginação que nunca termina.
 const maxPaginas = 100
+
+const PathDadosGrafico = "impostos/v5/historico-impostos/dados-grafico"
+
+// DadosGrafico é a resposta de dados-grafico: total pago em impostos por mês ("1" a "12").
+type DadosGrafico struct {
+	Meses map[string]struct {
+		TotalPago *float64 `json:"totalPago"`
+	} `json:"meses"`
+}
+
+// BuscarImpostosPagosNoAno lê o total pago em impostos em cada mês do ano.
+func BuscarImpostosPagosNoAno(ctx context.Context, g Getter, ano int) (*DadosGrafico, error) {
+	return get[DadosGrafico](ctx, g, fmt.Sprintf("%s?ano=%d", PathDadosGrafico, ano))
+}
