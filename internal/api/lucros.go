@@ -58,3 +58,48 @@ type RestricoesInforme struct {
 func BuscarRestricoesInforme(ctx context.Context, g Getter, ano int) (*RestricoesInforme, error) {
 	return get[RestricoesInforme](ctx, g, PathRestricoesInforme(ano))
 }
+
+// PathSociosInforme lista os sócios com informe de rendimentos no ano ([{id, nome}]).
+func PathSociosInforme(ano int) string {
+	return fmt.Sprintf("informerendimento/listSocioInformeRendimentos/%d", ano)
+}
+
+// PathComprovanteRendimentos são os valores do comprovante de rendimentos de um sócio. O
+// painel monta o PDF no navegador com esses valores; a API não devolve PDF.
+func PathComprovanteRendimentos(idSocio any, ano int) string {
+	return fmt.Sprintf("informerendimento/getValoresComprovanteRendimento/%v/%d", idSocio, ano)
+}
+
+// SocioInforme é um sócio com informe de rendimentos. Campos lidos pelo front; a conta
+// verificada não tinha informes.
+type SocioInforme struct {
+	ID   any    `json:"id" contract:"optional"` // número ou texto
+	Nome string `json:"nome" contract:"optional"`
+}
+
+// BuscarSociosInforme lista os sócios com informe no ano.
+func BuscarSociosInforme(ctx context.Context, g Getter, ano int) ([]SocioInforme, error) {
+	s, err := get[[]SocioInforme](ctx, g, PathSociosInforme(ano))
+	if err != nil {
+		return nil, err
+	}
+	return *s, nil
+}
+
+// ComprovanteRendimentos são os valores do comprovante de rendimentos (DIRF) de um sócio.
+// Formato lido do front, sem exemplo real: os valores ficam como any (número esperado).
+type ComprovanteRendimentos struct {
+	Nome               string `json:"nome"`
+	CPF                string `json:"cpf"`
+	Rendimentos        any    `json:"rendimentos"`        // pró-labore tributável
+	Previdencia        any    `json:"previdencia"`        // INSS
+	IRRFRetido         any    `json:"irrfRetido"`         // IRRF sobre o pró-labore
+	DecimoTerceiro     any    `json:"decimoTerceiro"`     // 13º
+	IRRFDecimoTerceiro any    `json:"irrfdecimoTerceiro"` // IRRF sobre o 13º
+	Lucro              any    `json:"lucro"`              // lucros e dividendos (isentos)
+}
+
+// BuscarComprovanteRendimentos lê os valores do comprovante de um sócio.
+func BuscarComprovanteRendimentos(ctx context.Context, g Getter, idSocio any, ano int) (*ComprovanteRendimentos, error) {
+	return get[ComprovanteRendimentos](ctx, g, PathComprovanteRendimentos(idSocio, ano))
+}

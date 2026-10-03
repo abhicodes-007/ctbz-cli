@@ -75,6 +75,8 @@ func Endpoints() []Endpoint {
 		{Name: "prolabore_parametros", LivePath: PathProlaboreParametros, Type: ProlaboreParametros{}},
 		{Name: "distribuicao_lucros", LivePath: PathDistribuicaoLucros, Type: DistribuicaoLucros{}},
 		{Name: "restricoes_informe", LivePath: PathRestricoesInforme(2025), Type: RestricoesInforme{}},
+		{Name: "socios_informe", LivePath: PathSociosInforme(2025), Type: []SocioInforme{}},
+		// getValoresComprovanteRendimento fica sem contrato: nenhum exemplo real (sem sócios com informe).
 	}
 }
 
