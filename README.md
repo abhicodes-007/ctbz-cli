@@ -1,5 +1,7 @@
 # ctbz — CLI para a Contabilizei
 
+[![CI](https://github.com/edusouza/ctbz-cli/actions/workflows/ci.yml/badge.svg)](https://github.com/edusouza/ctbz-cli/actions/workflows/ci.yml)
+
 CLI que substitui a interface web da [Contabilizei](https://app.contabilizei.com.br):
 faz o mesmo login que o navegador (usuário/senha → código por e-mail → escolha
 da empresa) e chama as mesmas URLs internas que o painel usa, como se fossem uma API.
