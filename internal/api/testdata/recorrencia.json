@@ -1,0 +1,13 @@
+{
+  "aceite": false,
+  "ativado": false,
+  "cartoesSalvos": [],
+  "competencia": "09-2026",
+  "dataProximaTentativa": "",
+  "dataProximoPagamento": "",
+  "habilitado": true,
+  "pagamentosAgendados": [],
+  "pagamentosConcluido": [],
+  "pagamentosRecusado": [],
+  "status": ""
+}

@@ -22,6 +22,8 @@ Gerada a partir da própria CLI (`go run ./tools/gendocs`); não edite à mão.
 | [`ctbz impostos historico`](ctbz_impostos_historico.md) | Lista o histórico de guias de impostos |
 | [`ctbz impostos parcelamento`](ctbz_impostos_parcelamento.md) | Mostra o detalhe de um parcelamento de impostos |
 | [`ctbz impostos parcelamentos`](ctbz_impostos_parcelamentos.md) | Lista os parcelamentos de impostos (em andamento, ativos e encerrados) |
+| [`ctbz impostos recorrente`](ctbz_impostos_recorrente.md) | Mostra a situação do pagamento recorrente (débito automático) de impostos |
+| [`ctbz impostos recorrente historico`](ctbz_impostos_recorrente_historico.md) | Lista os pagamentos recorrentes de impostos dos últimos meses |
 | [`ctbz impostos tabela-irrf`](ctbz_impostos_tabela-irrf.md) | Mostra a tabela progressiva do IRRF usada no cálculo do pró-labore |
 | [`ctbz login`](ctbz_login.md) | Autentica na Contabilizei (usuário, senha e código por e-mail) |
 | [`ctbz logout`](ctbz_logout.md) | Apaga a sessão local |

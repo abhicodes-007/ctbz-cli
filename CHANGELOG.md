@@ -11,6 +11,8 @@ usa [Versionamento Semântico](https://semver.org/lang/pt-BR/).
 
 - `ctbz mensalidade`: competência, valor, vencimento, situação e observações da mensalidade
   atual, e se há competência anterior em atraso (`--fail-on-atraso`, código 4).
+- `ctbz impostos recorrente`: situação do pagamento recorrente (débito automático) de impostos,
+  sem expor dados de cartão; `historico` lista as guias pagas e o custo de operação por mês.
 
 ## [0.3.0] - 2026-10-03
 
