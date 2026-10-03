@@ -1,0 +1,44 @@
+{
+  "atividades": [
+    {
+      "anexos": [
+        {
+          "anexo": 5,
+          "anexoFixo": false,
+          "descricaoAliquota": "Alíquota inicial de 6% ou 15,5%"
+        },
+        {
+          "anexo": 3,
+          "anexoFixo": true,
+          "descricaoAliquota": "Alíquota 6%"
+        }
+      ],
+      "codigo": "6311-90/0",
+      "descricao": "Tratamento de dados, provedores de serviços de aplicação e serviços de hospedagem na internet"
+    },
+    {
+      "anexos": [
+        {
+          "anexo": 3,
+          "anexoFixo": false,
+          "descricaoAliquota": "Alíquota inicial de 6% ou 15,5%"
+        }
+      ],
+      "codigo": "6202-30/0",
+      "descricao": "Desenvolvimento e licenciamento de programas de computador customizáveis"
+    },
+    {
+      "anexos": [
+        {
+          "anexo": 3,
+          "anexoFixo": false,
+          "descricaoAliquota": "Alíquota inicial de 6% ou 15,5%"
+        }
+      ],
+      "codigo": "6201-50/2",
+      "descricao": "Web design"
+    }
+  ],
+  "disponibilidade": "DISPONIVEL",
+  "motorFatorR": true
+}

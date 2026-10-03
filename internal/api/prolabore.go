@@ -86,9 +86,34 @@ type ProlaboreParametros struct {
 	ValorMaximoProlabore                   string  `json:"valorMaximoProlabore"`
 	PorcentagemInss                        float64 `json:"porcentagemInss"`
 	ValorMinimoProlaboreParaIncidenciaIrrf string  `json:"valorMinimoProlaboreParaIncidenciaIrrf"`
+	// A Contabilizei ajusta o pró-labore para o Fator R (motor do Fator R).
+	IsMotorFatorR bool `json:"isMotorFatorR"`
 }
 
 // BuscarProlaboreParametros lê prolabore/init.
 func BuscarProlaboreParametros(ctx context.Context, g Getter) (*ProlaboreParametros, error) {
 	return get[ProlaboreParametros](ctx, g, PathProlaboreParametros)
+}
+
+const PathSimuladorImpostos = "simulador-impostos-avancado/init"
+
+// SimuladorImpostos é a tela inicial do simulador de impostos avançado: atividades da
+// empresa com os anexos do Simples em que podem ser tributadas.
+type SimuladorImpostos struct {
+	Disponibilidade string `json:"disponibilidade"` // ex.: DISPONIVEL
+	MotorFatorR     bool   `json:"motorFatorR"`
+	Atividades      []struct {
+		Codigo    string `json:"codigo"` // ex.: "6311-90/0"
+		Descricao string `json:"descricao"`
+		Anexos    []struct {
+			Anexo             int    `json:"anexo"`
+			AnexoFixo         bool   `json:"anexoFixo"`
+			DescricaoAliquota string `json:"descricaoAliquota"`
+		} `json:"anexos"`
+	} `json:"atividades"`
+}
+
+// BuscarSimuladorImpostos lê o simulador de impostos avançado (só leitura).
+func BuscarSimuladorImpostos(ctx context.Context, g Getter) (*SimuladorImpostos, error) {
+	return get[SimuladorImpostos](ctx, g, PathSimuladorImpostos)
 }
