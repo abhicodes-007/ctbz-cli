@@ -31,6 +31,7 @@ ctbz notas [flags]
 
 - [`ctbz notas aliquotas`](ctbz_notas_aliquotas.md): Lista as alíquotas e os códigos de serviço por atividade
 - [`ctbz notas config`](ctbz_notas_config.md): Mostra a configuração do emissor de notas
+- [`ctbz notas entrada`](ctbz_notas_entrada.md): Lista as notas fiscais de entrada (NF-e recebidas pela empresa)
 - [`ctbz notas tomadores`](ctbz_notas_tomadores.md): Lista os tomadores (clientes) cadastrados no emissor de notas
 
 ## Flags

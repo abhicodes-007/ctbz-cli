@@ -37,5 +37,30 @@ O formato dessas respostas não pôde ser verificado: a conta usada no desenvolv
 notas de entrada, e o front só repassa a resposta (`resolve(a)`) sem mostrar como a trata.
 Os downloads ficam documentados aqui e não viram comando até haver um exemplo real.
 
-As listagens de notas de entrada estão em [endpoints verificados](endpoints-verificados.md)
-(#33).
+## Notas de entrada: listagens
+
+O front `/nota-entrada/` (Vue 1 com vue-resource, bundle `static/js/app.*.js`) tem duas
+telas, cada uma com duas abas. Todas as listagens respondem `{list, total, cursor,
+serializedList}` e foram chamadas de verdade (#33):
+
+| Tela / aba | Caminho | Paginação |
+|---|---|---|
+| Manifestação / a manifestar | `GET /api/emissor/notasentrada/listar/0?mes&ano&empresa&qtdPagina&cursor` | `cursor` da resposta anterior |
+| Manifestação / manifestadas | `GET /api/emissor/notasentrada/listar/1?…` | idem |
+| Classificação / a classificar | `GET /api/emissor/classificacaonotas/listar/?mes&ano&empresa&tipo=0&limite&cursor=&offset` | `offset` |
+| Classificação / classificadas | `GET /api/emissor/classificacaonotas/listar/?…&tipo=1…` | idem |
+
+- `mes` vai de 1 a 12; `empresa` é um filtro **pela razão social do emitente** (vazio, sem
+  filtro).
+- Itens (do exemplo do tutorial do front): `{id, chave, cnpjEmitente, razaoSocial,
+  inscricaoEstadual, dataEmissao (epoch ms), valor, situacao{id, descricao}}`.
+- Escrita (fora do escopo até a 1.0): `POST notasentrada/manifestar/`,
+  `POST classificacaonotas/salvarloteclassificacao/{tipo}`, `salvarclassificacao/`,
+  `reclassificar?idNfe=`.
+- Outros `GET`: `classificacaonotas/listarprodutos/{id}` (itens da nota),
+  `/api/plataforma/parametrosEmpresa/list`, `/api/legado/empresa/getEmpresaLogada`.
+
+## Notas tomadas
+
+O front `/nota-tomada/` não existe mais: responde **404** mesmo com sessão válida (verificado
+em 2026-10-03). As notas de serviço tomadas não têm tela nem API conhecida no painel.

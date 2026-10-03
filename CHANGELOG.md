@@ -17,6 +17,8 @@ usa [Versionamento Semântico](https://semver.org/lang/pt-BR/).
 - `ctbz notas config`: emissor habilitado, versão, instabilidade reportada, certificado e
   município; `ctbz notas aliquotas`: alíquota, ISS, Fator R e item de serviço por atividade,
   para tomadores no Brasil e no exterior.
+- `ctbz notas entrada`: NF-e recebidas pela empresa (a manifestar, manifestadas, a
+  classificar e classificadas), com `--mes` e `--emitente`.
 
 ## [0.4.0] - 2026-10-03
 
