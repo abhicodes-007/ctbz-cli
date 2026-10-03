@@ -74,7 +74,7 @@ func novaListaDeChamados() *output.List {
 func chamadosList(cs []api.Chamado) *output.List {
 	l := novaListaDeChamados()
 	for _, c := range cs {
-		id := idDeChamado(c.ID)
+		id := idTexto(c.ID)
 		l.Append(nilIfEmpty(id), output.Text(c.Assunto), nilIfEmpty(c.Status), nilIfEmpty(c.Canal), nil,
 			dataOuTexto(c.Atualizado), dataOuTexto(c.PrevisaoRetorno), linkDeChamado(id))
 	}
@@ -94,8 +94,8 @@ func chamadosRecentesList(cs []api.ChamadoResumo) *output.List {
 	return l
 }
 
-// idDeChamado normaliza o id, que pode vir como número ou texto.
-func idDeChamado(v any) string {
+// idTexto normaliza um id ou número que pode vir como número ou texto.
+func idTexto(v any) string {
 	switch x := v.(type) {
 	case string:
 		return x

@@ -29,6 +29,7 @@ Gerada a partir da própria CLI (`go run ./tools/gendocs`); não edite à mão.
 | [`ctbz logout`](ctbz_logout.md) | Apaga a sessão local |
 | [`ctbz mensalidade`](ctbz_mensalidade.md) | Mostra a mensalidade atual da Contabilizei (valor, vencimento e situação) |
 | [`ctbz mensalidade situacao`](ctbz_mensalidade_situacao.md) | Indica se a empresa está em dia com a Contabilizei |
+| [`ctbz notas`](ctbz_notas.md) | Lista as notas fiscais de serviço (NFS-e) emitidas |
 | [`ctbz pendencias`](ctbz_pendencias.md) | Lista as pendências da empresa (tipo, detalhe, prazo e situação) |
 | [`ctbz pendencias conciliacao`](ctbz_pendencias_conciliacao.md) | Mostra as pendências de conciliação fiscal (notas e recebimentos) |
 | [`ctbz plano`](ctbz_plano.md) | Mostra o plano contratado com a Contabilizei |

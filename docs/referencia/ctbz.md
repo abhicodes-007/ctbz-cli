@@ -17,6 +17,7 @@ Dados vão para stdout no formato escolhido com -o; mensagens e progresso vão p
 - [`ctbz login`](ctbz_login.md): Autentica na Contabilizei (usuário, senha e código por e-mail)
 - [`ctbz logout`](ctbz_logout.md): Apaga a sessão local
 - [`ctbz mensalidade`](ctbz_mensalidade.md): Mostra a mensalidade atual da Contabilizei (valor, vencimento e situação)
+- [`ctbz notas`](ctbz_notas.md): Lista as notas fiscais de serviço (NFS-e) emitidas
 - [`ctbz pendencias`](ctbz_pendencias.md): Lista as pendências da empresa (tipo, detalhe, prazo e situação)
 - [`ctbz plano`](ctbz_plano.md): Mostra o plano contratado com a Contabilizei
 - [`ctbz resumo`](ctbz_resumo.md): Mostra numa lista só o que precisa de atenção
