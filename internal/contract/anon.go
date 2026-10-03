@@ -42,7 +42,10 @@ var (
 	reCNPJMasked = regexp.MustCompile(`\d{2}\.\d{3}\.\d{3}/\d{4}-\d{2}`)
 	reCPFMasked  = regexp.MustCompile(`\d{3}\.\d{3}\.\d{3}-\d{2}`)
 	reLongDigits = regexp.MustCompile(`\d{8,}`)
-	reURL        = regexp.MustCompile(`https?://\S+`)
+	// Valores em reais escritos no texto ("R$ 100,00"): o valor de um pró-labore ou desconto
+	// é dado pessoal mesmo dentro de um campo de texto.
+	reBRL = regexp.MustCompile(`R\$\s?-?[0-9.]+,[0-9]{2}`)
+	reURL = regexp.MustCompile(`https?://\S+`)
 
 	// Chaves cujo valor identifica pessoas, empresas ou endereços.
 	keyName    = regexp.MustCompile(`(?i)(nome|razao|fantasia|titular|responsavel|socio|cliente|tomador)`)
@@ -115,6 +118,7 @@ func (a *anonymizer) text(key, s string) string {
 		return "LOGRADOURO EXEMPLO"
 	}
 	// Texto livre: aplica todos os padrões.
+	s = reBRL.ReplaceAllString(s, "R$ 1.234,56")
 	s = reURL.ReplaceAllString(s, "https://exemplo.invalid/arquivo")
 	s = reEmail.ReplaceAllString(s, "fulano@exemplo.com")
 	s = reCNPJMasked.ReplaceAllString(s, "22.222.222/0001-22")

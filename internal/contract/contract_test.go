@@ -102,6 +102,9 @@ func TestAnonymize(t *testing.T) {
 	  "detalhe": "pagamento do CNPJ 12.345.678/0001-90 por pessoa@gmail.com",
 	  "url": "https://storage.exemplo.com/assinado?token=abc",
 	  "ref": "5e3050a571f2d301",
+	  "prolabore": "R$ 100,00",
+	  "descontos": "R$ 11,00",
+	  "historico": "pago R$ 2.345,67 em julho",
 	  "contrato": "` + strings.Repeat("x", 400) + `"
 	}`
 	out, err := Anonymize([]byte(in))
@@ -109,7 +112,7 @@ func TestAnonymize(t *testing.T) {
 		t.Fatal(err)
 	}
 	s := string(out)
-	for _, leaked := range []string{"EMPRESA REAL", "12.345.678", "12345678901", "pessoa@gmail", "RUA DE VERDADE", `"1234"`, "80000123", "4801207998644224", "9876.54", "4321.98", "777.77", "storage.exemplo", "5e3050a5", "assunto real"} {
+	for _, leaked := range []string{"EMPRESA REAL", "12.345.678", "12345678901", "pessoa@gmail", "RUA DE VERDADE", `"1234"`, "80000123", "4801207998644224", "9876.54", "4321.98", "777.77", "storage.exemplo", "5e3050a5", "assunto real", "100,00", "11,00", "2.345,67"} {
 		if strings.Contains(s, leaked) {
 			t.Errorf("vazou %q:\n%s", leaked, s)
 		}
