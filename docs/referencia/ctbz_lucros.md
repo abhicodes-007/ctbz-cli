@@ -24,6 +24,10 @@ ctbz lucros
   ctbz lucros -o json | jq .saldo
 ```
 
+## Subcomandos
+
+- [`ctbz lucros informe`](ctbz_lucros_informe.md): Mostra os valores do informe de rendimentos dos sócios (para o IR)
+
 ## Flags globais
 
 ```
