@@ -19,6 +19,8 @@ usa [Versionamento Semântico](https://semver.org/lang/pt-BR/).
 - `ctbz version` (e `--version`), com versão, commit e data do build.
 - Ajuda em português e referência de comandos gerada em `docs/referencia/`.
 - Completion de shell: `ctbz completion bash|zsh|fish|powershell`.
+- `ctbz empresas`: lista as empresas do usuário (inclusive inativas), marcando a atual.
+- `ctbz empresa usar CNPJ`: troca a empresa da sessão refazendo o login.
 
 ### Changed
 

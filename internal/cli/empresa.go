@@ -38,6 +38,7 @@ A resposta crua da API está em "ctbz api dadosempresa/get".`,
 		},
 	}
 	cmd.Flags().BoolVar(&asJSON, "json", false, "atalho para -o json")
+	cmd.AddCommand(newEmpresaUsarCmd())
 	return cmd
 }
 
