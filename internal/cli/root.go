@@ -108,6 +108,7 @@ Dados vão para stdout no formato escolhido com -o; mensagens e progresso vão p
 		newMensalidadeCmd(),
 		newPlanoCmd(),
 		newNotasCmd(),
+		newProlaboreCmd(),
 		newAPICmd(),
 		newLogoutCmd(),
 		newVersionCmd(version),
