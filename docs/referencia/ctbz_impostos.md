@@ -27,9 +27,12 @@ ctbz impostos [flags]
 
 - [`ctbz impostos baixar`](ctbz_impostos_baixar.md): Baixa o PDF de guias de imposto
 - [`ctbz impostos calculo`](ctbz_impostos_calculo.md): Mostra como o imposto do mês foi calculado
+- [`ctbz impostos debitos`](ctbz_impostos_debitos.md): Indica se a empresa tem débitos federais em aberto
 - [`ctbz impostos faturamento`](ctbz_impostos_faturamento.md): Mostra o faturamento, o pró-labore e os impostos pagos nos últimos 12 meses
 - [`ctbz impostos guia`](ctbz_impostos_guia.md): Mostra o detalhe de uma guia de imposto
 - [`ctbz impostos historico`](ctbz_impostos_historico.md): Lista o histórico de guias de impostos
+- [`ctbz impostos parcelamento`](ctbz_impostos_parcelamento.md): Mostra o detalhe de um parcelamento de impostos
+- [`ctbz impostos parcelamentos`](ctbz_impostos_parcelamentos.md): Lista os parcelamentos de impostos (em andamento, ativos e encerrados)
 - [`ctbz impostos tabela-irrf`](ctbz_impostos_tabela-irrf.md): Mostra a tabela progressiva do IRRF usada no cálculo do pró-labore
 
 ## Flags

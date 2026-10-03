@@ -92,6 +92,8 @@ ctbz impostos calculo    # memória de cálculo do mês (DAS, INSS, IRRF, Fator 
 ctbz impostos baixar --pendentes -d ~/guias   # PDFs das guias a pagar
 ctbz impostos historico --ano 2026             # guias de meses anteriores
 ctbz impostos faturamento                      # faturamento, pró-labore e Fator R (12 meses)
+ctbz impostos parcelamentos                    # parcelamentos de impostos
+ctbz impostos debitos                          # débitos federais em aberto?
 ctbz api menu/get        # qualquer endpoint; caminho relativo → /api/plataforma/
 ctbz api -X POST -d @corpo.json /api/plataforma/algum/endpoint
 ctbz logout              # apaga a sessão local
