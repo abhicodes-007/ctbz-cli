@@ -1,0 +1,15 @@
+{
+  "contasBancarias": [
+    {
+      "agencia": "0000",
+      "codigoBanco": "301-1",
+      "contaCorrente": "000000000",
+      "dataSaldoInicial": 1000,
+      "fluxoIntegracao": "CONTABILIZEI_BANK",
+      "id": 1000000000000001,
+      "nomeBanco": "FULANO DE TAL",
+      "statusIntegracao": "INTEGRADA",
+      "vlrSaldoInicial": 1234.56
+    }
+  ]
+}

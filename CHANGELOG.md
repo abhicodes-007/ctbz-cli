@@ -17,6 +17,8 @@ usa [Versionamento Semântico](https://semver.org/lang/pt-BR/).
   prefixo), com contrapartida e saldo acumulado.
 - `ctbz caixa AAAA-MM`: lançamentos do caixa com conta de classificação, tipo, valor e
   situação; total do mês no stderr.
+- `ctbz extratos`: situação do extrato por conta bancária e mês (`--ano`);
+  `ctbz contas-bancarias`: banco, agência, conta, saldo inicial e integração.
 
 ## [0.6.0] - 2026-10-03
 

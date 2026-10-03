@@ -73,3 +73,22 @@ Total do mês: -R$ 141,83 em 1 lançamento(s)
   `ctbz contas`) e o tipo (receita, despesa…). Saídas têm valor negativo.
 - `automatico` indica lançamentos feitos pelo sistema (ex.: a mensalidade da Contabilizei).
 - Como no painel, a CLI pede até 1000 lançamentos por mês e avisa se houver mais.
+
+## Extratos e contas bancárias
+
+```sh
+ctbz extratos --ano 2026      # situação do extrato por conta e mês
+ctbz contas-bancarias         # contas cadastradas
+```
+
+```text
+Competência  Banco                  Agência  Conta      Situação  Integração  ID da conta
+10/2026      Contabilizei Conta PJ  0001     000000000  ABERTO                1000000000000001
+```
+
+- `extratos` mostra, para cada conta e mês, se o extrato está aberto ou fechado na
+  Contabilizei. Mês sem extrato vira a rotina "Importar extrato bancário" (`ctbz rotinas`).
+- `contas-bancarias` mostra banco, agência, conta, saldo inicial e a integração com o banco
+  (ex.: `INTEGRADA` na conta PJ da Contabilizei, que dispensa importar extrato).
+- Importar um extrato continua sendo feito pelo painel (`info-extrato` só existe depois de um
+  upload).

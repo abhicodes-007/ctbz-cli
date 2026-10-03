@@ -1,0 +1,37 @@
+# ctbz extratos
+
+Lista a situação dos extratos bancários por mês e conta
+
+Lista, para cada conta bancária e mês, a situação do extrato na Contabilizei (ex.: ABERTO
+enquanto o mês não foi fechado) e a integração com o banco. Os extratos são a base da
+conciliação: meses sem extrato aparecem nas rotinas como "Importar extrato bancário".
+
+--ano filtra pelo ano; a API devolve todos os meses disponíveis.
+
+## Uso
+
+```
+ctbz extratos [flags]
+```
+
+## Exemplos
+
+```sh
+  ctbz extratos
+  ctbz extratos --ano 2026 -o csv
+```
+
+## Flags
+
+```
+      --ano int   só os meses deste ano
+```
+
+## Flags globais
+
+```
+  -h, --help            mostra a ajuda do comando
+  -o, --output string   formato de saída: table, json ou csv (padrão: CTBZ_OUTPUT ou table)
+```
+
+Veja também: [`ctbz`](ctbz.md).
