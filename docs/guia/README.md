@@ -6,7 +6,7 @@ comando e flag está em [Referência de comandos](../referencia/README.md).
 | Contexto | O que dá para fazer |
 |---|---|
 | [Impostos](impostos.md) | Guias a pagar e em atraso |
-| [Pendências, rotinas e atendimento](pendencias.md) | Pendências abertas, rotinas do mês, prazos vencidos, conciliação e chamados |
+| [Pendências, rotinas e atendimento](pendencias.md) | Resumo do que precisa de atenção, pendências, rotinas do mês, conciliação e chamados |
 
 Antes de tudo, faça o login (veja o [README](https://github.com/edusouza/ctbz-cli#login)).
 Todos os comandos aceitam `-o table|json|csv`.
