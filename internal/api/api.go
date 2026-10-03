@@ -14,6 +14,12 @@ type Getter interface {
 	GetJSON(ctx context.Context, path string, v any) error
 }
 
+// TextGetter faz um GET autenticado e devolve o corpo como texto, para os poucos
+// endpoints que não respondem JSON (ex.: situação da mensalidade, contrato em HTML).
+type TextGetter interface {
+	GetText(ctx context.Context, path string) (string, error)
+}
+
 // Endpoint liga um caminho ao tipo da resposta, para os testes de contrato.
 type Endpoint struct {
 	// Name identifica a fixture: testdata/<Name>.json.
