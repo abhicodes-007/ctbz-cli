@@ -25,6 +25,7 @@ ctbz impostos [flags]
 
 ## Subcomandos
 
+- [`ctbz impostos baixar`](ctbz_impostos_baixar.md): Baixa o PDF de guias de imposto
 - [`ctbz impostos calculo`](ctbz_impostos_calculo.md): Mostra como o imposto do mês foi calculado
 - [`ctbz impostos guia`](ctbz_impostos_guia.md): Mostra o detalhe de uma guia de imposto
 - [`ctbz impostos tabela-irrf`](ctbz_impostos_tabela-irrf.md): Mostra a tabela progressiva do IRRF usada no cálculo do pró-labore
