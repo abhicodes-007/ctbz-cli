@@ -15,6 +15,9 @@ usa [Versionamento Semântico](https://semver.org/lang/pt-BR/).
   sem expor dados de cartão; `historico` lista as guias pagas e o custo de operação por mês.
 - `ctbz mensalidade situacao`: indica se a empresa está em dia com a Contabilizei
   (`--fail-on-inadimplencia`, código 4).
+- `ctbz plano`: plano contratado (descrição, categoria, valor de tabela e ramos);
+  `contrato` e `proposta` exportam o contrato de serviço e a proposta do plano em HTML ou,
+  com `--texto`, em texto simples.
 
 ## [0.3.0] - 2026-10-03
 

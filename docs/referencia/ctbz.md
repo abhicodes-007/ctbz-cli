@@ -18,6 +18,7 @@ Dados vão para stdout no formato escolhido com -o; mensagens e progresso vão p
 - [`ctbz logout`](ctbz_logout.md): Apaga a sessão local
 - [`ctbz mensalidade`](ctbz_mensalidade.md): Mostra a mensalidade atual da Contabilizei (valor, vencimento e situação)
 - [`ctbz pendencias`](ctbz_pendencias.md): Lista as pendências da empresa (tipo, detalhe, prazo e situação)
+- [`ctbz plano`](ctbz_plano.md): Mostra o plano contratado com a Contabilizei
 - [`ctbz resumo`](ctbz_resumo.md): Mostra numa lista só o que precisa de atenção
 - [`ctbz rotinas`](ctbz_rotinas.md): Lista as rotinas e obrigações do mês (da empresa e da Contabilizei)
 - [`ctbz status`](ctbz_status.md): Mostra a sessão atual e testa se ainda é válida
