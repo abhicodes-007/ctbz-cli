@@ -4,7 +4,9 @@
 //	go run ./tools/capture dadosempresa menu        # chama a API com a sessão do ctbz login
 //	go run ./tools/capture -from resp.json appbar   # anonimiza uma resposta já salva
 //
-// Revise o arquivo gerado antes do commit: a anonimização cobre os campos conhecidos.
+// Revise o arquivo gerado antes do commit: a anonimização cobre os campos conhecidos e,
+// com a sessão do login disponível, os nomes do usuário, da empresa e do sócio responsável
+// em qualquer texto.
 package main
 
 import (
@@ -63,7 +65,7 @@ func capture(name, from, path, dir string, full bool) error {
 			return err
 		}
 	}
-	anon, err := contract.Anonymize(raw)
+	anon, err := contract.Anonymize(raw, nomesDaSessao()...)
 	if err != nil {
 		return err
 	}
@@ -79,6 +81,25 @@ func capture(name, from, path, dir string, full bool) error {
 	}
 	fmt.Println("gravado:", file, "(revise antes do commit)")
 	return nil
+}
+
+// nomesDaSessao junta os nomes pessoais dos dados do login (usuário, empresa, sócio
+// responsável), para que sejam trocados também em textos livres. Sem sessão, nenhum.
+func nomesDaSessao() []string {
+	store, err := ctbz.DefaultStore()
+	if err != nil {
+		return nil
+	}
+	sess, err := store.LoadSession()
+	if err != nil {
+		fmt.Fprintln(os.Stderr, "aviso: sem sessão; nomes pessoais em textos livres não serão trocados")
+		return nil
+	}
+	var nomes []string
+	for _, raw := range sess.Storage {
+		nomes = append(nomes, contract.Nomes(raw)...)
+	}
+	return nomes
 }
 
 func find(name string) (api.Endpoint, bool) {

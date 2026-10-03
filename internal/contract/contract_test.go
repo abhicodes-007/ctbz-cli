@@ -150,6 +150,23 @@ func TestRawMessageNaoVerificado(t *testing.T) {
 	}
 }
 
+func TestAnonymizeNomesConhecidos(t *testing.T) {
+	sessao := `{"nome":"Maria Clara da Silva","empresa":{"razaoSocial":"ACME SOLUCOES LTDA","status":"ATIVO"},"nomeMesX":"Julho"}`
+	nomes := Nomes([]byte(sessao))
+	in := `[{"descricao":"Retirada para sócio - Maria Clara da Silva","conta":"Caixa"},{"historico":"pagamento acme solucoes ltda","status":"ATIVO"}]`
+	out, err := Anonymize([]byte(in), nomes...)
+	if err != nil {
+		t.Fatal(err)
+	}
+	s := string(out)
+	if strings.Contains(s, "Maria Clara") || strings.Contains(strings.ToLower(s), "acme solucoes") {
+		t.Errorf("nome conhecido vazou:\n%s", s)
+	}
+	if !strings.Contains(s, "Retirada para sócio - FULANO DE TAL") || !strings.Contains(s, `"conta": "Caixa"`) {
+		t.Errorf("o resto do texto deveria ficar:\n%s", s)
+	}
+}
+
 func TestPrune(t *testing.T) {
 	in := `{"cnpj":"1","segredo":"x","itens":[{"id":1,"label":"a","cpf":"123"}],"opcional":null,"ativo":true}`
 	out, err := Prune([]byte(in), resposta{})

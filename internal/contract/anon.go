@@ -13,7 +13,11 @@ import (
 // fictícios, mantendo a estrutura e os tipos. É usada para gerar as fixtures de
 // teste a partir de respostas reais. O resultado deve ser revisado antes do commit:
 // as regras cobrem os campos conhecidos, não qualquer texto livre.
-func Anonymize(data []byte) ([]byte, error) {
+//
+// nomes são textos pessoais conhecidos (ex.: nomes do usuário e dos sócios, vindos da
+// sessão; ver Nomes): qualquer ocorrência deles em qualquer texto vira "FULANO DE TAL",
+// o que cobre textos livres como o histórico de um lançamento contábil.
+func Anonymize(data []byte, nomes ...string) ([]byte, error) {
 	dec := json.NewDecoder(bytes.NewReader(data))
 	dec.UseNumber()
 	var doc any
@@ -21,6 +25,11 @@ func Anonymize(data []byte) ([]byte, error) {
 		return nil, err
 	}
 	a := &anonymizer{ids: map[string]string{}}
+	for _, n := range nomes {
+		if n = strings.TrimSpace(n); len([]rune(n)) >= minNome {
+			a.nomes = append(a.nomes, regexp.MustCompile(`(?i)`+regexp.QuoteMeta(n)))
+		}
+	}
 	doc = a.value("", doc, false)
 	var buf bytes.Buffer
 	enc := json.NewEncoder(&buf)
@@ -33,8 +42,41 @@ func Anonymize(data []byte) ([]byte, error) {
 }
 
 type anonymizer struct {
-	ids  map[string]string // ID real → ID fictício (mesmo ID, mesmo substituto)
-	next int64
+	ids   map[string]string // ID real → ID fictício (mesmo ID, mesmo substituto)
+	next  int64
+	nomes []*regexp.Regexp // textos pessoais conhecidos, trocados em qualquer texto
+}
+
+// minNome evita trocar textos curtos demais (ex.: iniciais) que apareceriam por acaso.
+const minNome = 5
+
+// Nomes coleta, de um JSON (ex.: os dados do localStorage gravados no login), os valores
+// das chaves que identificam pessoas ou empresas, para passar a Anonymize.
+func Nomes(data []byte) []string {
+	var doc any
+	if json.Unmarshal(data, &doc) != nil {
+		return nil
+	}
+	var out []string
+	var walk func(key string, v any)
+	walk = func(key string, v any) {
+		switch x := v.(type) {
+		case map[string]any:
+			for k, c := range x {
+				walk(k, c)
+			}
+		case []any:
+			for _, c := range x {
+				walk(key, c)
+			}
+		case string:
+			if keyName.MatchString(key) && !keyNotPersonal.MatchString(key) {
+				out = append(out, x)
+			}
+		}
+	}
+	walk("", doc)
+	return out
 }
 
 var (
@@ -97,6 +139,9 @@ func (a *anonymizer) value(key string, v any, money bool) any {
 }
 
 func (a *anonymizer) text(key, s string) string {
+	for _, n := range a.nomes {
+		s = n.ReplaceAllString(s, "FULANO DE TAL")
+	}
 	switch {
 	case s == "":
 		return s
