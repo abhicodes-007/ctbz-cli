@@ -8,6 +8,7 @@ import (
 	"io"
 	"os"
 	"strings"
+	"sync"
 	"time"
 
 	"github.com/edusouza/ctbz-cli/internal/ctbz"
@@ -28,13 +29,7 @@ func authedAPI(ctx context.Context, s streams, method, path string, body []byte)
 	c := sess.Client()
 	resp, err := c.API(ctx, method, path, bodyReader(body))
 	if errors.Is(err, ctbz.ErrUnauthorized) && os.Getenv("CTBZ_OTP_CMD") != "" {
-		fmt.Fprintln(s.err, "Sessão expirada; refazendo login com CTBZ_OTP_CMD…")
-		sess, err = login(ctx, store, s, loginOpts{
-			otpCmd:     os.Getenv("CTBZ_OTP_CMD"),
-			otpTimeout: envDuration("CTBZ_OTP_TIMEOUT", defaultOTPTimeout),
-			cnpj:       sess.CNPJ,
-			restart:    true,
-		})
+		sess, err = relogin(ctx, store, s, sess)
 		if err != nil {
 			return nil, err
 		}
@@ -46,6 +41,26 @@ func authedAPI(ctx context.Context, s streams, method, path string, body []byte)
 	}
 	saveCookies(store, sess, c, s.err)
 	return resp, nil
+}
+
+// reloginMu garante um único re-login quando várias chamadas em paralelo recebem 401.
+var reloginMu sync.Mutex
+
+// relogin refaz o login de uma sessão expirada. Quem chega depois de outra goroutine já ter
+// refeito o login usa a sessão nova gravada por ela, sem pedir outro OTP.
+func relogin(ctx context.Context, store *ctbz.Store, s streams, expirada *ctbz.Session) (*ctbz.Session, error) {
+	reloginMu.Lock()
+	defer reloginMu.Unlock()
+	if atual, err := store.LoadSession(); err == nil && !atual.CreatedAt.Equal(expirada.CreatedAt) {
+		return atual, nil
+	}
+	fmt.Fprintln(s.err, "Sessão expirada; refazendo login com CTBZ_OTP_CMD…")
+	return login(ctx, store, s, loginOpts{
+		otpCmd:     os.Getenv("CTBZ_OTP_CMD"),
+		otpTimeout: envDuration("CTBZ_OTP_TIMEOUT", defaultOTPTimeout),
+		cnpj:       expirada.CNPJ,
+		restart:    true,
+	})
 }
 
 // getJSON chama um endpoint com GET e decodifica a resposta em v.

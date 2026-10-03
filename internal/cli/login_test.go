@@ -8,7 +8,10 @@ import (
 	"net/http"
 	"net/http/httptest"
 	"net/url"
+	"os"
+	"path/filepath"
 	"strings"
+	"sync"
 	"testing"
 	"time"
 
@@ -18,6 +21,13 @@ import (
 // fakeContabilizei responde com telas mínimas do fluxo real de login.
 func fakeContabilizei(t *testing.T) *httptest.Server {
 	t.Helper()
+	srv := httptest.NewServer(contabilizeiMux())
+	t.Cleanup(srv.Close)
+	return srv
+}
+
+// contabilizeiMux imita as telas de login (usuário/senha, OTP 123456, seleção de empresa).
+func contabilizeiMux() *http.ServeMux {
 	storage := base64.StdEncoding.EncodeToString([]byte(url.PathEscape(
 		`{"email":"fulano@example.com","empresa":{"cnpj":"22222222000122","razaoSocial":"FULANO LTDA"}}`)))
 	mux := http.NewServeMux()
@@ -42,9 +52,7 @@ func fakeContabilizei(t *testing.T) *httptest.Server {
 		http.SetCookie(w, &http.Cookie{Name: "oauth-token", Value: "ok", Path: "/"})
 		io.WriteString(w, `<script>localStorage.setItem("l","`+storage+`");</script>`)
 	})
-	srv := httptest.NewServer(mux)
-	t.Cleanup(srv.Close)
-	return srv
+	return mux
 }
 
 func TestLoginWithOTPCommand(t *testing.T) {
@@ -104,4 +112,49 @@ func TestLoginPendingThenResume(t *testing.T) {
 
 func testStreams() streams {
 	return streams{in: strings.NewReader(""), out: io.Discard, err: io.Discard}
+}
+
+func TestReloginUnicoComChamadasEmParalelo(t *testing.T) {
+	mux := contabilizeiMux()
+	mux.HandleFunc("/api/plataforma/", func(w http.ResponseWriter, r *http.Request) {
+		if c, err := r.Cookie("oauth-token"); err != nil || c.Value != "ok" {
+			w.WriteHeader(http.StatusUnauthorized)
+			return
+		}
+		io.WriteString(w, `{}`)
+	})
+	srv := httptest.NewServer(mux)
+	t.Cleanup(srv.Close)
+	withSession(t, srv) // sessão sem cookies: toda chamada recebe 401 até o re-login
+	store := &ctbz.Store{Dir: os.Getenv("CTBZ_HOME")}
+	sess, err := store.LoadSession()
+	if err != nil {
+		t.Fatal(err)
+	}
+	sess.CNPJ = "22222222000122" // o re-login escolhe a mesma empresa
+	if err := store.SaveSession(sess); err != nil {
+		t.Fatal(err)
+	}
+	t.Setenv("CTBZ_BASE_URL", srv.URL)
+	t.Setenv("CTBZ_USER", "00000000000")
+	t.Setenv("CTBZ_PASSWORD", "x")
+	execucoes := filepath.Join(t.TempDir(), "otp")
+	t.Setenv("CTBZ_OTP_CMD", "echo >> "+execucoes+"; echo 123456")
+
+	var wg sync.WaitGroup
+	for range 5 {
+		wg.Add(1)
+		go func() {
+			defer wg.Done()
+			var v map[string]any
+			if err := getJSON(context.Background(), testStreams(), "appbar/get", &v); err != nil {
+				t.Error(err)
+			}
+		}()
+	}
+	wg.Wait()
+	data, _ := os.ReadFile(execucoes)
+	if n := strings.Count(string(data), "\n"); n != 1 {
+		t.Errorf("CTBZ_OTP_CMD rodou %d vezes, quero 1 (um único re-login)", n)
+	}
 }
