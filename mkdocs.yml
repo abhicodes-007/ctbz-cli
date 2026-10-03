@@ -1,0 +1,77 @@
+site_name: ctbz — CLI para a Contabilizei
+site_description: Opere a Contabilizei pela linha de comando.
+repo_url: https://github.com/edusouza/ctbz-cli
+edit_uri: edit/main/docs/
+docs_dir: docs
+not_in_nav: |
+  adr/template.md
+  referencia/ctbz*.md
+
+theme:
+  name: material
+  language: pt-BR
+  features:
+    - navigation.sections
+    - content.code.copy
+
+markdown_extensions:
+  - admonition
+  - tables
+  - toc:
+      permalink: true
+  - pymdownx.superfences:
+      custom_fences:
+        - name: mermaid
+          class: mermaid
+          format: !!python/name:pymdownx.superfences.fence_code_format
+
+nav:
+  - Início: README.md
+  - Guia de uso:
+      - Visão geral: guia/README.md
+      - Impostos: guia/impostos.md
+      - Pendências, rotinas e atendimento: guia/pendencias.md
+      - Mensalidade e pagamentos: guia/mensalidade.md
+      - Notas fiscais: guia/notas.md
+      - Pró-labore e lucros: guia/prolabore.md
+      - Contabilidade: guia/contabil.md
+      - Documentos e certificado: guia/documentos.md
+  - Referência de comandos: referencia/README.md
+  - Autenticação:
+      - Visão geral: autenticacao/README.md
+      - Credenciais: autenticacao/01-credenciais.md
+      - Código OTP: autenticacao/02-otp.md
+      - Seleção de empresa: autenticacao/03-selecao-de-empresa.md
+      - Sessão e cookies: autenticacao/04-sessao-e-cookies.md
+  - OTP automático: otp-automatico/README.md
+  - API:
+      - Visão geral: api/README.md
+      - Endpoints verificados: api/endpoints-verificados.md
+      - Catálogo: api/catalogo.md
+      - Notas fiscais: api/notas-fiscais.md
+  - Front-end: frontend/README.md
+  - Desenvolvimento:
+      - Arquitetura da CLI: cli/README.md
+      - Testes de contrato: contratos.md
+      - Monitoramento da API: monitoramento.md
+      - Contribuindo: contribuindo.md
+      - Metodologia: metodologia/README.md
+  - Decisões (ADRs):
+      - Índice: adr/README.md
+      - "0001 Registrar decisões": adr/0001-registrar-decisoes-em-adrs.md
+      - "0002 Somente leitura": adr/0002-somente-leitura-ate-1-0.md
+      - "0003 Versionamento": adr/0003-versionamento-e-changelog.md
+      - "0004 Branches e PRs": adr/0004-branches-empilhadas-e-prs-por-issue.md
+      - "0005 Documentação": adr/0005-documentacao-em-github-pages.md
+      - "0006 Saída padronizada": adr/0006-saida-padronizada.md
+      - "0007 Login e sessão": adr/0007-login-sessao-e-otp.md
+      - "0008 Cobra": adr/0008-cobra-para-a-arvore-de-comandos.md
+      - "0009 Camada api": adr/0009-camada-api-tipada.md
+      - "0010 Contratos": adr/0010-testes-de-contrato.md
+      - "0011 Fixtures podadas": adr/0011-fixtures-podadas-ao-contrato.md
+      - "0012 Prazos e alertas": adr/0012-prazos-e-alertas.md
+      - "0013 Sem retentativa": adr/0013-sem-retentativa-com-fonte-alternativa.md
+      - "0014 CI": adr/0014-ci-no-github-actions.md
+      - "0015 Releases": adr/0015-releases-com-goreleaser.md
+      - "0016 Monitoramento": adr/0016-monitoramento-agendado.md
+      - "0017 Contrato da 1.0": adr/0017-contrato-publico-da-1-0.md

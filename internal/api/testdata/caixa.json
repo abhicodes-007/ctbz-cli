@@ -1,0 +1,15 @@
+{
+  "list": [
+    {
+      "confirmadoViaSistema": true,
+      "data": 1789732800000,
+      "descricao": "Pagamento Contabilizei - Mensalidade da competência Setembro/2026",
+      "id": 1000000000000001,
+      "idContaUsuario": 1000000000000002,
+      "situacao": "CONFIRMADO",
+      "tipo": "CAIXA",
+      "valor": 1234.56
+    }
+  ],
+  "total": 1
+}

@@ -1,0 +1,30 @@
+[
+  {
+    "dataCriacao": 1784665522412,
+    "dataLimite": "21/07/2026",
+    "detalhe": "<texto omitido>",
+    "id": 1000000000000001,
+    "situacaoPendencia": {
+      "descricao": "Pendente",
+      "id": "PENDENTE"
+    },
+    "tipoPendencia": {
+      "codigo": 43,
+      "titulo": "Cadastre o PIS para ativar o pró-labore automático"
+    }
+  },
+  {
+    "dataCriacao": 1786371353621,
+    "dataLimite": "25/08/2026",
+    "detalhe": "<texto omitido>",
+    "id": 1000000000000002,
+    "situacaoPendencia": {
+      "descricao": "Finalizada",
+      "id": "FINALIZADO"
+    },
+    "tipoPendencia": {
+      "codigo": 44,
+      "titulo": "Termo de Ciência e Responsabilidade"
+    }
+  }
+]

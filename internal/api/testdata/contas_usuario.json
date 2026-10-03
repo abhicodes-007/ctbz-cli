@@ -1,0 +1,23 @@
+[
+  {
+    "classificacao": "DESPESA",
+    "descricao": "Devolução Adiantamento de Clientes",
+    "descricaoContaContabil": "Adiantamentos de Clientes",
+    "id": 1000000000000001,
+    "situacao": "INATIVO"
+  },
+  {
+    "classificacao": "DESPESA",
+    "descricao": "Assistência Odontológica",
+    "descricaoContaContabil": "Assistência Médica, Odontológica e Farmacêutica a Empregados",
+    "id": 1000000000000002,
+    "situacao": "INATIVO"
+  },
+  {
+    "classificacao": "DESPESA",
+    "descricao": "Indenizações com Processos Judiciais",
+    "descricaoContaContabil": "Indenizações com Processos Judiciais",
+    "id": 1000000000000003,
+    "situacao": "ATIVO"
+  }
+]

@@ -118,6 +118,65 @@ func TestFormatBRL(t *testing.T) {
 	}
 }
 
+func TestParseBRL(t *testing.T) {
+	for in, want := range map[string]Money{"R$ 1.621,00": 1621, "R$ 932,31": 932.31, "-R$ 0,50": -0.5, "1.234.567,89": 1234567.89, " R$ 0,00 ": 0} {
+		if got, ok := ParseBRL(in); !ok || got != want {
+			t.Errorf("ParseBRL(%q) = %v, %v; quero %v", in, got, ok, want)
+		}
+	}
+	for _, in := range []string{"", "R$", "abc", "R$ x,00"} {
+		if _, ok := ParseBRL(in); ok {
+			t.Errorf("ParseBRL(%q) deveria falhar", in)
+		}
+	}
+	// ida e volta com FormatBRL
+	if got, _ := ParseBRL(FormatBRL(-1234.5)); got != -1234.5 {
+		t.Errorf("ida e volta: %v", got)
+	}
+}
+
+func TestCPF(t *testing.T) {
+	c := NewCPF("123.456.789-01")
+	if c != "12345678901" || FormatCPF(c) != "123.456.789-01" || cellText(c, FormatCSV) != "12345678901" {
+		t.Errorf("CPF: %q %q", c, FormatCPF(c))
+	}
+	if raw, _ := marshal(CPF("")); string(raw) != "null" {
+		t.Errorf("CPF vazio em JSON = %s", raw)
+	}
+}
+
+func TestText(t *testing.T) {
+	longo := Text(strings.Repeat("á", 70) + " <fim>")
+	if got := cellText(longo, FormatTable); len([]rune(got)) != textMax || !strings.HasSuffix(got, "…") {
+		t.Errorf("tabela: %q", got)
+	}
+	if got := cellText(longo, FormatCSV); got != string(longo) {
+		t.Errorf("CSV deveria trazer o texto completo: %q", got)
+	}
+	if raw, _ := marshal(longo); !strings.HasSuffix(string(raw), ` <fim>"`) {
+		t.Errorf("JSON deveria trazer o texto completo, sem escapar <>: %s", raw)
+	}
+	if raw, _ := marshal(Text("")); string(raw) != "null" {
+		t.Errorf("Text vazio em JSON = %s", raw)
+	}
+}
+
+func TestIndent(t *testing.T) {
+	v := Indent{Level: 3, Text: "Caixa"}
+	if got := cellText(v, FormatTable); got != "    Caixa" {
+		t.Errorf("tabela: %q", got)
+	}
+	if got := cellText(v, FormatCSV); got != "Caixa" {
+		t.Errorf("CSV: %q", got)
+	}
+	if raw, _ := marshal(v); string(raw) != `"Caixa"` {
+		t.Errorf("JSON: %s", raw)
+	}
+	if got := cellText(Indent{Text: "ATIVO"}, FormatTable); got != "ATIVO" {
+		t.Errorf("nível zero: %q", got)
+	}
+}
+
 func TestParseFormat(t *testing.T) {
 	for _, s := range []string{"table", "JSON", " csv "} {
 		if _, err := ParseFormat(s); err != nil {

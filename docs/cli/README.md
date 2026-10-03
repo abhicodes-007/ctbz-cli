@@ -1,15 +1,26 @@
 # CLI (`ctbz`)
 
-Uso e instalação estão no [README principal](../../README.md). Aqui fica o funcionamento
+Uso e instalação estão no [README principal](https://github.com/edusouza/ctbz-cli/blob/main/README.md). Aqui fica o funcionamento
 interno.
 
 ## Estrutura
 
 ```text
 cmd/ctbz/
-  main.go        subcomandos (status, empresa, api, logout), re-login automático
-  output.go      flags -o/--output (global e por comando) e precedência de formato
-  login.go       orquestração do login: retomada, fontes de OTP, escolha de empresa
+  main.go        só chama cli.Execute (versão injetada por -ldflags)
+internal/cli/
+  root.go        árvore Cobra, flag global -o, códigos de saída, ajuda em português
+  login.go       comando login: retomada, fontes de OTP, escolha de empresa
+  session.go     chamadas autenticadas (re-login automático), dados da sessão
+  status.go, empresa.go, api.go, logout.go, version.go   um arquivo por comando
+  docs.go        gerador da referência de comandos (docs/referencia)
+internal/api/
+  api.go         Getter/TextGetter, registro de endpoints (Endpoints) para os contratos
+  empresa.go     caminhos, tipos de resposta e BuscarXxx de um contexto
+  testdata/      fixtures anonimizadas (go run ./tools/capture)
+internal/contract/
+  contract.go    verificação de contrato por reflexão (removido, tipo mudou, novo)
+  anon.go        anonimização das fixtures
 internal/ctbz/
   client.go      HTTP: cookies manuais, redirecionamentos manuais, API(), erros
   login.go       etapas do login e parsers de HTML/localStorage
@@ -21,14 +32,31 @@ internal/output/
   values.go      tipos de valor (Money, Date, DateTime, CNPJ) e formatação por formato
   render.go      renderizadores: tabela alinhada, JSON ordenado, CSV
   fromjson.go    JSON arbitrário → List/Record (ordem dos campos e números preservados)
+tools/gendocs/   regenera docs/referencia
+tools/releasenotes/  notas da release a partir do CHANGELOG.md
+tools/capture/   grava fixtures anonimizadas para os contratos
 scripts/
   otp-gmail-gws.sh       OTP a partir do Gmail (gws)
   extrair-endpoints.py   gera docs/api/catalogo.md
+  monitorar.sh           contratos ao vivo + catálogo (job de monitoramento)
 ```
 
-Só biblioteca padrão, mais `golang.org/x/term` (detectar terminal). A versão de
-`x/term` está fixada em `v0.30.0` para manter o mínimo em Go 1.24; versões mais novas
-exigem Go 1.26.
+Dependências: [Cobra](https://github.com/spf13/cobra) para a árvore de comandos
+([ADR-0008](../adr/0008-cobra-para-a-arvore-de-comandos.md)) e `golang.org/x/term` para
+detectar terminal. A versão de `x/term` está fixada em `v0.30.0` para manter o mínimo em
+Go 1.24; versões mais novas exigem Go 1.26.
+
+## Como adicionar um comando
+
+1. Criar `internal/cli/<comando>.go` com `func newXxxCmd() *cobra.Command` e registrá-lo em
+   `NewRootCmd` (ou no comando pai).
+2. `Short` curto no imperativo/descritivo, `Long` e `Example` em português.
+3. Ler a API com uma função de `internal/api` (`api.BuscarXxx(ctx, sessionGetter{s})`,
+   ver [Testes de contrato](../contratos.md)) e montar um `output.Record`
+   ou `output.List` ([ADR-0006](../adr/0006-saida-padronizada.md)); escrever com
+   `output.Write(s.out, formato, dados)`, formato vindo de `outputFormat(cmd, "")`.
+4. Testes com `execCLI` e `fakeAPI` (ver `internal/cli/output_test.go`).
+5. `go run ./tools/gendocs` e entrada no `CHANGELOG.md`.
 
 ## Máquina de estados do login
 
@@ -47,7 +75,7 @@ empresas) é serializável. Sempre que falta uma entrada (OTP ou CNPJ) e não h�
 nem `CTBZ_OTP_CMD`, o estado vai para `pending.json` e o processo sai com código 3. A
 próxima chamada com `--otp` ou `--cnpj` retoma do ponto exato, com os mesmos cookies.
 
-Regras de retomada (`cmd/ctbz/login.go`):
+Regras de retomada (`internal/cli/login.go`):
 
 - `--otp N` só faz sentido retomando: sem login pendente, é erro (o código pertence ao
   login que o gerou).
@@ -87,7 +115,11 @@ As credenciais (`CTBZ_USER`, `CTBZ_PASSWORD`) nunca são gravadas.
 - **`url.PathUnescape`** para o `localStorage`, que vem de `encodeURIComponent`
   (`QueryUnescape` trocaria `+` por espaço).
 - **Re-login automático** só com `CTBZ_OTP_CMD`: sem ele, um 401 vira erro com
-  instrução, em vez de pedir um OTP no meio de outro comando.
+  instrução, em vez de pedir um OTP no meio de outro comando. Com chamadas em paralelo
+  (`ctbz resumo`), só a primeira que recebe 401 refaz o login; as outras esperam e usam a
+  sessão nova (um único e-mail de OTP).
+- **Gravação atômica com temporário próprio** (`os.CreateTemp` + `rename`): gravações
+  simultâneas da sessão nunca misturam conteúdo.
 
 ## Saída
 
@@ -95,9 +127,11 @@ Todos os comandos montam os dados como `output.List` (várias linhas) ou `output
 (um registro) e chamam `output.Write(os.Stdout, formato, dados)`. Assim, um comando novo
 ganha os três formatos sem código extra.
 
-- **Tipos de valor**: use `output.Money`, `output.Date`, `output.DateTime` e `output.CNPJ` em
-  vez de strings formatadas. Cada formato decide a apresentação (ex.: `Money` vira
-  `R$ 1.234,56` na tabela e `1234.56` no JSON/CSV).
+- **Tipos de valor**: use `output.Money`, `output.Date`, `output.DateTime`, `output.CNPJ`,
+  `output.CPF`, `output.Text` e `output.Indent` em vez de strings formatadas. Cada formato decide a apresentação
+  (ex.: `Money` vira `R$ 1.234,56` na tabela e `1234.56` no JSON/CSV; `Text`, para descrições
+  longas, é cortado em 60 caracteres só na tabela; `Indent`, para árvores como o plano de
+  contas, é recuado só na tabela).
 - **Chaves** (`Key`) em `snake_case` português sem acento (`razao_social`), estáveis entre
   versões: são o contrato com scripts. **Rótulos** (`Label`/`Header`) são livres.
 - **Precedência do formato**: `-o` antes do comando > `-o` do comando > `CTBZ_OUTPUT` >
@@ -118,8 +152,9 @@ ganha os três formatos sem código extra.
 |---|---|
 | 0 | sucesso |
 | 1 | erro (inclui HTTP ≥ 400 no `ctbz api`, que ainda imprime o corpo) |
-| 2 | uso incorreto (comando desconhecido, sem argumentos) |
+| 2 | uso incorreto (comando ou flag desconhecidos, argumentos faltando, formato inválido) |
 | 3 | login pendente: falta OTP ou CNPJ |
+| 4 | atenção: o comando funcionou, mas há algo pendente (ex.: `impostos --fail-on-atraso` com guias em atraso) |
 
 ## Testes
 
@@ -132,8 +167,10 @@ go test ./...
   `localStorage` com acentos e símbolos, 401 sem cookies.
 - `internal/output`: golden files dos três formatos (lista, registro, JSON arbitrário e
   aninhado), formatação de reais, zero negativo, listas vazias.
-- `cmd/ctbz`: precedência de `-o`/`CTBZ_OUTPUT`, `--json` como atalho, stdout só com dados.
+- `internal/cli`: execução da árvore real (`execCLI`) com API simulada (`fakeAPI`):
+  precedência de `-o`/`CTBZ_OUTPUT`, `--json` como atalho, stdout só com dados, códigos
+  de saída, ajuda em português e referência de comandos atualizada.
 - `internal/otp`: extração do código, polling com falhas seguidas de sucesso, timeout
   preservando o último erro útil, prompt.
-- `cmd/ctbz`: fluxo completo com `--otp-cmd` e fluxo em etapas (pendente → `--otp` →
+- `internal/cli` (login): fluxo completo com `--otp-cmd` e fluxo em etapas (pendente → `--otp` →
   pendente → `--cnpj`).

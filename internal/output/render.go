@@ -74,7 +74,19 @@ func marshal(v any) ([]byte, error) {
 			return []byte("null"), nil
 		}
 		return json.Marshal(x.Format(time.RFC3339))
+	case Text:
+		if x == "" {
+			return []byte("null"), nil
+		}
+		return marshalString(string(x))
+	case Indent:
+		return marshalString(x.Text)
 	case CNPJ:
+		if x == "" {
+			return []byte("null"), nil
+		}
+		return json.Marshal(string(x))
+	case CPF:
 		if x == "" {
 			return []byte("null"), nil
 		}

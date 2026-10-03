@@ -62,6 +62,24 @@ O conteúdo de `l`, `r` e `e` está descrito em [04-sessao-e-cookies.md](04-sess
 
 ## Trocar de empresa
 
-Não foi encontrado endpoint para trocar de empresa sem refazer o login. O painel exibe
-`dadosempresa/get → empresas[]`, mas a troca não foi investigada. Hoje, trocar exige
-novo login com outro `--cnpj` (e um novo OTP).
+O seletor de empresas do painel não usa uma chamada de API: ele navega para
+
+```http
+GET /api/public/requestselecaoempresa?redirect=/&cnpj=22222222000122
+```
+
+que responde `302` para um **host de SSO separado**:
+
+```http
+Location: https://sso.contabilizei.com/selecionarempresa?token=<token>&cnpj=22222222000122
+```
+
+O SSO tem sessão própria (cookie `JSESSIONID` em `sso.contabilizei.com`), que a CLI não tem:
+o login da CLI acontece em `app.contabilizei.com.br`. Sem essa sessão, o SSO devolve a tela de
+login (verificado em 03/10/2026, pedindo a troca para a própria empresa atual; a sessão antiga
+continuou válida).
+
+Por isso `ctbz empresa usar CNPJ` troca de empresa **refazendo o login** com `--cnpj`, o que
+envia um novo código OTP. Com `CTBZ_OTP_CMD` definido, a troca é automática.
+
+A lista de empresas para escolher vem de `dadosempresa/get → empresas[]` (`ctbz empresas`).

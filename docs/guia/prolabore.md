@@ -1,0 +1,131 @@
+# Pró-labore e lucros
+
+## Pró-labore vigente
+
+```sh
+ctbz prolabore
+```
+
+```text
+Gerenciamento:  INTELIGENTE
+Total:          R$ 1.621,00
+Calculando:     não
+Indisponível:   não
+Sócios:
+  Nome           CPF                   Valor  Recebe pró-labore  Responsável na Receita  Gestão       Atualizado em  Dependentes
+  FULANO DE TAL  000.000.000-00  R$ 1.621,00  sim                sim                     INTELIGENTE  01/09/2026               2
+```
+
+- **Gerenciamento** `INTELIGENTE` significa que a Contabilizei calcula todo mês o pró-labore
+  que leva ao menor imposto (inclusive o Fator R).
+- O valor e as competências do card do painel (`valor_card`, `competencia_atual`,
+  `competencia_anterior`) aparecem quando a Contabilizei já calculou o mês.
+- Em JSON, os sócios vêm em `socios`; em CSV, a lista de sócios sai como JSON na célula.
+
+## Histórico
+
+```sh
+ctbz prolabore historico               # todos os sócios, todo o histórico
+ctbz prolabore historico --ano 2026
+ctbz prolabore historico --socio ID    # ID de "ctbz prolabore -o json"
+```
+
+```text
+Competência  Sócio          Pró-labore  Descontos
+07/2026      FULANO DE TAL  R$ 1.621,00  R$ 178,31
+```
+
+A API devolve o histórico inteiro de um sócio de uma vez (não aceita ano nem página); a CLI
+consulta cada sócio e filtra por `--ano`. Os descontos são o INSS e o IRRF retidos.
+
+## Parâmetros de cálculo
+
+```sh
+ctbz prolabore parametros
+```
+
+```text
+Salário mínimo:               R$ 1.621,00
+Alíquota do INSS (%):         11
+Contribuição máxima ao INSS:  R$ 932,31
+Pró-labore no teto do INSS:   R$ 8.475,55
+IRRF a partir de:             R$ 5.000,00
+```
+
+- O pró-labore não pode ser menor que o salário mínimo.
+- O sócio contribui com 11% de INSS até o teto; acima do pró-labore no teto, a contribuição
+  não aumenta.
+- Abaixo do valor de incidência, não há IRRF retido.
+
+## Fator R
+
+```sh
+ctbz prolabore fator-r
+```
+
+```text
+Motor do Fator R:      sim
+Fator R (%):           28.75
+Pró-labore 12 meses:   R$ 27.600,00
+Faturamento 12 meses:  R$ 96.000,00
+Simulador:             DISPONIVEL
+Atividades:
+  CNAE       Atividade                                       Anexos    Alíquotas                                     Anexo fixo
+  6311-90/0  Tratamento de dados, provedores de serviços d…  V ou III  Alíquota inicial de 6% ou 15,5%; Alíquota 6%  sim
+```
+
+- **Fator R** = pró-labore ÷ faturamento dos últimos 12 meses. A partir de 28%, as atividades
+  sujeitas a ele saem do Anexo V (alíquota inicial de 15,5%) para o Anexo III (6%).
+- **Motor do Fator R** indica que a Contabilizei ajusta o pró-labore todo mês para manter o
+  Fator R no melhor ponto.
+- `anexos` mostra em quais anexos cada atividade pode ser tributada; `anexo_fixo` diz se
+  alguma delas não depende do Fator R.
+- O simulador do painel é só consultado: simular cenários continua sendo feito por lá.
+
+## Distribuição de lucros
+
+```sh
+ctbz lucros
+```
+
+```text
+Exercício:               2025
+Saldo na empresa:        R$ 5.000,00
+Total distribuído:       R$ 3.000,00
+Adiantamentos:           R$ 0,00
+Limite para distribuir:  R$ 8.000,00
+Exercício fechado:       sim
+Pode alterar:            não
+Data limite:             31/03/2026
+Pendência documental:    não
+Débitos federais:        não
+Reabertura do balanço:   NENHUM
+Por sócio:
+  Sócio          Valor
+  FULANO DE TAL  R$ 3.000,00
+```
+
+- O exercício é o que a Contabilizei tem aberto para distribuição; a API não aceita outro
+  ano. Sem exercício aberto, as restrições mostradas são as do ano anterior (como no painel).
+- **Restrições**: pendências documentais e débitos federais impedem o informe de
+  rendimentos; `reabertura_balanco` mostra se há um pedido de reabertura do balanço em
+  andamento.
+- Distribuir ou alterar os valores continua sendo feito pelo painel.
+
+## Informe de rendimentos dos sócios
+
+```sh
+ctbz lucros informe              # ano anterior (o da declaração de IR)
+ctbz lucros informe --ano 2025 -o csv > informe-2025.csv
+```
+
+```text
+Ano   Sócio          CPF             Rendimentos tributáveis  Previdência (INSS)  IRRF retido  13º salário  IRRF sobre o 13º  Lucros isentos
+2025  FULANO DE TAL  000.000.000-00              R$ 19.452,00          R$ 2.139,72      R$ 0,00      R$ 0,00           R$ 0,00    R$ 50.000,00
+```
+
+- São os valores do comprovante de rendimentos que cada sócio usa na declaração de IR:
+  rendimentos tributáveis (pró-labore), INSS, IRRF, 13º e lucros isentos.
+- O painel monta o PDF do comprovante no navegador a partir desses valores; a API não
+  oferece o PDF, por isso a CLI entrega os números (use `-o csv` ou `-o json` para guardar).
+- O formato vem do código do painel: a conta usada no desenvolvimento não tinha informes.

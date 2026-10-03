@@ -18,6 +18,9 @@ Legenda: ✅ 200 · ⚠️ responde, mas precisa de parâmetro ou não está lib
 | `appshell/get` | ✅ | `alerta` |
 | `contrato/buscarContratoServico` | ✅ | `html, versao, idHistoricoContrato`: texto do contrato de serviço |
 | `empresa/dadosacesso/init` | ⚠️ 403 | `{"message": …}` |
+| `/api/legado/socio/list` | ✅ | lista de sócios: `id, nome, cpf, administrador, responsavelReceita, possuiProLabore, salarioBase, dataAdmissao, categoria{descricao}, situacaoColaborador{descricao}` e ~90 outros campos pessoais — usado por `ctbz empresa socios` |
+| `/api/legado/notafiscal/cnaeanexosmultiplos/list` | ✅ | CNAEs: `cnae{codigo, descricao, tipoRamoAtividade}, anexos[{codTabelaSimples, ativo, principal}]` — usado por `ctbz empresa atividades` |
+| `/api/public/requestselecaoempresa?redirect=/&cnpj=` | ⚠️ 302 | redireciona para o SSO (`sso.contabilizei.com/selecionarempresa`), que exige sessão própria (ver [seleção de empresa](../autenticacao/03-selecao-de-empresa.md#trocar-de-empresa)) |
 
 ## Dashboard (tela inicial)
 
@@ -28,7 +31,7 @@ Legenda: ✅ 200 · ⚠️ responde, mas precisa de parâmetro ou não está lib
 | `dashboard/situacao-app` | ✅ | `elegivel, cadastroFinalizado, companyInfo{cnpj, cpf, cadastroStatus}, tipoPerfil, variacaoBannerCbank` |
 | `dashboard/fatura` | ✅ | `total, vencimento, competencia, status, label, possuiCartaoPrincipal, botaoAcao…`: mensalidade da Contabilizei |
 | `dashboard/v1/mensalidade` | ✅ | `status, plano, valor, dataVencimento, competenciaAnteriorAtrasada…` |
-| `dashboard/rotinas-mensais` | ✅ | `cardInfo` |
+| `dashboard/rotinas-mensais` | ✅ | `cardInfo[{ramoAtividade, descricaoPerfilEmissao, urlPerfilEmissao, urlConsultaNota}]`: só atalhos de emissão de nota, não rotinas |
 | `dashboard/v2/central-rotinas` | ✅ | `tipoExibicao, tipoPendencia, pendencias, rotinas, rotinasContabilizei` |
 | `dashboard/prolabore` | ✅ | `valorProlabore, competenciaAtual, competenciaAnterior, calculando, sociedade…` |
 | `dashboard/card-certificado` | ✅ | `tipoCard, prazo, certificadoVencido, prazoFinalizado, temEmissor` |
@@ -41,16 +44,22 @@ Legenda: ✅ 200 · ⚠️ responde, mas precisa de parâmetro ou não está lib
 |---|---|---|
 | `impostos/v5/impostos-a-pagar/guias` | ✅ | `emAtraso[], esteMes[], proximoMes[]`; cada guia: `id, nome{label}, origem, tipo, identificadorImposto, vencimento, vencimentoOriginal, valor{label}, competencia, status{label}, acaoBotao, pendencias[]` |
 | `impostos/v5/impostos-a-pagar/guia/{id}` | ✅ | `id, origem, tipo, identificadorImposto, vencimento, valorTotal, valorEstimado, valorOriginal, valorJurosEMulta, valorEmAtraso, oraculo, banner…` |
-| `impostos/v3/impostos-a-pagar/guia/{id}/baixar-guia` | ✅ | `url`: link para o PDF da guia (DAS etc.) |
+| `impostos/v3/impostos-a-pagar/guia/{id}/baixar-guia` | ✅ | `url`: URL assinada do Google Cloud Storage (expira) que devolve o PDF da guia sem cookies — usado por `ctbz impostos baixar`. Para parcelas: `parcela/{id}/baixar-parcela` |
 | `impostos/v5/impostos-a-pagar/init` | ✅ | `podeGerenciarDebitoAutomatico, exibirComoMeuImpostoFoiCalculado, exibirMemoriaDeCalculo, dadosMemoriaDeCalculo` |
 | `impostos/v5/impostos-a-pagar/banners` | ✅ | `banners` |
 | `impostos/v5/historico-impostos/guias` | ✅ | `impostos` |
 | `impostos/v5/historico-impostos/anos-vigentes` | ✅ | lista de anos |
 | `impostos/v5/historico-impostos/faturamento-mensal` | ✅ | `faturamentoMensal` |
+| `impostos/v5/historico-impostos/dados-grafico?ano=AAAA` | ✅ | `meses{"1".."12": {totalPago}}` — usado por `ctbz impostos faturamento` |
 | `impostos/v2/historico-impostos/init` | ✅ | `emDia, quantidadeGuiasVencidas` |
-| `impostos/v2/historico-impostos/guias?pagina=1` | ✅ | `paginaAtual, totalPaginas, competencias`; aceita também `status`, `mes`, `ano` |
+| `impostos/v2/historico-impostos/guias?pagina=1` | ✅ | `paginaAtual, totalPaginas, competencias[{competencia, guias[{id, imposto, impostoDescricao, competencia{mes,ano}, dataVencimento, valorPrincipal, valorPago, status, tipo, codigoBarras…}]}]`; aceita `status`, `mes` (1–12), `ano` — usado por `ctbz impostos historico` |
 | `impostos/v2/historico-impostos/guias` (sem `pagina`) | ❌ 560 | `{identificador, detalhe, dataHora}` |
-| `impostos/rollout` | ✅ | `versao` |
+| `impostos/como-imposto-foi-calculado/init` | ✅ | `nomeMesCompetencia, faturamentoTotal, dasSimples{…}, darf{inss{…}, irrf{…}, total}, valorFaturamentoUltimos12Meses, valorProlaboreUltimos12Meses, percentualFatorR, historicoFaturamento[{mes, valorFaturamento, valorProlabore}]` — usado por `ctbz impostos calculo` |
+| `impostos/como-imposto-foi-calculado/tabela-irrf` | ✅ | lista `{baseCalculo, aliquota, deducao}` em texto (ex.: `"7,5%"`) |
+| `impostos/rollout` | ✅ | `versao` (`v3`, `v4` ou `v5`; a conta testada usa `v5`) |
+| `impostos/v3/impostos-a-pagar/init` (também `v4`) | ✅ | `abaParcelamentos{emAndamento[], ativos[], historico[]}`, `impostos[]`, `abaEsteMes`, `abaEmAtraso`… — responde mesmo com rollout `v5`; usado por `ctbz impostos parcelamentos` |
+| `impostos/parcelamento/negociacao-automatica/{tipo}/init` | ❌ 560 | "Empresa não possui guias para simulação" (sem dívidas) |
+| `impostos/parcelamento/banner-oferta-parcelamento` | ✅ 204 | sem conteúdo |
 | `impostos/` · `impostos/impostos-a-pagar/` · `impostos/parcelamentos` | ❌ 404 | não são rotas de API |
 
 Fluxo para baixar as guias do mês:
@@ -72,6 +81,7 @@ ctbz api impostos/v3/impostos-a-pagar/guia/<id>/baixar-guia | jq -r .url
 | `contabancaria/list` | ✅ | `bancos, contasBancarias, processandoCtbzBank` |
 | `informerendimento/recuperardadosdistribuicaocliente` | ✅ | `ano, saldo, totalDistribuido, totalAdiantamentos, exercicioFechado, lucrosSocios, dataLimite…`: distribuição de lucros |
 | `conciliacao-fiscal/v2/init` | ✅ | `qtdNotasFiscaisPendentes, qtdRecebimentosPendentes, qtdConciliacoesAutomaticasMesAnterior…` |
+| `conciliacao-fiscal/v2/pendencias?pagina&totalPagina&status&tipoPendencia&periodoInicial&periodoFinal` | ✅ | `{pagina[], totalRegistros, totalPaginas}`; itens não vistos (conta sem pendências) |
 | `simulador-impostos-avancado/init` | ✅ | `disponibilidade, atividades, primeiroCiclo, motorFatorR…` |
 
 ## Pró-labore
@@ -86,23 +96,27 @@ ctbz api impostos/v3/impostos-a-pagar/guia/<id>/baixar-guia | jq -r .url
 | Caminho | | Resposta |
 |---|---|---|
 | `novo-emissor/listagem/init` | ✅ | `certificadoDigital, hasInstability, user, endereco, permiteEmissaoExterior, emissorEnabled…` |
-| `novo-emissor/listagem/notas` | ✅ | lista de notas emitidas |
+| `novo-emissor/listagem/notas` | ✅ | lista de notas emitidas (v1, usada só com a feature flag desligada) |
+| `novo-emissor/v2/listagem/notas/filtro?pagina&limite&ano&mes[&nomeTomador\|documento\|numeroNota=]` | ✅ | `{list[], total}`; usada pelo `ctbz notas` |
 | `novo-emissor/tomadores/init` | ✅ | `emissaoSemTomador, tomadores, permiteEmissaoExterior` |
+| `novo-emissor/clientes/consulta/{cnpj}` | ✅ | cadastro na Receita: `cnpj, razaoSocial, nomeFantasia, dataAbertura, atividadePrincipal, naturezaJuridica, situacaoCadastral, optanteSimples, endereço, socios…` |
 | `novo-emissor/v2/versao-emissor` | ✅ | `versaoNovoEmissor` |
+| `/api/emissor/notasentrada/listar/{0\|1}?mes&ano&empresa&qtdPagina&cursor` | ✅ | `{list[], total, cursor, serializedList}`: notas de entrada a manifestar (0) e manifestadas (1) |
+| `/api/emissor/classificacaonotas/listar/?mes&ano&empresa&tipo&limite&cursor&offset` | ✅ | mesmo formato: a classificar (`tipo=0`) e classificadas (`tipo=1`) |
 | `notafiscal/listaliquotaatividade` | ✅ | `regimeTributario, temCodigoServicoItemServico, interno, externo` |
 
 ## Certificado digital, documentos, pagamentos e atendimento
 
 | Caminho | | Resposta |
 |---|---|---|
-| `certificado/status` | ✅ | `situacao, dataVencimento, mensagemErro, valido, aptoRenovacao` |
+| `certificado/status` | ✅ | `situacao, dataVencimento` (epoch ms), `mensagemErro, valido, aptoRenovacao` — usado por `ctbz empresa certificado` |
 | `documentos/envio-documento/init` | ✅ | `tiposPermitidos, documentos` |
 | `documentos/listar-enviados?…` | ⚠️ 400 | exige `tipoDocumento=` (um ou mais) + `limit` + `offset` |
 | `payments/recorrencia/init` | ✅ | `status, competencia, dataProximoPagamento, habilitado, ativado…` |
 | `payments/recorrencia/historico` | ✅ | `pagamentos` |
 | `inadimplencia/consultasituacaomensalidadeempresa` | ✅ | texto `OK` |
 | `atendimento/chamados?em-andamento=true` | ✅ | lista de chamados abertos |
-| `atendimento/chamados?finalizados=true` | ⚠️ 400 | texto `timeout` (lento no servidor) |
+| `atendimento/chamados?finalizados=true` | ⚠️ 400 | `timeout` ou `Memcache put: Item may not be more than 1048503 bytes` (lista grande demais para o cache do servidor). A CLI usa `dadosempresa/get` → `chamados` (100 mais recentes, `{id, status, subject, created_at, url}`), ver [ADR-0013](../adr/0013-sem-retentativa-com-fonte-alternativa.md) |
 | `escritorio-virtual/recuperar-mensagens` | ❌ 560 | serviço não contratado |
 
 ## Não chamados de propósito

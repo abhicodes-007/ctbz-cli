@@ -12,7 +12,8 @@ Todos dependem dos cookies de sessão; sem eles, o HTML redireciona para `/login
 | `/sistema/#/` | front antigo (ex.: "Como emitir notas", "Importar notas fiscais") |
 | `/plataforma/` | plataforma nova |
 | `/conciliacao/#/` | extratos e conciliação bancária |
-| `/nota-entrada/#/`, `/nota-tomada/#/` | notas de entrada / tomadas |
+| `/nota-entrada/#/` | notas de entrada (NF-e de compra): manifestação e classificação, na base `/api/emissor/` (ver [notas fiscais](../api/notas-fiscais.md)) |
+| `/nota-tomada/#/` | removido: responde 404 desde pelo menos 2026-10 |
 | `/autopilot/#/` | autopilot |
 | `/onboarding/…`, `/onboarding-plataforma/#/` | onboarding |
 | `/checkout/#/` | checkout de planos |
@@ -73,7 +74,7 @@ a = axios.create({ baseURL: "/api/leads/hubspot/", withCredentials: false })
 
 Nos demais módulos as chamadas aparecem como `X["c"].get("dashboard/fatura")`, em que
 `X` é o nome local do módulo importado e a letra indica a base. É nisso que se apoia o
-[gerador de catálogo](../../scripts/extrair-endpoints.py). Alguns serviços guardam o
+[gerador de catálogo](https://github.com/edusouza/ctbz-cli/blob/main/scripts/extrair-endpoints.py). Alguns serviços guardam o
 caminho numa variável antes (`var e="/novo-emissor/listagem/notas"; return u["c"].get(e)`),
 e o gerador trata esse padrão também.
 

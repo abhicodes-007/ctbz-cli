@@ -1,5 +1,7 @@
 # ctbz — CLI para a Contabilizei
 
+[![CI](https://github.com/edusouza/ctbz-cli/actions/workflows/ci.yml/badge.svg)](https://github.com/edusouza/ctbz-cli/actions/workflows/ci.yml)
+
 CLI que substitui a interface web da [Contabilizei](https://app.contabilizei.com.br):
 faz o mesmo login que o navegador (usuário/senha → código por e-mail → escolha
 da empresa) e chama as mesmas URLs internas que o painel usa, como se fossem uma API.
@@ -8,13 +10,14 @@ Próximas versões e funcionalidades: [ROADMAP.md](ROADMAP.md).
 
 ## Instalação
 
+Baixe o binário do seu sistema na [página de releases](https://github.com/edusouza/ctbz-cli/releases)
+(Linux, macOS e Windows, amd64 e arm64; confira com `checksums.txt`), ou instale com Go 1.24+:
+
 ```sh
 go install github.com/edusouza/ctbz-cli/cmd/ctbz@latest
 # ou, a partir do clone:
 go build -o ctbz ./cmd/ctbz
 ```
-
-Requer Go 1.24+.
 
 ## Configuração
 
@@ -79,13 +82,56 @@ cada `ctbz login` gera um e-mail novo, e só o código mais recente vale.
 ## Comandos
 
 ```sh
+ctbz resumo              # o que precisa de atenção (impostos, pendências, rotinas, mensalidade)
 ctbz status              # dados da sessão e se ela ainda é válida
 ctbz empresa             # resumo da empresa selecionada
-ctbz mensalidade historico  # pagamentos anteriores e débito automático
+ctbz empresas            # empresas do usuário, marcando a atual
+ctbz empresa usar CNPJ   # troca de empresa (refaz o login: novo OTP)
+ctbz empresa certificado # validade do certificado digital
+ctbz empresa socios      # sócios e seus papéis
+ctbz empresa atividades  # CNAEs e anexos do Simples Nacional
+ctbz impostos            # guias a pagar (em atraso, do mês e do próximo mês)
+ctbz impostos guia ID    # detalhe de uma guia
+ctbz impostos calculo    # memória de cálculo do mês (DAS, INSS, IRRF, Fator R)
+ctbz impostos baixar --pendentes -d ~/guias   # PDFs das guias a pagar
+ctbz impostos historico --ano 2026             # guias de meses anteriores
+ctbz impostos faturamento                      # faturamento, pró-labore e Fator R (12 meses)
+ctbz impostos parcelamentos                    # parcelamentos de impostos
+ctbz impostos debitos                          # débitos federais em aberto?
+ctbz impostos recorrente [historico]           # pagamento recorrente (débito automático) de impostos
+ctbz pendencias                                # pendências abertas, com alerta de prazo
+ctbz pendencias conciliacao                    # notas e recebimentos a conciliar
+ctbz rotinas --mes 2026-10                     # rotinas e obrigações do mês (empresa e Contabilizei)
+ctbz chamados [--finalizados]                  # chamados de atendimento
+ctbz mensalidade                               # mensalidade atual da Contabilizei
+ctbz mensalidade situacao                      # a empresa está em dia com a Contabilizei?
+ctbz mensalidade historico                     # pagamentos anteriores e débito automático
+ctbz plano [contrato|proposta] [--texto]       # plano contratado e contrato de serviço
+ctbz notas --de 2026-01 --ate 2026-09          # NFS-e emitidas no período, com total
+ctbz notas tomadores [consulta CNPJ]           # clientes do emissor; cadastro de um CNPJ
+ctbz notas config | ctbz notas aliquotas       # emissor e alíquotas por atividade
+ctbz notas entrada [--lista manifestadas]      # NF-e recebidas (notas de entrada)
+ctbz prolabore [historico --ano 2026]          # pró-labore por sócio e histórico mensal
+ctbz prolabore parametros                      # salário mínimo, INSS e IRRF usados no cálculo
+ctbz prolabore fator-r                         # Fator R, motor do Fator R e anexos por atividade
+ctbz lucros                                    # distribuição de lucros do exercício
+ctbz lucros informe --ano 2025                 # valores do informe de rendimentos dos sócios (IR)
+ctbz balancete 2026-08                         # balancete do mês (árvore de contas)
+ctbz balanco 2025                              # balanço patrimonial do exercício
+ctbz razao --conta 1.01 --de 2026-01           # lançamentos do razão por conta
+ctbz caixa 2026-09                             # lançamentos do caixa do mês, com total
+ctbz extratos --ano 2026 | ctbz contas-bancarias  # extratos por mês e contas cadastradas
+ctbz contas --busca alug                       # plano de contas usado nas classificações
+ctbz documentos [--tipo TIPO]                  # central de documentos: tipos e arquivos enviados
+ctbz certificado                               # certificado digital: validade e renovação
 ctbz api menu/get        # qualquer endpoint; caminho relativo → /api/plataforma/
 ctbz api -X POST -d @corpo.json /api/plataforma/algum/endpoint
 ctbz logout              # apaga a sessão local
+ctbz version             # versão do binário
 ```
+
+Referência completa de cada comando: [`docs/referencia`](docs/referencia/README.md)
+(também em `ctbz COMANDO --help`). Completion de shell: `source <(ctbz completion bash)`.
 
 ## Formatos de saída
 
@@ -113,7 +159,15 @@ export CTBZ_OUTPUT=json        # muda o padrão
 - `ctbz api` sai em JSON por padrão e ignora `CTBZ_OUTPUT`. Com `-o table` ou `-o csv`, listas
   de objetos viram tabelas. `--raw` imprime o corpo exatamente como veio.
 
-Códigos de saída: `0` sucesso, `1` erro, `3` login pendente (aguardando OTP ou CNPJ).
+Códigos de saída: `0` sucesso, `1` erro, `2` uso incorreto (comando, flag ou argumento inválido),
+`3` login pendente (aguardando OTP ou CNPJ), `4` atenção (ex.: impostos em atraso com
+`--fail-on-atraso`, pendências vencidas com `--fail-on-vencidas`, algo vencido ou crítico com
+`ctbz resumo --fail-on-atencao`).
+
+Guia de uso por contexto: [`docs/guia`](docs/guia/README.md).
+
+A partir da 1.0, comandos, flags, chaves de JSON/CSV e códigos de saída só mudam de forma
+incompatível numa versão *major* ([ADR-0017](docs/adr/0017-contrato-publico-da-1-0.md)).
 
 ## Como funciona (engenharia reversa)
 

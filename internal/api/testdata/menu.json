@@ -1,0 +1,70 @@
+[
+  {
+    "application": "painel-de-controle",
+    "children": [],
+    "id": "home",
+    "label": "Home",
+    "route": "",
+    "type": "MENU"
+  },
+  {
+    "application": "sistema",
+    "children": [
+      {
+        "application": "",
+        "id": "notas-fiscais",
+        "label": "Notas Fiscais",
+        "route": "",
+        "type": "DIVIDER"
+      },
+      {
+        "application": "painel-de-controle",
+        "id": "emitir-nfse",
+        "label": "Emitir NFs-e",
+        "route": "emissor/listagem",
+        "type": "ITEM_MENU"
+      },
+      {
+        "application": "sistema",
+        "id": "como-emitir-notas-de-servico",
+        "label": "Como emitir notas de serviço",
+        "route": "como-emitir",
+        "type": "ITEM_MENU"
+      }
+    ],
+    "id": "rotinas",
+    "label": "Minhas Rotinas",
+    "route": "",
+    "type": "MENU"
+  },
+  {
+    "application": "sistema",
+    "children": [
+      {
+        "application": "sistema",
+        "id": "mensais",
+        "label": "Declarações mensais",
+        "route": "declaracoes-mensais",
+        "type": "ITEM_MENU"
+      },
+      {
+        "application": "sistema",
+        "id": "anuais",
+        "label": "Declarações anuais",
+        "route": "declaracoes-anuais",
+        "type": "ITEM_MENU"
+      },
+      {
+        "application": "sistema",
+        "id": "balanco-patrimonial",
+        "label": "Balanço patrimonial",
+        "route": "relatorio-contabil/BALANCO",
+        "type": "ITEM_MENU"
+      }
+    ],
+    "id": "relatorios",
+    "label": "Relatórios",
+    "route": "",
+    "type": "MENU"
+  }
+]

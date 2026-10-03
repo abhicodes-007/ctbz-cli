@@ -23,6 +23,32 @@ type DateTime struct{ time.Time }
 // CNPJ guarda só os dígitos. Tabela: "00.000.000/0000-00"; JSON/CSV: dígitos.
 type CNPJ string
 
+// CPF guarda só os dígitos. Tabela: "000.000.000-00"; JSON/CSV: dígitos.
+type CPF string
+
+// Text é um texto longo (ex.: descrições). Tabela: cortado em 60 caracteres com "…";
+// JSON/CSV: completo. Texto vazio é tratado como ausente.
+type Text string
+
+// Indent é um texto em uma árvore (ex.: plano de contas). Tabela: recuado em dois espaços
+// por nível abaixo do primeiro; JSON/CSV: só o texto (o nível vai em outra coluna).
+type Indent struct {
+	Level int
+	Text  string
+}
+
+// NewCPF remove a pontuação de um CPF.
+func NewCPF(s string) CPF { return CPF(NewCNPJ(s)) }
+
+// FormatCPF aplica a máscara 000.000.000-00 quando há 11 dígitos.
+func FormatCPF(c CPF) string {
+	s := string(c)
+	if len(s) != 11 {
+		return s
+	}
+	return s[0:3] + "." + s[3:6] + "." + s[6:9] + "-" + s[9:11]
+}
+
 // NewCNPJ remove a pontuação de um CNPJ.
 func NewCNPJ(s string) CNPJ {
 	var b strings.Builder
@@ -67,6 +93,23 @@ func FormatBRL(v float64) string {
 		sinal = "-"
 	}
 	return fmt.Sprintf("%sR$ %s,%02d", sinal, b.String(), cents%100)
+}
+
+// ParseBRL lê um valor formatado em reais ("R$ 1.234,56", "-R$ 0,50", "1.234,56").
+// Texto que não é um valor devolve false.
+func ParseBRL(s string) (Money, bool) {
+	s = strings.TrimSpace(s)
+	neg := strings.HasPrefix(s, "-")
+	s = strings.TrimSpace(strings.TrimPrefix(strings.TrimPrefix(s, "-"), "R$"))
+	s = strings.ReplaceAll(strings.ReplaceAll(s, ".", ""), ",", ".")
+	v, err := strconv.ParseFloat(strings.TrimSpace(s), 64)
+	if err != nil || s == "" {
+		return 0, false
+	}
+	if neg {
+		v = -v
+	}
+	return Money(v), true
 }
 
 // FormatCNPJ aplica a máscara 00.000.000/0000-00 quando há 14 dígitos.
@@ -115,9 +158,24 @@ func cellText(v any, f Format) string {
 			return x.Local().Format("02/01/2006 15:04")
 		}
 		return x.Format(time.RFC3339)
+	case Text:
+		if table {
+			return truncate(string(x), textMax)
+		}
+		return string(x)
+	case Indent:
+		if table && x.Level > 1 {
+			return strings.Repeat("  ", x.Level-1) + x.Text
+		}
+		return x.Text
 	case CNPJ:
 		if table {
 			return FormatCNPJ(x)
+		}
+		return string(x)
+	case CPF:
+		if table {
+			return FormatCPF(x)
 		}
 		return string(x)
 	case []string:
@@ -143,7 +201,7 @@ func cellText(v any, f Format) string {
 		}
 		s := string(raw)
 		if table {
-			s = truncate(s, 60)
+			s = truncate(s, textMax)
 		}
 		return s
 	}
@@ -166,6 +224,9 @@ func numeric(v any) bool {
 	}
 	return false
 }
+
+// textMax é o tamanho máximo de Text e de JSON aninhado numa célula da tabela.
+const textMax = 60
 
 func truncate(s string, max int) string {
 	r := []rune(s)

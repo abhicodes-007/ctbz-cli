@@ -1,0 +1,31 @@
+{
+  "acoesBotoes": [
+    "INFORMAR_PAGAMENTO",
+    "PAGAR"
+  ],
+  "competencia": "Jul de 2026",
+  "id": 1000000000000001,
+  "identificadorImposto": "DARF_UNIFICADO",
+  "oraculo": {
+    "descricao": "Guia do governo federal para recolhimento de INSS e Imposto de Renda sobre o pró-labore, folha de pagamento ou retenções.",
+    "frequencia": "Mensal",
+    "impacto": "O atraso gera multa e juros, impede CND e acesso a crédito, proíbe distribuição de lucros e pode excluir a empresa optante do Simples Nacional.",
+    "nome": "FULANO DE TAL"
+  },
+  "status": [
+    "RECALCULADA"
+  ],
+  "tipo": "GUIA",
+  "valorEmAtraso": null,
+  "valorEstimado": null,
+  "valorJurosEMulta": {
+    "valor": 1234.56
+  },
+  "valorOriginal": {
+    "valor": 1000
+  },
+  "valorTotal": {
+    "valor": 1234.56
+  },
+  "vencimento": "06/10/2026"
+}

@@ -15,6 +15,8 @@ bundles JavaScript do painel) e confirmado com chamadas reais em outubro de 2026
 | [Front-end](frontend/README.md) | Como o painel é construído (Vue), onde ficam os bundles, configuração exposta e outros fronts |
 | [CLI](cli/README.md) | Arquitetura do `ctbz`, estados persistidos, códigos de saída e decisões de projeto |
 | [Metodologia](metodologia/README.md) | Passo a passo reproduzível da investigação, armadilhas encontradas e cuidados |
+| [Decisões (ADRs)](adr/README.md) | Por que o projeto é como é: arquitetura, processo, versionamento |
+| [Contribuindo](contribuindo.md) | Convenções de código, testes, commits e definição de pronto |
 
 ## Resumo em uma tela
 

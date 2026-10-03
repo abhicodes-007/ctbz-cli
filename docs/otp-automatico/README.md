@@ -31,32 +31,49 @@ ctbz login --cnpj 22222222000122
 
 ## Gmail via Google Workspace CLI (`gws`)
 
-[`scripts/otp-gmail-gws.sh`](../../scripts/otp-gmail-gws.sh) usa o
-[Google Workspace CLI](https://github.com/googleworkspace/cli) e `jq`:
+[`scripts/otp-gmail-gws.sh`](https://github.com/edusouza/ctbz-cli/blob/main/scripts/otp-gmail-gws.sh)
+usa o [Google Workspace CLI](https://github.com/googleworkspace/cli) e `jq`:
 
 1. `gws gmail users messages list` com a busca
    `from:seguranca@contabilizei.com.br after:$CTBZ_OTP_SINCE` e `maxResults: 1`;
-2. `gws gmail users messages get` (`format: full`) da mensagem mais recente;
+2. `gws gmail users messages get` da mensagem mais recente;
 3. procura 6 dígitos no `snippet` e, se não achar, nos corpos `text/plain`/`text/html`
    (base64url decodificado com `jq @base64d`).
 
+A sintaxe (`gws gmail users messages list --params '{…}'`, saída em JSON) segue a
+documentação do `gws`. O script é testado automaticamente contra um `gws` simulado
+(`internal/otp/gmail_script_test.go`): código no corpo, código no snippet, nenhum e-mail,
+e-mail sem código e `gws` ausente.
+
+### Configurar
+
 ```sh
+gws auth setup     # primeira vez (precisa do gcloud)
+gws auth login
 export CTBZ_OTP_CMD="$PWD/scripts/otp-gmail-gws.sh"
 export CTBZ_OTP_QUERY='from:seguranca@contabilizei.com.br'   # padrão
 export GWS=gws                                                # binário, se não estiver no PATH
 ```
 
 O operador `after:` do Gmail aceita epoch em segundos, por isso o script repassa
-`CTBZ_OTP_SINCE` direto.
+`CTBZ_OTP_SINCE` direto. Sem `gws` ou `jq` no `PATH`, o script sai com código 127 e a
+mensagem `comando não encontrado`.
 
-> Testado com um `gws` simulado (três cenários: código no corpo, código no snippet e
-> nenhum e-mail). Ainda não rodou contra um Gmail real; confirme se os subcomandos
-> `users messages list/get` batem com a sua versão do `gws`.
+### Validar
+
+1. Peça um código (`ctbz login --restart`, sem `CTBZ_OTP_CMD`) e rode o script sozinho:
+   `scripts/otp-gmail-gws.sh` deve imprimir os 6 dígitos (ele procura nos últimos 10 minutos).
+2. Login de ponta a ponta, mostrando as tentativas:
+   `CTBZ_VERBOSE=1 ctbz login --restart`. As linhas `aguardando OTP (tentativa N)` mostram
+   quanto o e-mail demorou (uma tentativa a cada 5 s).
+3. Se o e-mail costuma demorar mais de 3 minutos, aumente `CTBZ_OTP_TIMEOUT` (ex.: `5m`).
 
 ## Encaminhando para outra caixa
 
-Se o e-mail de segurança for reencaminhado por uma regra do Gmail para uma caixa que a
-CLI acessa:
+Para que a CLI leia uma caixa dedicada (e não a sua caixa pessoal), crie um filtro no Gmail
+pessoal: **Configurações → Filtros e endereços bloqueados → Criar filtro**, com
+`De: seguranca@contabilizei.com.br`, ação **Encaminhar para** o endereço da caixa da CLI
+(o Gmail pede para confirmar o endereço de encaminhamento antes). Depois:
 
 - O remetente visto pela outra caixa pode deixar de ser `seguranca@contabilizei.com.br`
   (depende de como o encaminhamento é feito). Ajuste `CTBZ_OTP_QUERY`, por exemplo:

@@ -104,7 +104,9 @@ func readJSON(path string, v any) error {
 	return json.Unmarshal(data, v)
 }
 
-// writeJSON grava com permissão 0600: o arquivo contém cookies de sessão.
+// writeJSON grava com permissão 0600 (o arquivo contém cookies de sessão), de forma
+// atômica: cada escrita usa um temporário próprio, então gravações em paralelo (ex.: as
+// chamadas simultâneas do ctbz resumo) nunca misturam conteúdo; a última vence.
 func writeJSON(dir, path string, v any) error {
 	if err := os.MkdirAll(dir, 0o700); err != nil {
 		return err
@@ -113,11 +115,21 @@ func writeJSON(dir, path string, v any) error {
 	if err != nil {
 		return err
 	}
-	tmp := path + ".tmp"
-	if err := os.WriteFile(tmp, data, 0o600); err != nil {
+	f, err := os.CreateTemp(dir, filepath.Base(path)+".*.tmp") // criado com 0600
+	if err != nil {
 		return err
 	}
-	return os.Rename(tmp, path)
+	_, err = f.Write(data)
+	if cerr := f.Close(); err == nil {
+		err = cerr
+	}
+	if err == nil {
+		err = os.Rename(f.Name(), path)
+	}
+	if err != nil {
+		os.Remove(f.Name())
+	}
+	return err
 }
 
 func removeIfExists(path string) error {
