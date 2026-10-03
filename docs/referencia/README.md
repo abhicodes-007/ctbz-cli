@@ -7,6 +7,7 @@ Gerada a partir da própria CLI (`go run ./tools/gendocs`); não edite à mão.
 | [`ctbz`](ctbz.md) | CLI para a Contabilizei |
 | [`ctbz api`](ctbz_api.md) | Chama uma URL da plataforma com a sessão atual |
 | [`ctbz balancete`](ctbz_balancete.md) | Mostra o balancete de verificação de um mês |
+| [`ctbz balanco`](ctbz_balanco.md) | Mostra o balanço patrimonial (ativo, passivo e patrimônio líquido) |
 | [`ctbz chamados`](ctbz_chamados.md) | Lista os chamados de atendimento (em andamento ou finalizados) |
 | [`ctbz empresa`](ctbz_empresa.md) | Mostra os dados da empresa selecionada |
 | [`ctbz empresa atividades`](ctbz_empresa_atividades.md) | Lista os CNAEs da empresa e os anexos do Simples Nacional |
