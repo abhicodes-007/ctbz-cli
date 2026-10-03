@@ -86,3 +86,21 @@ Por sócio:
   rendimentos; `reabertura_balanco` mostra se há um pedido de reabertura do balanço em
   andamento.
 - Distribuir ou alterar os valores continua sendo feito pelo painel.
+
+## Informe de rendimentos dos sócios
+
+```sh
+ctbz lucros informe              # ano anterior (o da declaração de IR)
+ctbz lucros informe --ano 2025 -o csv > informe-2025.csv
+```
+
+```text
+Ano   Sócio          CPF             Rendimentos tributáveis  Previdência (INSS)  IRRF retido  13º salário  IRRF sobre o 13º  Lucros isentos
+2025  FULANO DE TAL  000.000.000-00              R$ 19.452,00          R$ 2.139,72      R$ 0,00      R$ 0,00           R$ 0,00    R$ 50.000,00
+```
+
+- São os valores do comprovante de rendimentos que cada sócio usa na declaração de IR:
+  rendimentos tributáveis (pró-labore), INSS, IRRF, 13º e lucros isentos.
+- O painel monta o PDF do comprovante no navegador a partir desses valores; a API não
+  oferece o PDF, por isso a CLI entrega os números (use `-o csv` ou `-o json` para guardar).
+- O formato vem do código do painel: a conta usada no desenvolvimento não tinha informes.

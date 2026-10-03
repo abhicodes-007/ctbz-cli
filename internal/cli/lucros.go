@@ -46,6 +46,7 @@ reabertura do balanço. A API não recebe ano: o exercício é o que a Contabili
 			return output.Write(s.out, f, lucrosRecord(d, ano, r))
 		},
 	}
+	cmd.AddCommand(newLucrosInformeCmd())
 	return cmd
 }
 

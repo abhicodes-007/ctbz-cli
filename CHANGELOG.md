@@ -17,6 +17,8 @@ usa [Versionamento Semântico](https://semver.org/lang/pt-BR/).
 - `ctbz lucros`: saldo, total distribuído, adiantamentos, limite, prazo e valor por sócio do
   exercício aberto, com as restrições do informe (pendência documental, débitos federais,
   reabertura do balanço).
+- `ctbz lucros informe`: valores do comprovante de rendimentos de cada sócio (rendimentos,
+  INSS, IRRF, 13º, lucros isentos) para a declaração de IR.
 
 ## [0.5.0] - 2026-10-03
 

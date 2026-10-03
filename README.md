@@ -110,6 +110,7 @@ ctbz notas entrada [--lista manifestadas]      # NF-e recebidas (notas de entrad
 ctbz prolabore [historico --ano 2026]          # pró-labore por sócio e histórico mensal
 ctbz prolabore parametros                      # salário mínimo, INSS e IRRF usados no cálculo
 ctbz lucros                                    # distribuição de lucros do exercício
+ctbz lucros informe --ano 2025                 # valores do informe de rendimentos dos sócios (IR)
 ctbz api menu/get        # qualquer endpoint; caminho relativo → /api/plataforma/
 ctbz api -X POST -d @corpo.json /api/plataforma/algum/endpoint
 ctbz logout              # apaga a sessão local
