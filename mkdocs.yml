@@ -35,6 +35,7 @@ nav:
       - Notas fiscais: guia/notas.md
       - Pró-labore e lucros: guia/prolabore.md
       - Contabilidade: guia/contabil.md
+      - Documentos e certificado: guia/documentos.md
   - Referência de comandos: referencia/README.md
   - Autenticação:
       - Visão geral: autenticacao/README.md

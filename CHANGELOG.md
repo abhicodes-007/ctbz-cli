@@ -7,6 +7,11 @@ usa [Versionamento Semântico](https://semver.org/lang/pt-BR/).
 
 ## [Unreleased]
 
+### Added
+
+- `ctbz documentos`: tipos da central de documentos com quantidade enviada; `--tipo` lista os
+  arquivos enviados (competência, envio, descrição, valor e link).
+
 ## [0.7.0] - 2026-10-03
 
 ### Added

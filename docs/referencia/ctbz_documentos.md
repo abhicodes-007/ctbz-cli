@@ -1,0 +1,38 @@
+# ctbz documentos
+
+Lista os tipos de documento aceitos e os documentos enviados
+
+Sem --tipo, lista os tipos de documento da central de documentos (extratos, contratos de
+empréstimo, informes de investimentos…) com quantos já foram enviados e a última
+modificação. Com --tipo, lista os documentos enviados daquele tipo: arquivo, competência,
+data de envio, descrição e o link do arquivo.
+
+Enviar documentos continua sendo feito pelo painel.
+
+## Uso
+
+```
+ctbz documentos [flags]
+```
+
+## Exemplos
+
+```sh
+  ctbz documentos
+  ctbz documentos --tipo EXTRATO_BANCARIO_MOVIMENTACOES -o csv
+```
+
+## Flags
+
+```
+      --tipo string   tipo de documento (veja a coluna tipo de "ctbz documentos")
+```
+
+## Flags globais
+
+```
+  -h, --help            mostra a ajuda do comando
+  -o, --output string   formato de saída: table, json ou csv (padrão: CTBZ_OUTPUT ou table)
+```
+
+Veja também: [`ctbz`](ctbz.md).

@@ -118,6 +118,7 @@ ctbz razao --conta 1.01 --de 2026-01           # lançamentos do razão por cont
 ctbz caixa 2026-09                             # lançamentos do caixa do mês, com total
 ctbz extratos --ano 2026 | ctbz contas-bancarias  # extratos por mês e contas cadastradas
 ctbz contas --busca alug                       # plano de contas usado nas classificações
+ctbz documentos [--tipo TIPO]                  # central de documentos: tipos e arquivos enviados
 ctbz api menu/get        # qualquer endpoint; caminho relativo → /api/plataforma/
 ctbz api -X POST -d @corpo.json /api/plataforma/algum/endpoint
 ctbz logout              # apaga a sessão local
