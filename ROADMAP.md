@@ -24,7 +24,7 @@ Labels usadas: `épico`, `versão: vX.Y`, `contexto: …`, `tipo: funcionalidade
 | **v0.4** | Mensalidade e pagamentos da Contabilizei | [#23](https://github.com/edusouza/ctbz-cli/issues/23) | 4 | concluída |
 | **v0.5** | Notas fiscais | [#28](https://github.com/edusouza/ctbz-cli/issues/28) | 5 | concluída |
 | **v0.6** | Pró-labore e distribuição de lucros | [#34](https://github.com/edusouza/ctbz-cli/issues/34) | 5 | concluída |
-| **v0.7** | Contabilidade: relatórios, caixa e extratos | [#40](https://github.com/edusouza/ctbz-cli/issues/40) | 6 | planejada |
+| **v0.7** | Contabilidade: relatórios, caixa e extratos | [#40](https://github.com/edusouza/ctbz-cli/issues/40) | 6 | concluída |
 | **v0.8** | Documentos e certificado digital | [#47](https://github.com/edusouza/ctbz-cli/issues/47) | 2 | planejada |
 | **v1.0** | Estabilidade e distribuição (futuro) | [#50](https://github.com/edusouza/ctbz-cli/issues/50) | 3 | planejada |
 
@@ -135,12 +135,12 @@ Relatórios contábeis (balancete, balanço, razão), lançamentos do caixa, ext
 
 | | Issue | Funcionalidade | Tipo |
 |---|---|---|---|
-| ⬜ | [#41](https://github.com/edusouza/ctbz-cli/issues/41) | Balancete mensal | funcionalidade |
-| ⬜ | [#42](https://github.com/edusouza/ctbz-cli/issues/42) | Balanço patrimonial | funcionalidade |
-| ⬜ | [#43](https://github.com/edusouza/ctbz-cli/issues/43) | Razão contábil | funcionalidade |
-| ⬜ | [#44](https://github.com/edusouza/ctbz-cli/issues/44) | Caixa: lançamentos do mês | funcionalidade |
-| ⬜ | [#45](https://github.com/edusouza/ctbz-cli/issues/45) | Extratos e contas bancárias | funcionalidade |
-| ⬜ | [#46](https://github.com/edusouza/ctbz-cli/issues/46) | Plano de contas e classificações | funcionalidade |
+| ✅ | [#41](https://github.com/edusouza/ctbz-cli/issues/41) | Balancete mensal | funcionalidade |
+| ✅ | [#42](https://github.com/edusouza/ctbz-cli/issues/42) | Balanço patrimonial | funcionalidade |
+| ✅ | [#43](https://github.com/edusouza/ctbz-cli/issues/43) | Razão contábil | funcionalidade |
+| ✅ | [#44](https://github.com/edusouza/ctbz-cli/issues/44) | Caixa: lançamentos do mês | funcionalidade |
+| ✅ | [#45](https://github.com/edusouza/ctbz-cli/issues/45) | Extratos e contas bancárias | funcionalidade |
+| ✅ | [#46](https://github.com/edusouza/ctbz-cli/issues/46) | Plano de contas e classificações | funcionalidade |
 
 Fora de escopo: Importar extrato, classificar/desmembrar lançamentos, reabrir balanço (escrita).
 
