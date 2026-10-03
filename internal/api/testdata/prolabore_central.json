@@ -1,0 +1,23 @@
+{
+  "elegivelNoMotor": true,
+  "prolaboreIndisponivel": true,
+  "socios": [
+    {
+      "cpf": "00000000000",
+      "dataUltimaAtualizacao": "01/09/2026",
+      "id": 1000000000000001,
+      "insightGestao": "INTELIGENTE",
+      "nome": "FULANO DE TAL",
+      "nomesDependentes": [
+        "FULANO DE TAL",
+        "FULANO DE TAL"
+      ],
+      "possuiProlabore": false,
+      "responsavelReceita": true,
+      "valorProlabore": 1000
+    }
+  ],
+  "tipoGerenciamento": "INTELIGENTE",
+  "totalProLabore": 1000,
+  "zerarProlabore": true
+}
