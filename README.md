@@ -84,6 +84,7 @@ ctbz empresa             # resumo da empresa selecionada
 ctbz api menu/get        # qualquer endpoint; caminho relativo → /api/plataforma/
 ctbz api -X POST -d @corpo.json /api/plataforma/algum/endpoint
 ctbz logout              # apaga a sessão local
+ctbz version             # versão do binário
 ```
 
 Ajuda de cada comando: `ctbz COMANDO --help`. Completion de shell: `source <(ctbz completion bash)`.

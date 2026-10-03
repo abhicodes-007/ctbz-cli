@@ -56,7 +56,6 @@ func run(ctx context.Context, root *cobra.Command) int {
 
 // NewRootCmd monta a árvore de comandos.
 func NewRootCmd(version string) *cobra.Command {
-	_ = version // usada pelo comando version (próximo commit)
 	root := &cobra.Command{
 		Use:   "ctbz",
 		Short: "CLI para a Contabilizei",
@@ -64,14 +63,17 @@ func NewRootCmd(version string) *cobra.Command {
 (usuário, senha e código enviado por e-mail) e consulta os dados da empresa.
 
 Dados vão para stdout no formato escolhido com -o; mensagens e progresso vão para stderr.`,
+		Version:       resolveVersion(version).Version,
 		SilenceErrors: true,
 		SilenceUsage:  true,
 	}
 	root.PersistentFlags().StringP("output", "o", "", "formato de saída: table, json ou csv (padrão: CTBZ_OUTPUT ou table)")
 	root.PersistentFlags().BoolP("help", "h", false, "mostra a ajuda do comando")
+	root.Flags().BoolP("version", "v", false, "mostra a versão do ctbz")
 	root.SetFlagErrorFunc(func(_ *cobra.Command, err error) error { return usageError{err} })
 	root.CompletionOptions.HiddenDefaultCmd = true
 	root.SetUsageTemplate(usageTemplate)
+	root.SetVersionTemplate("ctbz {{.Version}}\n")
 	root.SetHelpCommand(&cobra.Command{
 		Use:    "help [comando]",
 		Short:  "Mostra a ajuda de um comando",
@@ -91,6 +93,7 @@ Dados vão para stdout no formato escolhido com -o; mensagens e progresso vão p
 		newEmpresaCmd(),
 		newAPICmd(),
 		newLogoutCmd(),
+		newVersionCmd(version),
 	)
 	return root
 }

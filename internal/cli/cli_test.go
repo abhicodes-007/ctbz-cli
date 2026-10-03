@@ -50,6 +50,17 @@ func TestHelpInPortuguese(t *testing.T) {
 	}
 }
 
+func TestVersion(t *testing.T) {
+	out, _, code := execCLI(t, "", "version", "-o", "json")
+	if code != ExitOK || !strings.Contains(out, `"versao": "test"`) {
+		t.Fatalf("código %d, saída:\n%s", code, out)
+	}
+	out, _, _ = execCLI(t, "", "--version")
+	if strings.TrimSpace(out) != "ctbz test" {
+		t.Errorf("--version = %q", out)
+	}
+}
+
 func TestNoSessionError(t *testing.T) {
 	t.Setenv("CTBZ_HOME", t.TempDir())
 	_, stderr, code := execCLI(t, "", "empresa")

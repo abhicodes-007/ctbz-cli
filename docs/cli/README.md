@@ -12,7 +12,7 @@ internal/cli/
   root.go        árvore Cobra, flag global -o, códigos de saída, ajuda em português
   login.go       comando login: retomada, fontes de OTP, escolha de empresa
   session.go     chamadas autenticadas (re-login automático), dados da sessão
-  status.go, empresa.go, api.go, logout.go   um arquivo por comando
+  status.go, empresa.go, api.go, logout.go, version.go   um arquivo por comando
 internal/ctbz/
   client.go      HTTP: cookies manuais, redirecionamentos manuais, API(), erros
   login.go       etapas do login e parsers de HTML/localStorage

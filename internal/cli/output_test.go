@@ -12,6 +12,28 @@ import (
 	"github.com/edusouza/ctbz-cli/internal/ctbz"
 )
 
+func TestOutputPrecedence(t *testing.T) {
+	for _, tc := range []struct {
+		name, env string
+		args      []string
+		wantStart string
+	}{
+		{"padrão é tabela", "", []string{"version"}, "Versão:"},
+		{"CTBZ_OUTPUT", "csv", []string{"version"}, "versao,commit,data"},
+		{"-o vence CTBZ_OUTPUT", "csv", []string{"version", "-o", "table"}, "Versão:"},
+		{"-o antes do comando", "", []string{"-o", "json", "version"}, "{"},
+		{"--output=", "", []string{"--output=csv", "version"}, "versao,"},
+	} {
+		t.Run(tc.name, func(t *testing.T) {
+			t.Setenv("CTBZ_OUTPUT", tc.env)
+			out, stderr, code := execCLI(t, "", tc.args...)
+			if code != ExitOK || !strings.HasPrefix(out, tc.wantStart) {
+				t.Errorf("código %d, stderr %q, saída:\n%s", code, stderr, out)
+			}
+		})
+	}
+}
+
 // withSession cria uma sessão apontando para srv num CTBZ_HOME temporário.
 func withSession(t *testing.T, srv *httptest.Server) {
 	t.Helper()
