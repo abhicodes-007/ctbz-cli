@@ -118,6 +118,23 @@ func TestFormatBRL(t *testing.T) {
 	}
 }
 
+func TestParseBRL(t *testing.T) {
+	for in, want := range map[string]Money{"R$ 1.621,00": 1621, "R$ 932,31": 932.31, "-R$ 0,50": -0.5, "1.234.567,89": 1234567.89, " R$ 0,00 ": 0} {
+		if got, ok := ParseBRL(in); !ok || got != want {
+			t.Errorf("ParseBRL(%q) = %v, %v; quero %v", in, got, ok, want)
+		}
+	}
+	for _, in := range []string{"", "R$", "abc", "R$ x,00"} {
+		if _, ok := ParseBRL(in); ok {
+			t.Errorf("ParseBRL(%q) deveria falhar", in)
+		}
+	}
+	// ida e volta com FormatBRL
+	if got, _ := ParseBRL(FormatBRL(-1234.5)); got != -1234.5 {
+		t.Errorf("ida e volta: %v", got)
+	}
+}
+
 func TestCPF(t *testing.T) {
 	c := NewCPF("123.456.789-01")
 	if c != "12345678901" || FormatCPF(c) != "123.456.789-01" || cellText(c, FormatCSV) != "12345678901" {

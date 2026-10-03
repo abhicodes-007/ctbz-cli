@@ -88,6 +88,23 @@ func FormatBRL(v float64) string {
 	return fmt.Sprintf("%sR$ %s,%02d", sinal, b.String(), cents%100)
 }
 
+// ParseBRL lê um valor formatado em reais ("R$ 1.234,56", "-R$ 0,50", "1.234,56").
+// Texto que não é um valor devolve false.
+func ParseBRL(s string) (Money, bool) {
+	s = strings.TrimSpace(s)
+	neg := strings.HasPrefix(s, "-")
+	s = strings.TrimSpace(strings.TrimPrefix(strings.TrimPrefix(s, "-"), "R$"))
+	s = strings.ReplaceAll(strings.ReplaceAll(s, ".", ""), ",", ".")
+	v, err := strconv.ParseFloat(strings.TrimSpace(s), 64)
+	if err != nil || s == "" {
+		return 0, false
+	}
+	if neg {
+		v = -v
+	}
+	return Money(v), true
+}
+
 // FormatCNPJ aplica a máscara 00.000.000/0000-00 quando há 14 dígitos.
 func FormatCNPJ(c CNPJ) string {
 	s := string(c)

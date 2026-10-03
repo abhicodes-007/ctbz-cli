@@ -7,6 +7,12 @@ usa [Versionamento Semântico](https://semver.org/lang/pt-BR/).
 
 ## [Unreleased]
 
+### Added
+
+- `ctbz prolabore`: tipo de gerenciamento, total, competências do painel e, por sócio, valor,
+  responsável na Receita, gestão, atualização e dependentes; `historico` lista pró-labore e
+  descontos por competência (`--ano`, `--socio`).
+
 ## [0.5.0] - 2026-10-03
 
 ### Added
