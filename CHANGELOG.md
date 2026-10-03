@@ -7,6 +7,11 @@ usa [Versionamento Semântico](https://semver.org/lang/pt-BR/).
 
 ## [Unreleased]
 
+### Added
+
+- `ctbz balancete AAAA-MM`: contas com saldo anterior, débitos, créditos e saldo, recuadas
+  por nível na tabela e planas (com coluna `nivel`) em CSV e JSON.
+
 ## [0.6.0] - 2026-10-03
 
 ### Added
