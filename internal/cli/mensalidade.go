@@ -47,6 +47,47 @@ Com --fail-on-atraso, o comando termina com código 4 quando há competência an
 		},
 	}
 	cmd.Flags().BoolVar(&failOnAtraso, "fail-on-atraso", false, "termina com código 4 se houver competência anterior em atraso")
+	cmd.AddCommand(newMensalidadeSituacaoCmd())
+	return cmd
+}
+
+func newMensalidadeSituacaoCmd() *cobra.Command {
+	var failOnInadimplencia bool
+	cmd := &cobra.Command{
+		Use:   "situacao",
+		Short: "Indica se a empresa está em dia com a Contabilizei",
+		Long: `Indica se a empresa está em dia com a Contabilizei (consulta de inadimplência do painel).
+A API responde "OK" para empresas em dia; qualquer outra resposta é mostrada como veio e
+tratada como "não está em dia".
+
+Com --fail-on-inadimplencia, o comando termina com código 4 quando a empresa não está em dia.`,
+		Example: `  ctbz mensalidade situacao
+  ctbz mensalidade situacao --fail-on-inadimplencia || echo "Mensalidade pendente"`,
+		Args: exactArgs(0, "nenhum argumento"),
+		RunE: func(cmd *cobra.Command, _ []string) error {
+			f, err := outputFormat(cmd, "")
+			if err != nil {
+				return err
+			}
+			s := streamsOf(cmd)
+			situacao, err := api.BuscarSituacaoMensalidade(cmd.Context(), sessionGetter{s})
+			if err != nil {
+				return err
+			}
+			emDia := situacao == api.SituacaoEmDia
+			rec := &output.Record{}
+			rec.Add("em_dia", "Em dia", emDia)
+			rec.Add("situacao", "Situação", nilIfEmpty(situacao))
+			if err := output.Write(s.out, f, rec); err != nil {
+				return err
+			}
+			if failOnInadimplencia && !emDia {
+				return errAttention
+			}
+			return nil
+		},
+	}
+	cmd.Flags().BoolVar(&failOnInadimplencia, "fail-on-inadimplencia", false, "termina com código 4 se a empresa não estiver em dia")
 	return cmd
 }
 

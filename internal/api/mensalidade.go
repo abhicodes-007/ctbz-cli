@@ -1,6 +1,9 @@
 package api
 
-import "context"
+import (
+	"context"
+	"strings"
+)
 
 const (
 	PathFatura      = "dashboard/fatura"
@@ -34,4 +37,21 @@ type Mensalidade struct {
 // BuscarMensalidade lê dashboard/v1/mensalidade.
 func BuscarMensalidade(ctx context.Context, g Getter) (*Mensalidade, error) {
 	return get[Mensalidade](ctx, g, PathMensalidade)
+}
+
+// PathSituacaoMensalidade responde texto puro, não JSON.
+const PathSituacaoMensalidade = "inadimplencia/consultasituacaomensalidadeempresa"
+
+// SituacaoEmDia é a resposta de PathSituacaoMensalidade para uma empresa em dia. Outros
+// valores não foram vistos; qualquer coisa diferente é tratada como "não está em dia".
+const SituacaoEmDia = "OK"
+
+// BuscarSituacaoMensalidade lê a situação da empresa com a Contabilizei (ex.: "OK"),
+// sem espaços nem aspas em volta.
+func BuscarSituacaoMensalidade(ctx context.Context, g TextGetter) (string, error) {
+	s, err := g.GetText(ctx, PathSituacaoMensalidade)
+	if err != nil {
+		return "", err
+	}
+	return strings.Trim(strings.TrimSpace(s), `"`), nil
 }

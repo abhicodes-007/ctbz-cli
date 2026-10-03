@@ -15,7 +15,7 @@ internal/cli/
   status.go, empresa.go, api.go, logout.go, version.go   um arquivo por comando
   docs.go        gerador da referência de comandos (docs/referencia)
 internal/api/
-  api.go         Getter, registro de endpoints (Endpoints) para os contratos
+  api.go         Getter/TextGetter, registro de endpoints (Endpoints) para os contratos
   empresa.go     caminhos, tipos de resposta e BuscarXxx de um contexto
   testdata/      fixtures anonimizadas (go run ./tools/capture)
 internal/contract/

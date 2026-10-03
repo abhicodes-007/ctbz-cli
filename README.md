@@ -101,6 +101,7 @@ ctbz pendencias conciliacao                    # notas e recebimentos a concilia
 ctbz rotinas --mes 2026-10                     # rotinas e obrigações do mês (empresa e Contabilizei)
 ctbz chamados [--finalizados]                  # chamados de atendimento
 ctbz mensalidade                               # mensalidade atual da Contabilizei
+ctbz mensalidade situacao                      # a empresa está em dia com a Contabilizei?
 ctbz api menu/get        # qualquer endpoint; caminho relativo → /api/plataforma/
 ctbz api -X POST -d @corpo.json /api/plataforma/algum/endpoint
 ctbz logout              # apaga a sessão local

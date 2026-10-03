@@ -13,6 +13,8 @@ usa [Versionamento Semântico](https://semver.org/lang/pt-BR/).
   atual, e se há competência anterior em atraso (`--fail-on-atraso`, código 4).
 - `ctbz impostos recorrente`: situação do pagamento recorrente (débito automático) de impostos,
   sem expor dados de cartão; `historico` lista as guias pagas e o custo de operação por mês.
+- `ctbz mensalidade situacao`: indica se a empresa está em dia com a Contabilizei
+  (`--fail-on-inadimplencia`, código 4).
 
 ## [0.3.0] - 2026-10-03
 
