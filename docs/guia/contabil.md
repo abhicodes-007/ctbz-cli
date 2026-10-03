@@ -92,3 +92,20 @@ Competência  Banco                  Agência  Conta      Situação  Integraç�
   (ex.: `INTEGRADA` na conta PJ da Contabilizei, que dispensa importar extrato).
 - Importar um extrato continua sendo feito pelo painel (`info-extrato` só existe depois de um
   upload).
+
+## Plano de contas (classificações)
+
+```sh
+ctbz contas --busca alug                # por trecho da descrição ou da conta contábil
+ctbz contas --situacao ativo -o csv
+```
+
+```text
+Descrição  Conta contábil            Classificação  Situação  ID
+Aluguel    Aluguéis e Arrendamentos  DESPESA        ATIVO     1
+```
+
+- São as contas usadas para classificar entradas e saídas (as mesmas do `ctbz caixa`), cada
+  uma ligada a uma conta contábil.
+- `--busca` não diferencia maiúsculas, mas acentos contam: um trecho como `alug` acha
+  "Aluguel" e "Aluguéis".
