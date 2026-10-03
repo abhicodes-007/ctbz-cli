@@ -21,6 +21,9 @@ usa [Versionamento Semântico](https://semver.org/lang/pt-BR/).
 - Completion de shell: `ctbz completion bash|zsh|fish|powershell`.
 - `ctbz empresas`: lista as empresas do usuário (inclusive inativas), marcando a atual.
 - `ctbz empresa usar CNPJ`: troca a empresa da sessão refazendo o login.
+- `ctbz empresa` mostra também natureza jurídica, data de abertura, início na Contabilizei,
+  inscrição estadual e endereço.
+- `ctbz empresa certificado`: situação, vencimento e dias para vencer do certificado digital.
 
 ### Changed
 

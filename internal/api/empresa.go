@@ -1,6 +1,11 @@
 package api
 
-import "context"
+import (
+	"context"
+	"encoding/json"
+	"errors"
+	"fmt"
+)
 
 const (
 	PathDadosEmpresa = "dadosempresa/get"
@@ -68,4 +73,70 @@ func BuscarMenu(ctx context.Context, g Getter) ([]MenuItem, error) {
 		return nil, err
 	}
 	return *items, nil
+}
+
+// EmpresaSessao é a empresa selecionada, como o login a grava no localStorage do
+// navegador (chave "e"). Não é um endpoint: vem de ctbz.Session.Storage e reflete o
+// momento do login. Tem dados cadastrais que nenhuma leitura da API devolve.
+type EmpresaSessao struct {
+	CNPJ             string `json:"cnpj"`
+	RazaoSocial      string `json:"razaoSocial"`
+	NomeFantasia     string `json:"nomeFantasia" contract:"optional"`
+	RegimeTributario string `json:"regimeTributario"`
+	OptanteSimples   bool   `json:"optanteSimples"`
+	NaturezaJuridica struct {
+		CodReceita string `json:"codReceita"`
+		Descricao  string `json:"descricao"`
+	} `json:"naturezaJuridica"`
+	InscricaoMunicipal string   `json:"inscricaoMunicipal"`
+	InscricaoEstadual  string   `json:"inscricaoEstadual"`
+	DataAbertura       int64    `json:"dataAbertura"`
+	RamosAtividade     []string `json:"ramosAtividade"`
+	// Competência em que a Contabilizei assumiu a contabilidade.
+	ResponsabilidadeInicial struct {
+		Mes int `json:"mes"`
+		Ano int `json:"ano"`
+	} `json:"responsabilidadeInicial"`
+	Endereco struct {
+		Logradouro  string `json:"logradouro"`
+		Numero      string `json:"numero"`
+		Complemento string `json:"complemento"`
+		Bairro      string `json:"bairro"`
+		CEP         string `json:"cep"`
+		Municipio   struct {
+			Nome string `json:"nome"`
+			UF   struct {
+				ID string `json:"id"`
+			} `json:"uf"`
+		} `json:"municipio"`
+	} `json:"endereco"`
+}
+
+// EmpresaDaSessao decodifica a empresa gravada pelo login.
+func EmpresaDaSessao(storage map[string]json.RawMessage) (*EmpresaSessao, error) {
+	raw, ok := storage["e"]
+	if !ok {
+		return nil, errors.New("a sessão não tem os dados da empresa; rode `ctbz login` de novo")
+	}
+	var e EmpresaSessao
+	if err := json.Unmarshal(raw, &e); err != nil {
+		return nil, fmt.Errorf("dados da empresa na sessão: %w", err)
+	}
+	return &e, nil
+}
+
+const PathCertificadoStatus = "certificado/status"
+
+// CertificadoStatus é a resposta de certificado/status.
+type CertificadoStatus struct {
+	Situacao       string `json:"situacao"`
+	Valido         bool   `json:"valido"`
+	AptoRenovacao  bool   `json:"aptoRenovacao"`
+	DataVencimento *int64 `json:"dataVencimento"` // epoch em ms; nulo sem certificado
+	MensagemErro   string `json:"mensagemErro"`
+}
+
+// BuscarCertificadoStatus lê certificado/status.
+func BuscarCertificadoStatus(ctx context.Context, g Getter) (*CertificadoStatus, error) {
+	return get[CertificadoStatus](ctx, g, PathCertificadoStatus)
 }

@@ -5,6 +5,8 @@ import (
 	"io"
 	"net/http"
 	"net/http/httptest"
+	"os"
+	"path/filepath"
 	"strings"
 	"testing"
 	"time"
@@ -41,7 +43,12 @@ func withSession(t *testing.T, srv *httptest.Server) {
 	t.Setenv("CTBZ_HOME", store.Dir)
 	t.Setenv("CTBZ_OUTPUT", "")
 	t.Setenv("CTBZ_OTP_CMD", "")
-	if err := store.SaveSession(&ctbz.Session{BaseURL: srv.URL, CreatedAt: time.Now()}); err != nil {
+	empresa, err := os.ReadFile(filepath.Join("..", "api", "testdata", "sessao_empresa.json"))
+	if err != nil {
+		t.Fatal(err)
+	}
+	sess := &ctbz.Session{BaseURL: srv.URL, CreatedAt: time.Now(), Storage: map[string]json.RawMessage{"e": empresa}}
+	if err := store.SaveSession(sess); err != nil {
 		t.Fatal(err)
 	}
 }
@@ -100,7 +107,8 @@ func TestEmpresaFormats(t *testing.T) {
 	}
 
 	out, _, _ = execCLI(t, "", "empresa")
-	for _, want := range []string{"CNPJ:", "22.222.222/0001-22", "22/07/2027", "Outras empresas:", "FULANO MEI"} {
+	for _, want := range []string{"CNPJ:", "22.222.222/0001-22", "22/07/2027", "Outras empresas:", "FULANO MEI",
+		"Sociedade Empresária Limitada (206-2)", "07/2026", "CEP 00000-000"} {
 		if !strings.Contains(out, want) {
 			t.Errorf("tabela sem %q:\n%s", want, out)
 		}

@@ -22,6 +22,7 @@ ctbz empresa [flags]
 
 ## Subcomandos
 
+- [`ctbz empresa certificado`](ctbz_empresa_certificado.md): Mostra a situação do certificado digital da empresa
 - [`ctbz empresa usar`](ctbz_empresa_usar.md): Troca a empresa da sessão
 
 ## Flags

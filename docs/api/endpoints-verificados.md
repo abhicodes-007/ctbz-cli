@@ -95,7 +95,7 @@ ctbz api impostos/v3/impostos-a-pagar/guia/<id>/baixar-guia | jq -r .url
 
 | Caminho | | Resposta |
 |---|---|---|
-| `certificado/status` | ✅ | `situacao, dataVencimento, mensagemErro, valido, aptoRenovacao` |
+| `certificado/status` | ✅ | `situacao, dataVencimento` (epoch ms), `mensagemErro, valido, aptoRenovacao` — usado por `ctbz empresa certificado` |
 | `documentos/envio-documento/init` | ✅ | `tiposPermitidos, documentos` |
 | `documentos/listar-enviados?…` | ⚠️ 400 | exige `tipoDocumento=` (um ou mais) + `limit` + `offset` |
 | `payments/recorrencia/init` | ✅ | `status, competencia, dataProximoPagamento, habilitado, ativado…` |

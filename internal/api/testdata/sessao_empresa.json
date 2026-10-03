@@ -1,0 +1,168 @@
+{
+  "abertura": true,
+  "cnpj": "00000000000000",
+  "codIbge": 4106902,
+  "comercioFisico": null,
+  "configuracao": {
+    "blobCertificado": "storage,contabilizei-configuracao-certificado,00000000000000/11de00000000000e.pfx",
+    "dataRemocaoCertificado": null,
+    "dataUploadCertificado": 1784750158010,
+    "dataValidadeCertificado": 1816282860000,
+    "id": 1000000000000001,
+    "nomeArquivoCertificado": "FULANO DE TAL",
+    "possuiCertificadoA3": false,
+    "proxNumeroRps": 1
+  },
+  "dataAbertura": 1784581200000,
+  "dataAtivacao": 1784665520362,
+  "dataUltimoVencimento": null,
+  "email": null,
+  "endereco": {
+    "bairro": "LOGRADOURO EXEMPLO",
+    "cep": "00000000",
+    "codIbge": null,
+    "complemento": "LOGRADOURO EXEMPLO",
+    "enderecoCompleto": "LOGRADOURO EXEMPLO",
+    "logradouro": "LOGRADOURO EXEMPLO",
+    "municipio": {
+      "codIbge": 4106902,
+      "codTributario": 7535,
+      "nome": "FULANO DE TAL",
+      "nomeNormalizado": "FULANO DE TAL",
+      "uf": {
+        "id": "PR",
+        "nome": "FULANO DE TAL"
+      }
+    },
+    "numero": "0000",
+    "semComplemento": false,
+    "uf": {
+      "id": "PR",
+      "nome": "FULANO DE TAL"
+    }
+  },
+  "exibeOnboardingAssessor": false,
+  "franquia": false,
+  "id": 1000000000000002,
+  "importacaoNotasAutomatica": true,
+  "inscricaoEstadual": null,
+  "inscricaoMunicipal": "00000000",
+  "jiraFinalizado": true,
+  "jiraIssueId": "XXXX",
+  "listaTelefone": [
+    {
+      "id": 1000000000000003,
+      "numero": "00000000000",
+      "tipoTelefone": "CELULAR"
+    }
+  ],
+  "motivoStatusEmpresa": null,
+  "naturezaJuridica": {
+    "cod": 5,
+    "codReceita": "206-2",
+    "descricao": "Sociedade Empresária Limitada"
+  },
+  "nomeFantasia": "",
+  "novoOnboarding": false,
+  "numColaborador": 0,
+  "numSocios": 1,
+  "optanteSimples": true,
+  "perfil": {
+    "codigo": "001",
+    "emissao": true,
+    "id": 1000000000000004,
+    "listLiberacaoParcialEmissao": {
+      "4542563570679808": "0000000000000000",
+      "4967799692722176": "0000000000000000;0000000000000000;0000000000000000;0000000000000000",
+      "5703098093797376": "",
+      "5792811370676224": "0000000000000000;;0000000000000000",
+      "6205952864813056": "0000000000000000;0000000000000000;0000000000000000",
+      "6707501965770752": ""
+    },
+    "listRestricaoMunicipioImportacao": [
+      1000000000000005,
+      1000000000000006,
+      1000000000000007
+    ],
+    "listaMunicipio": [
+      {
+        "codIbge": 4314902,
+        "codTributario": 8801,
+        "ddd": 51,
+        "id": 1000000000000008,
+        "nome": "FULANO DE TAL",
+        "nomeNormalizado": "FULANO DE TAL",
+        "uf": "RS"
+      },
+      {
+        "codIbge": 4106902,
+        "codTributario": 7535,
+        "ddd": 41,
+        "id": 1000000000000009,
+        "nome": "FULANO DE TAL",
+        "nomeNormalizado": "FULANO DE TAL",
+        "uf": "PR"
+      },
+      {
+        "codIbge": 3106200,
+        "codTributario": 4123,
+        "ddd": 31,
+        "id": 1000000000000010,
+        "nome": "FULANO DE TAL",
+        "nomeNormalizado": "FULANO DE TAL",
+        "uf": "MG"
+      }
+    ]
+  },
+  "permiteEmitirNota": false,
+  "permiteImportarNota": true,
+  "planoPagamentoEmpresa": {
+    "pagtoPlano": {
+      "categoria": "BASICO",
+      "descricao": "2025 - Simples - Serviço - Básico [139]",
+      "id": 1000000000000011,
+      "ramoAtividades": [
+        "SERVICO"
+      ],
+      "valor": 1000
+    }
+  },
+  "processoMigracaoPendente": false,
+  "ramoAtividadeComercio": false,
+  "ramoAtividadeServico": true,
+  "ramosAtividade": [
+    "SERVICO"
+  ],
+  "razaoSocial": "FULANO DE TAL",
+  "regimeTributario": "SIMPLES",
+  "responsabilidadeInicial": {
+    "ano": 2026,
+    "date": [
+      2026,
+      7,
+      1
+    ],
+    "mes": 7,
+    "periodo": 202607,
+    "text": "7/2026"
+  },
+  "responsavel": {
+    "cpf": "00000000000",
+    "id": 1000000000000012,
+    "nome": "FULANO DE TAL",
+    "ref": "XXXX"
+  },
+  "site": null,
+  "socioResponsavel": {
+    "cpf": "00000000000",
+    "nome": "FULANO DE TAL"
+  },
+  "status": {
+    "descricao": "Ativo",
+    "id": "ATIVO"
+  },
+  "timelineFinalizada": true,
+  "uf": "PR",
+  "utilizaCertificadoDigital": false,
+  "valorUltimaMensalidade": null
+}

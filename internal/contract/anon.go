@@ -49,7 +49,7 @@ var (
 	keyAddress = regexp.MustCompile(`(?i)(logradouro|endereco|bairro|complemento|rua|cidade|municipio$)`)
 	keyFree    = regexp.MustCompile(`(?i)^(subject|assunto|mensagem|observacao|detalhe|comentario|motivo)$`)
 	keySecret  = regexp.MustCompile(`(?i)^(ref|token|hash|senha|chave|key|clientKey|adyenClientKey|jiraIssueId)$`)
-	keyDigits  = regexp.MustCompile(`(?i)(cpf|cnpj|cep|telefone|celular|conta$|numeroConta|agencia|inscricao|pis|nit|documento|identificador)`)
+	keyDigits  = regexp.MustCompile(`(?i)(cpf|cnpj|cep|telefone|celular|conta$|numeroConta|agencia|inscricao|pis|nit|documento|identificador|^numero$)`)
 	keyMoney   = regexp.MustCompile(`(?i)(valor|saldo|total|faturamento|receita|credito|debito|preco|montante|juros|multa|prolabore|lucro|distribu|adiantamento|base)`)
 )
 
