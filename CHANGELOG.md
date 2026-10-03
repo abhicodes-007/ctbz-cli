@@ -7,6 +7,8 @@ usa [Versionamento Semântico](https://semver.org/lang/pt-BR/).
 
 ## [Unreleased]
 
+## [0.8.0] - 2026-10-03
+
 ### Added
 
 - `ctbz documentos`: tipos da central de documentos com quantidade enviada; `--tipo` lista os
@@ -138,7 +140,8 @@ usa [Versionamento Semântico](https://semver.org/lang/pt-BR/).
   categoria, salário-base e data de entrada.
 - `ctbz empresa atividades`: CNAEs da empresa, a principal e os anexos do Simples Nacional.
 
-[Unreleased]: https://github.com/edusouza/ctbz-cli/compare/v0.7.0...HEAD
+[Unreleased]: https://github.com/edusouza/ctbz-cli/compare/v0.8.0...HEAD
+[0.8.0]: https://github.com/edusouza/ctbz-cli/compare/v0.7.0...v0.8.0
 [0.7.0]: https://github.com/edusouza/ctbz-cli/compare/v0.6.0...v0.7.0
 [0.6.0]: https://github.com/edusouza/ctbz-cli/compare/v0.5.0...v0.6.0
 [0.5.0]: https://github.com/edusouza/ctbz-cli/compare/v0.4.0...v0.5.0

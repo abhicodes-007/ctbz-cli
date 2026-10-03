@@ -25,7 +25,7 @@ Labels usadas: `épico`, `versão: vX.Y`, `contexto: …`, `tipo: funcionalidade
 | **v0.5** | Notas fiscais | [#28](https://github.com/edusouza/ctbz-cli/issues/28) | 5 | concluída |
 | **v0.6** | Pró-labore e distribuição de lucros | [#34](https://github.com/edusouza/ctbz-cli/issues/34) | 5 | concluída |
 | **v0.7** | Contabilidade: relatórios, caixa e extratos | [#40](https://github.com/edusouza/ctbz-cli/issues/40) | 6 | concluída |
-| **v0.8** | Documentos e certificado digital | [#47](https://github.com/edusouza/ctbz-cli/issues/47) | 2 | planejada |
+| **v0.8** | Documentos e certificado digital | [#47](https://github.com/edusouza/ctbz-cli/issues/47) | 2 | concluída |
 | **v1.0** | Estabilidade e distribuição (futuro) | [#50](https://github.com/edusouza/ctbz-cli/issues/50) | 3 | planejada |
 
 ## v0.1 — Login e dados da empresa
@@ -152,8 +152,8 @@ Documentos enviados à Contabilizei e situação do certificado digital (candida
 
 | | Issue | Funcionalidade | Tipo |
 |---|---|---|---|
-| ⬜ | [#48](https://github.com/edusouza/ctbz-cli/issues/48) | Documentos enviados | funcionalidade |
-| ⬜ | [#49](https://github.com/edusouza/ctbz-cli/issues/49) | Certificado digital: situação e renovação (leitura) | funcionalidade |
+| ✅ | [#48](https://github.com/edusouza/ctbz-cli/issues/48) | Documentos enviados | funcionalidade |
+| ✅ | [#49](https://github.com/edusouza/ctbz-cli/issues/49) | Certificado digital: situação e renovação (leitura) | funcionalidade |
 
 Fora de escopo: Enviar documentos, emitir/renovar/remover certificado (escrita).
 
