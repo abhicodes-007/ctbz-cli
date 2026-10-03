@@ -1,0 +1,47 @@
+[
+  {
+    "classificacaoConta": "ATIVO",
+    "descricao": "ATIVO",
+    "id": "1",
+    "idContaPai": null,
+    "listaLancamento": [],
+    "natureza": "DEVEDORA",
+    "nivel": 1,
+    "saldoAnterior": 1234.56,
+    "saldoExercicio": 1234.56,
+    "saldoExercicioAnterior": 1000,
+    "tipo": "S",
+    "totalCredito": 1234.56,
+    "totalDebito": 1234.56
+  },
+  {
+    "classificacaoConta": "ATIVO",
+    "descricao": "CIRCULANTE",
+    "id": "1.01",
+    "idContaPai": "1",
+    "listaLancamento": [],
+    "natureza": null,
+    "nivel": 2,
+    "saldoAnterior": 1234.56,
+    "saldoExercicio": 1234.56,
+    "saldoExercicioAnterior": 1000,
+    "tipo": "S",
+    "totalCredito": 1234.56,
+    "totalDebito": 1234.56
+  },
+  {
+    "classificacaoConta": "ATIVO",
+    "descricao": "CAIXA E EQUIVALENTES DE CAIXA",
+    "id": "1.01.01",
+    "idContaPai": "1.01",
+    "listaLancamento": [],
+    "natureza": "DEVEDORA",
+    "nivel": 3,
+    "saldoAnterior": 1234.56,
+    "saldoExercicio": 1234.56,
+    "saldoExercicioAnterior": 1000,
+    "tipo": "S",
+    "totalCredito": 1234.56,
+    "totalDebito": 1234.56
+  }
+]
