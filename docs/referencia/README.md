@@ -25,6 +25,7 @@ Gerada a partir da própria CLI (`go run ./tools/gendocs`); não edite à mão.
 | [`ctbz impostos tabela-irrf`](ctbz_impostos_tabela-irrf.md) | Mostra a tabela progressiva do IRRF usada no cálculo do pró-labore |
 | [`ctbz login`](ctbz_login.md) | Autentica na Contabilizei (usuário, senha e código por e-mail) |
 | [`ctbz logout`](ctbz_logout.md) | Apaga a sessão local |
+| [`ctbz mensalidade`](ctbz_mensalidade.md) | Mostra a mensalidade atual da Contabilizei (valor, vencimento e situação) |
 | [`ctbz pendencias`](ctbz_pendencias.md) | Lista as pendências da empresa (tipo, detalhe, prazo e situação) |
 | [`ctbz pendencias conciliacao`](ctbz_pendencias_conciliacao.md) | Mostra as pendências de conciliação fiscal (notas e recebimentos) |
 | [`ctbz resumo`](ctbz_resumo.md) | Mostra numa lista só o que precisa de atenção |

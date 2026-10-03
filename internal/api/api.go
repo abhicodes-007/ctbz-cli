@@ -50,6 +50,8 @@ func Endpoints() []Endpoint {
 		{Name: "conciliacao_resumo", LivePath: PathConciliacaoInit, Type: ConciliacaoResumo{}},
 		{Name: "conciliacao_pendencias", LivePath: PathConciliacaoPendencias + "?status=PENDENTE&tipoPendencia=" + PendenciaNotaSemRecebimento, Type: PaginaConciliacao{}},
 		{Name: "chamados_em_andamento", LivePath: PathChamadosEmAndamento, Type: []Chamado{}},
+		{Name: "fatura", LivePath: PathFatura, Type: Fatura{}},
+		{Name: "mensalidade", LivePath: PathMensalidade, Type: Mensalidade{}},
 	}
 }
 
