@@ -70,3 +70,4 @@ nav:
       - "0011 Fixtures podadas": adr/0011-fixtures-podadas-ao-contrato.md
       - "0012 Prazos e alertas": adr/0012-prazos-e-alertas.md
       - "0013 Sem retentativa": adr/0013-sem-retentativa-com-fonte-alternativa.md
+      - "0014 CI": adr/0014-ci-no-github-actions.md

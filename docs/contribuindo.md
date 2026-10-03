@@ -9,6 +9,9 @@ Convenções do dia a dia. Decisões maiores estão nos [ADRs](adr/README.md).
 2. Branch `vX.Y/NN-slug`; commits atômicos em [Conventional Commits](https://www.conventionalcommits.org/pt-br/),
    em português.
 3. Cada commit compila e passa em `gofmt -l .`, `go vet ./...` e `go test ./...`.
+4. O CI (`.github/workflows/ci.yml`) roda as mesmas verificações, com `-race`, em Linux e
+   macOS, e valida a documentação com `mkdocs build --strict`
+   ([ADR-0014](adr/0014-ci-no-github-actions.md)). Um PR só entra com o CI verde.
 
 ## Definição de pronto de um PR
 
@@ -39,6 +42,17 @@ Convenções do dia a dia. Decisões maiores estão nos [ADRs](adr/README.md).
 
 - Só `GET` nos comandos de domínio ([ADR-0002](adr/0002-somente-leitura-ate-1-0.md)).
 - Sessão e credenciais nunca vão para logs, testes ou commits.
+
+## Documentação publicada
+
+A cada push na `main`, `.github/workflows/docs.yml` gera o site com MkDocs e o publica no
+GitHub Pages. Configuração única no repositório: **Settings → Pages → Build and deployment →
+Source: GitHub Actions**. Para ver localmente:
+
+```sh
+pip install -r docs/requirements.txt
+mkdocs serve
+```
 
 ## Lançar uma versão
 
