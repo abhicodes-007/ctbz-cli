@@ -26,6 +26,10 @@ type CNPJ string
 // CPF guarda só os dígitos. Tabela: "000.000.000-00"; JSON/CSV: dígitos.
 type CPF string
 
+// Text é um texto longo (ex.: descrições). Tabela: cortado em 60 caracteres com "…";
+// JSON/CSV: completo. Texto vazio é tratado como ausente.
+type Text string
+
 // NewCPF remove a pontuação de um CPF.
 func NewCPF(s string) CPF { return CPF(NewCNPJ(s)) }
 
@@ -130,6 +134,11 @@ func cellText(v any, f Format) string {
 			return x.Local().Format("02/01/2006 15:04")
 		}
 		return x.Format(time.RFC3339)
+	case Text:
+		if table {
+			return truncate(string(x), textMax)
+		}
+		return string(x)
 	case CNPJ:
 		if table {
 			return FormatCNPJ(x)
@@ -163,7 +172,7 @@ func cellText(v any, f Format) string {
 		}
 		s := string(raw)
 		if table {
-			s = truncate(s, 60)
+			s = truncate(s, textMax)
 		}
 		return s
 	}
@@ -186,6 +195,9 @@ func numeric(v any) bool {
 	}
 	return false
 }
+
+// textMax é o tamanho máximo de Text e de JSON aninhado numa célula da tabela.
+const textMax = 60
 
 func truncate(s string, max int) string {
 	r := []rune(s)

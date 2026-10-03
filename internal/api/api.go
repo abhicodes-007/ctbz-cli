@@ -45,6 +45,7 @@ func Endpoints() []Endpoint {
 		{Name: "impostos_pagos_no_ano", Type: DadosGrafico{}}, // o ano vem do histórico de faturamento
 		{Name: "parcelamentos", LivePath: PathImpostosV3, Type: ParcelamentosV3{}},
 		{Name: "debitos_federais", LivePath: PathDebitosFederais, Type: DebitosFederais{}},
+		{Name: "pendencias_empresa", LivePath: PathPendenciasEmpresa, Type: []PendenciaEmpresa{}},
 	}
 }
 

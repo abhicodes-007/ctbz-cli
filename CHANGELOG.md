@@ -7,6 +7,11 @@ usa [Versionamento Semântico](https://semver.org/lang/pt-BR/).
 
 ## [Unreleased]
 
+### Added
+
+- `ctbz pendencias`: pendências da empresa com tipo, detalhe, criação, prazo e situação;
+  coluna `alerta` (`vencida`/`próxima`), `--todas` e `--fail-on-vencidas` (código 4).
+
 ## [0.2.0] - 2026-10-03
 
 ### Added
