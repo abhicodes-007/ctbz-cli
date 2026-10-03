@@ -39,6 +39,8 @@ func Endpoints() []Endpoint {
 		{Name: "menu", LivePath: PathMenu, Type: []MenuItem{}},
 		{Name: "sessao_empresa", Type: EmpresaSessao{}}, // localStorage "e" do login
 		{Name: "certificado_status", LivePath: PathCertificadoStatus, Type: CertificadoStatus{}},
+		{Name: "certificado_processo", LivePath: PathCertificadoProcesso, Type: CertificadoProcesso{}},
+		{Name: "certificado_card", LivePath: PathCertificadoCard, Type: CertificadoCard{}},
 		{Name: "socios", LivePath: PathSocios, Type: []Socio{}},
 		{Name: "cnaes", LivePath: PathCNAEs, Type: []CNAEEmpresa{}},
 		{Name: "guias_a_pagar", LivePath: PathGuiasAPagar, Type: GuiasAPagar{}},
