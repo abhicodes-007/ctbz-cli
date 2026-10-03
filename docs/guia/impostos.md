@@ -90,3 +90,19 @@ Mostra os últimos 12 meses do mais antigo ao mais recente: faturamento e pró-l
 apuração e o total pago em impostos em cada mês. O resumo traz o faturamento acumulado (RBT12,
 que define a alíquota do Simples Nacional) e o Fator R (pró-labore ÷ faturamento; a partir de
 28% algumas atividades saem do Anexo V para o Anexo III).
+
+## Parcelamentos e débitos federais
+
+```sh
+ctbz impostos parcelamentos          # em andamento, ativos e encerrados
+ctbz impostos parcelamento ID        # detalhe de um parcelamento
+ctbz impostos debitos                # há débitos federais em aberto?
+```
+
+- A lista vem da aba "Parcelamentos" do painel (rota `impostos/v3/impostos-a-pagar/init`, que
+  continua respondendo mesmo com a tela v5 ativa).
+- O detalhe de um parcelamento é mostrado como a API devolve: o formato não pôde ser
+  verificado, porque a conta usada no desenvolvimento não tinha parcelamentos.
+- `debitos --fail-on-debitos` termina com código 4 quando há débitos federais.
+- Simular ou contratar parcelamento continua sendo feito pelo painel (a CLI só lê,
+  ver [ADR-0002](../adr/0002-somente-leitura-ate-1-0.md)).

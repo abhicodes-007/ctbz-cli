@@ -20,6 +20,8 @@ usa [Versionamento Semântico](https://semver.org/lang/pt-BR/).
   mês e situação.
 - `ctbz impostos faturamento`: faturamento, pró-labore e impostos pagos nos últimos 12 meses,
   com RBT12 e Fator R.
+- `ctbz impostos parcelamentos`, `ctbz impostos parcelamento ID` e `ctbz impostos debitos`
+  (`--fail-on-debitos`).
 - Guia de uso por contexto em `docs/guia/`.
 
 ## [0.1.0] - 2026-10-03

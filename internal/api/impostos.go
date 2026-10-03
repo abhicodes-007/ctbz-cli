@@ -254,3 +254,51 @@ type DadosGrafico struct {
 func BuscarImpostosPagosNoAno(ctx context.Context, g Getter, ano int) (*DadosGrafico, error) {
 	return get[DadosGrafico](ctx, g, fmt.Sprintf("%s?ano=%d", PathDadosGrafico, ano))
 }
+
+const (
+	// PathImpostosV3 é o init da tela de impostos v3/v4. Mesmo com a tela v5 ativa ele
+	// responde, e é a única fonte da lista de parcelamentos (abaParcelamentos).
+	PathImpostosV3      = "impostos/v3/impostos-a-pagar/init"
+	PathDebitosFederais = "dashboard/informerendimento/debitos-federais"
+)
+
+// PathParcelamento é o detalhe de um parcelamento (o ID vem de ParcelamentosV3).
+func PathParcelamento(id int64) string {
+	return fmt.Sprintf("impostos/parcelamento/detalhes/%d", id)
+}
+
+// Parcelamento é um item da aba de parcelamentos. Campos vistos no front; a conta usada
+// nos testes não tinha parcelamentos, por isso são todos opcionais no contrato.
+type Parcelamento struct {
+	IDParcelamento   int64  `json:"idParcelamento" contract:"optional"`
+	Titulo           string `json:"titulo" contract:"optional"`
+	TipoParcelamento string `json:"tipoParcelamento" contract:"optional"`
+	Status           string `json:"status" contract:"optional"`
+	ParcelaAtual     *struct {
+		NumeroParcela int `json:"numeroParcela" contract:"optional"`
+	} `json:"parcelaAtual" contract:"optional"`
+}
+
+// ParcelamentosV3 é a parte de impostos/v3/impostos-a-pagar/init usada pela CLI.
+type ParcelamentosV3 struct {
+	AbaParcelamentos struct {
+		EmAndamento []Parcelamento `json:"emAndamento"`
+		Ativos      []Parcelamento `json:"ativos"`
+		Historico   []Parcelamento `json:"historico"`
+	} `json:"abaParcelamentos"`
+}
+
+// BuscarParcelamentos lê os parcelamentos em andamento, ativos e encerrados.
+func BuscarParcelamentos(ctx context.Context, g Getter) (*ParcelamentosV3, error) {
+	return get[ParcelamentosV3](ctx, g, PathImpostosV3)
+}
+
+// DebitosFederais é a resposta de dashboard/informerendimento/debitos-federais.
+type DebitosFederais struct {
+	PossuiDebitosFederais bool `json:"possuiDebitosFederais"`
+}
+
+// BuscarDebitosFederais lê se há débitos federais em aberto.
+func BuscarDebitosFederais(ctx context.Context, g Getter) (*DebitosFederais, error) {
+	return get[DebitosFederais](ctx, g, PathDebitosFederais)
+}

@@ -57,6 +57,9 @@ Legenda: ✅ 200 · ⚠️ responde, mas precisa de parâmetro ou não está lib
 | `impostos/como-imposto-foi-calculado/init` | ✅ | `nomeMesCompetencia, faturamentoTotal, dasSimples{…}, darf{inss{…}, irrf{…}, total}, valorFaturamentoUltimos12Meses, valorProlaboreUltimos12Meses, percentualFatorR, historicoFaturamento[{mes, valorFaturamento, valorProlabore}]` — usado por `ctbz impostos calculo` |
 | `impostos/como-imposto-foi-calculado/tabela-irrf` | ✅ | lista `{baseCalculo, aliquota, deducao}` em texto (ex.: `"7,5%"`) |
 | `impostos/rollout` | ✅ | `versao` (`v3`, `v4` ou `v5`; a conta testada usa `v5`) |
+| `impostos/v3/impostos-a-pagar/init` (também `v4`) | ✅ | `abaParcelamentos{emAndamento[], ativos[], historico[]}`, `impostos[]`, `abaEsteMes`, `abaEmAtraso`… — responde mesmo com rollout `v5`; usado por `ctbz impostos parcelamentos` |
+| `impostos/parcelamento/negociacao-automatica/{tipo}/init` | ❌ 560 | "Empresa não possui guias para simulação" (sem dívidas) |
+| `impostos/parcelamento/banner-oferta-parcelamento` | ✅ 204 | sem conteúdo |
 | `impostos/` · `impostos/impostos-a-pagar/` · `impostos/parcelamentos` | ❌ 404 | não são rotas de API |
 
 Fluxo para baixar as guias do mês:
