@@ -10,7 +10,7 @@ comando e flag está em [Referência de comandos](../referencia/README.md).
 | [Mensalidade e pagamentos](mensalidade.md) | Mensalidade, situação com a Contabilizei, plano e contrato |
 | [Notas fiscais](notas.md) | Notas emitidas e de entrada, tomadores, configuração do emissor e alíquotas |
 | [Pró-labore e lucros](prolabore.md) | Pró-labore por sócio, histórico, parâmetros de cálculo, Fator R, distribuição de lucros e informe de rendimentos |
-| [Contabilidade](contabil.md) | Balancete, balanço, razão, caixa, extratos e contas bancárias |
+| [Contabilidade](contabil.md) | Balancete, balanço, razão, caixa, extratos, contas bancárias e plano de contas |
 
 Antes de tudo, faça o login (veja o [README](https://github.com/edusouza/ctbz-cli#login)).
 Todos os comandos aceitam `-o table|json|csv`.

@@ -19,6 +19,8 @@ usa [Versionamento Semântico](https://semver.org/lang/pt-BR/).
   situação; total do mês no stderr.
 - `ctbz extratos`: situação do extrato por conta bancária e mês (`--ano`);
   `ctbz contas-bancarias`: banco, agência, conta, saldo inicial e integração.
+- `ctbz contas`: plano de contas usado nas classificações, com conta contábil, classificação
+  e situação; `--busca` e `--situacao`.
 
 ## [0.6.0] - 2026-10-03
 
