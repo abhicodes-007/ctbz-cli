@@ -79,6 +79,11 @@ func marshal(v any) ([]byte, error) {
 			return []byte("null"), nil
 		}
 		return json.Marshal(string(x))
+	case CPF:
+		if x == "" {
+			return []byte("null"), nil
+		}
+		return json.Marshal(string(x))
 	case string:
 		return marshalString(x)
 	default:

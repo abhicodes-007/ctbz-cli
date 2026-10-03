@@ -18,6 +18,9 @@ Legenda: ✅ 200 · ⚠️ responde, mas precisa de parâmetro ou não está lib
 | `appshell/get` | ✅ | `alerta` |
 | `contrato/buscarContratoServico` | ✅ | `html, versao, idHistoricoContrato`: texto do contrato de serviço |
 | `empresa/dadosacesso/init` | ⚠️ 403 | `{"message": …}` |
+| `/api/legado/socio/list` | ✅ | lista de sócios: `id, nome, cpf, administrador, responsavelReceita, possuiProLabore, salarioBase, dataAdmissao, categoria{descricao}, situacaoColaborador{descricao}` e ~90 outros campos pessoais — usado por `ctbz empresa socios` |
+| `/api/legado/notafiscal/cnaeanexosmultiplos/list` | ✅ | CNAEs: `cnae{codigo, descricao, tipoRamoAtividade}, anexos[{codTabelaSimples, ativo, principal}]` — usado por `ctbz empresa atividades` |
+| `/api/public/requestselecaoempresa?redirect=/&cnpj=` | ⚠️ 302 | redireciona para o SSO (`sso.contabilizei.com/selecionarempresa`), que exige sessão própria (ver [seleção de empresa](../autenticacao/03-selecao-de-empresa.md#trocar-de-empresa)) |
 
 ## Dashboard (tela inicial)
 

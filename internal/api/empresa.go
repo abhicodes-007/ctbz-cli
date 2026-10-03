@@ -140,3 +140,61 @@ type CertificadoStatus struct {
 func BuscarCertificadoStatus(ctx context.Context, g Getter) (*CertificadoStatus, error) {
 	return get[CertificadoStatus](ctx, g, PathCertificadoStatus)
 }
+
+// Caminhos no monolito legado (/api/legado/).
+const (
+	PathSocios = "/api/legado/socio/list"
+	PathCNAEs  = "/api/legado/notafiscal/cnaeanexosmultiplos/list"
+)
+
+// Socio é um item de socio/list. A resposta real traz muitos dados pessoais
+// (documentos, filiação, dependentes); só os campos abaixo são lidos.
+type Socio struct {
+	ID                 int64   `json:"id"`
+	Nome               string  `json:"nome"`
+	CPF                string  `json:"cpf"`
+	Administrador      bool    `json:"administrador"`
+	ResponsavelReceita bool    `json:"responsavelReceita"`
+	PossuiProLabore    bool    `json:"possuiProLabore"`
+	SalarioBase        float64 `json:"salarioBase"`
+	DataAdmissao       int64   `json:"dataAdmissao"`
+	Categoria          struct {
+		Descricao string `json:"descricao"`
+	} `json:"categoria"`
+	SituacaoColaborador struct {
+		Descricao string `json:"descricao"`
+	} `json:"situacaoColaborador"`
+}
+
+// BuscarSocios lê a lista de sócios da empresa.
+func BuscarSocios(ctx context.Context, g Getter) ([]Socio, error) {
+	s, err := get[[]Socio](ctx, g, PathSocios)
+	if err != nil {
+		return nil, err
+	}
+	return *s, nil
+}
+
+// CNAEEmpresa é um item de notafiscal/cnaeanexosmultiplos/list: um CNAE da empresa e os
+// anexos do Simples Nacional em que ele pode ser tributado.
+type CNAEEmpresa struct {
+	CNAE struct {
+		Codigo            string `json:"codigo"`
+		Descricao         string `json:"descricao"`
+		TipoRamoAtividade string `json:"tipoRamoAtividade"`
+	} `json:"cnae"`
+	Anexos []struct {
+		CodTabelaSimples int  `json:"codTabelaSimples"`
+		Ativo            bool `json:"ativo"`
+		Principal        bool `json:"principal"`
+	} `json:"anexos"`
+}
+
+// BuscarCNAEs lê os CNAEs da empresa.
+func BuscarCNAEs(ctx context.Context, g Getter) ([]CNAEEmpresa, error) {
+	c, err := get[[]CNAEEmpresa](ctx, g, PathCNAEs)
+	if err != nil {
+		return nil, err
+	}
+	return *c, nil
+}

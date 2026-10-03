@@ -24,6 +24,9 @@ usa [Versionamento Semântico](https://semver.org/lang/pt-BR/).
 - `ctbz empresa` mostra também natureza jurídica, data de abertura, início na Contabilizei,
   inscrição estadual e endereço.
 - `ctbz empresa certificado`: situação, vencimento e dias para vencer do certificado digital.
+- `ctbz empresa socios`: sócios com CPF, papel (administrador, responsável na Receita),
+  categoria, salário-base e data de entrada.
+- `ctbz empresa atividades`: CNAEs da empresa, a principal e os anexos do Simples Nacional.
 
 ### Changed
 
