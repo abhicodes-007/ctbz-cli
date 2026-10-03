@@ -31,7 +31,7 @@ ctbz login --cnpj 22222222000122
 
 ## Gmail via Google Workspace CLI (`gws`)
 
-[`scripts/otp-gmail-gws.sh`](../../scripts/otp-gmail-gws.sh) usa o
+[`scripts/otp-gmail-gws.sh`](https://github.com/edusouza/ctbz-cli/blob/main/scripts/otp-gmail-gws.sh) usa o
 [Google Workspace CLI](https://github.com/googleworkspace/cli) e `jq`:
 
 1. `gws gmail users messages list` com a busca
