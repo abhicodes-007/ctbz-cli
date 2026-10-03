@@ -7,6 +7,12 @@ usa [Versionamento Semântico](https://semver.org/lang/pt-BR/).
 
 ## [Unreleased]
 
+### Added
+
+- `ctbz notas`: NFS-e emitidas no período (`--de`/`--ate`, até 24 meses) com número, emissão,
+  tomador, documento, valor, status e situação; filtros `--tomador` (nome ou CPF/CNPJ) e
+  `--numero`; total do período no stderr.
+
 ## [0.4.0] - 2026-10-03
 
 ### Added

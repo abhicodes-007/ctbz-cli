@@ -32,6 +32,7 @@ nav:
       - Impostos: guia/impostos.md
       - Pendências, rotinas e atendimento: guia/pendencias.md
       - Mensalidade e pagamentos: guia/mensalidade.md
+      - Notas fiscais: guia/notas.md
   - Referência de comandos: referencia/README.md
   - Autenticação:
       - Visão geral: autenticacao/README.md
