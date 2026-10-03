@@ -101,6 +101,8 @@ ctbz api impostos/v3/impostos-a-pagar/guia/<id>/baixar-guia | jq -r .url
 | `novo-emissor/tomadores/init` | ✅ | `emissaoSemTomador, tomadores, permiteEmissaoExterior` |
 | `novo-emissor/clientes/consulta/{cnpj}` | ✅ | cadastro na Receita: `cnpj, razaoSocial, nomeFantasia, dataAbertura, atividadePrincipal, naturezaJuridica, situacaoCadastral, optanteSimples, endereço, socios…` |
 | `novo-emissor/v2/versao-emissor` | ✅ | `versaoNovoEmissor` |
+| `/api/emissor/notasentrada/listar/{0\|1}?mes&ano&empresa&qtdPagina&cursor` | ✅ | `{list[], total, cursor, serializedList}`: notas de entrada a manifestar (0) e manifestadas (1) |
+| `/api/emissor/classificacaonotas/listar/?mes&ano&empresa&tipo&limite&cursor&offset` | ✅ | mesmo formato: a classificar (`tipo=0`) e classificadas (`tipo=1`) |
 | `notafiscal/listaliquotaatividade` | ✅ | `regimeTributario, temCodigoServicoItemServico, interno, externo` |
 
 ## Certificado digital, documentos, pagamentos e atendimento

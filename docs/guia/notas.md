@@ -60,6 +60,23 @@ externo  servico  6204-0/00  Consultoria em TI  01.06  Assessoria e consultoria 
   alíquota do Simples, a parte que é ISS e o Fator R usado no cálculo. O mercado `externo`
   (tomador no exterior) não tem ISS.
 
+## Notas de entrada (NF-e recebidas)
+
+```sh
+ctbz notas entrada                                    # a manifestar, mês atual
+ctbz notas entrada --lista manifestadas --mes 2026-09
+ctbz notas entrada --lista a-classificar --emitente "ACME"
+```
+
+- São as notas de compra emitidas contra o CNPJ da empresa, as mesmas da tela "Notas fiscais
+  de entrada". `--lista` escolhe a aba: `a-manifestar` (padrão), `manifestadas`,
+  `a-classificar` e `classificadas`.
+- Colunas: emissão, emitente, CNPJ do emitente, valor, situação (ex.: Ciência), chave de
+  acesso e ID.
+- Manifestar (ciência, desconhecimento) e classificar (estoque, insumo, uso e consumo)
+  continuam sendo feitos pelo painel.
+- Notas de serviço **tomadas** não estão disponíveis: a tela antiga foi removida do site.
+
 ## PDF e XML das notas
 
 A API do painel não oferece o PDF nem o XML das NFS-e emitidas: a Contabilizei envia o
