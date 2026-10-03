@@ -77,6 +77,8 @@ func Endpoints() []Endpoint {
 		{Name: "balancete", LivePath: PathBalancete(2026, 9), Type: []ContaRelatorio{}},
 		{Name: "balanco", LivePath: PathBalanco(2026, 9), Type: []ContaRelatorio{}},
 		{Name: "razao", LivePath: PathRazao(2026, 9), Type: []ContaRelatorio{}},
+		{Name: "caixa", LivePath: PathCaixa(2026, 9), Type: Caixa{}},
+		{Name: "contas_usuario", LivePath: PathContasUsuario, Type: []ContaUsuario{}},
 		{Name: "distribuicao_lucros", LivePath: PathDistribuicaoLucros, Type: DistribuicaoLucros{}},
 		{Name: "restricoes_informe", LivePath: PathRestricoesInforme(2025), Type: RestricoesInforme{}},
 		{Name: "socios_informe", LivePath: PathSociosInforme(2025), Type: []SocioInforme{}},
