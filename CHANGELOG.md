@@ -11,6 +11,9 @@ usa [Versionamento Semântico](https://semver.org/lang/pt-BR/).
 
 - `ctbz impostos`: guias a pagar em atraso, do mês e do próximo mês, com totais por grupo;
   `--atrasadas` e `--fail-on-atraso` (código de saída 4 quando há atraso).
+- `ctbz impostos guia ID`: detalhe de uma guia (valores, juros e multa, situação, ações).
+- `ctbz impostos calculo` e `ctbz impostos tabela-irrf`: memória de cálculo do mês e tabela
+  do IRRF.
 - Guia de uso por contexto em `docs/guia/`.
 
 ## [0.1.0] - 2026-10-03

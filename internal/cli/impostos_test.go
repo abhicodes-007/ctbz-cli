@@ -63,3 +63,42 @@ func TestCompetenciaDeTexto(t *testing.T) {
 		}
 	}
 }
+
+func TestImpostosGuia(t *testing.T) {
+	withSession(t, fakeAPI(t, map[string]string{
+		"/api/plataforma/impostos/v5/impostos-a-pagar/guia/1000000000000001": fixture(t, "guia_detalhe"),
+	}))
+	out, stderr, code := execCLI(t, "", "impostos", "guia", "1000000000000001", "-o", "json")
+	if code != ExitOK {
+		t.Fatalf("código %d: %s", code, stderr)
+	}
+	for _, want := range []string{`"competencia": "07/2026"`, `"vencimento": "2026-10-06"`, `"valor_total": 1234.56`,
+		`"valor_original": 1000.00`, `"valor_estimado": null`, `"situacao": [`, `"tipo": "guia"`} {
+		if !strings.Contains(out, want) {
+			t.Errorf("JSON sem %s:\n%s", want, out)
+		}
+	}
+	if _, _, code := execCLI(t, "", "impostos", "guia", "abc"); code != ExitUsage {
+		t.Errorf("ID inválido: código %d", code)
+	}
+}
+
+func TestImpostosCalculoETabelaIRRF(t *testing.T) {
+	withSession(t, fakeAPI(t, map[string]string{
+		"/api/plataforma/impostos/como-imposto-foi-calculado/init":        fixture(t, "calculo_imposto"),
+		"/api/plataforma/impostos/como-imposto-foi-calculado/tabela-irrf": fixture(t, "tabela_irrf"),
+	}))
+	out, stderr, code := execCLI(t, "", "impostos", "calculo", "-o", "json")
+	if code != ExitOK {
+		t.Fatalf("código %d: %s", code, stderr)
+	}
+	for _, want := range []string{`"mes": "Setembro"`, `"faturamento": 1000.00`, `"das_total": null`, `"fator_r": 100`} {
+		if !strings.Contains(out, want) {
+			t.Errorf("JSON sem %s:\n%s", want, out)
+		}
+	}
+	out, _, _ = execCLI(t, "", "impostos", "tabela-irrf", "-o", "csv")
+	if !strings.HasPrefix(out, "base_calculo,aliquota,deducao\n") || !strings.Contains(out, `"7,5%","R$ 182,16"`) {
+		t.Errorf("CSV:\n%s", out)
+	}
+}

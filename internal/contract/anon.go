@@ -47,12 +47,14 @@ var (
 	// Chaves cujo valor identifica pessoas, empresas ou endereços.
 	keyName    = regexp.MustCompile(`(?i)(nome|razao|fantasia|titular|responsavel|socio|cliente|tomador)`)
 	keyAddress = regexp.MustCompile(`(?i)(logradouro|endereco|bairro|complemento|rua|cidade|municipio$)`)
-	keyFree    = regexp.MustCompile(`(?i)^(subject|assunto|mensagem|observacao|detalhe|comentario|motivo)$`)
-	keySecret  = regexp.MustCompile(`(?i)^(ref|token|hash|senha|chave|key|clientKey|adyenClientKey|jiraIssueId)$`)
-	keyDigits  = regexp.MustCompile(`(?i)(cpf|cnpj|cep|telefone|celular|conta$|numeroConta|agencia|inscricao|pis|nit|documento|identificador|^numero$|rg$|cnh|eleitor|rne|passaporte)`)
-	keyBirth   = regexp.MustCompile(`(?i)nascimento`)
-	keyMoney   = regexp.MustCompile(`(?i)(valor|saldo|total|faturamento|receita|credito|debito|preco|montante|juros|multa|prolabore|lucro|distribu|adiantamento|base|imposto|economia|cenario|pago|custo)`)
-	keyID      = regexp.MustCompile(`(?i)^id|id$|^(mes|ano|periodo|dia|quantidade\w*|nr\w*|numero\w*)$`)
+	// Chaves que casam com as regras acima mas não identificam ninguém.
+	keyNotPersonal = regexp.MustCompile(`(?i)^nomeMes`)
+	keyFree        = regexp.MustCompile(`(?i)^(subject|assunto|mensagem|observacao|detalhe|comentario|motivo)$`)
+	keySecret      = regexp.MustCompile(`(?i)^(ref|token|hash|senha|chave|key|clientKey|adyenClientKey|jiraIssueId)$`)
+	keyDigits      = regexp.MustCompile(`(?i)(cpf|cnpj|cep|telefone|celular|conta$|numeroConta|agencia|inscricao|pis|nit|documento|identificador|^numero$|rg$|cnh|eleitor|rne|passaporte)`)
+	keyBirth       = regexp.MustCompile(`(?i)nascimento`)
+	keyMoney       = regexp.MustCompile(`(?i)(valor|saldo|total|faturamento|receita|credito|debito|preco|montante|juros|multa|prolabore|lucro|distribu|adiantamento|base|imposto|economia|cenario|pago|custo)`)
+	keyID          = regexp.MustCompile(`(?i)^id|id$|^(mes|ano|periodo|dia|quantidade\w*|nr\w*|numero\w*)$`)
 )
 
 const (
@@ -97,6 +99,8 @@ func (a *anonymizer) text(key, s string) string {
 		return s
 	case len(s) > longText:
 		return "<texto omitido>"
+	case keyNotPersonal.MatchString(key):
+		return s
 	case keySecret.MatchString(key):
 		return "XXXX"
 	case strings.Contains(strings.ToLower(key), "email"):
