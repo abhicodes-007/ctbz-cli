@@ -45,3 +45,15 @@ func TestProlaboreHistorico(t *testing.T) {
 		t.Errorf("--socio 1 (código %d):\n%s", code, out)
 	}
 }
+
+func TestProlaboreParametros(t *testing.T) {
+	withSession(t, fakeAPI(t, map[string]string{"/api/plataforma/prolabore/init": `{"salarioMinimo":"R$ 1.621,00",
+"valorMaximoContribuicaoInss":"R$ 932,31","valorMaximoProlabore":"R$ 8.475,55","porcentagemInss":11.0,
+"valorMinimoProlaboreParaIncidenciaIrrf":"R$ 5.000,00","isMotorFatorR":true}`}))
+	out, stderr, code := execCLI(t, "", "prolabore", "parametros", "-o", "csv")
+	want := "salario_minimo,inss_aliquota,inss_contribuicao_maxima,prolabore_teto_inss,irrf_a_partir_de\n" +
+		"1621.00,11,932.31,8475.55,5000.00\n"
+	if code != ExitOK || out != want {
+		t.Errorf("código %d (%s):\n%s\nesperado:\n%s", code, stderr, out, want)
+	}
+}

@@ -37,3 +37,22 @@ Competência  Sócio          Pró-labore  Descontos
 
 A API devolve o histórico inteiro de um sócio de uma vez (não aceita ano nem página); a CLI
 consulta cada sócio e filtra por `--ano`. Os descontos são o INSS e o IRRF retidos.
+
+## Parâmetros de cálculo
+
+```sh
+ctbz prolabore parametros
+```
+
+```text
+Salário mínimo:               R$ 1.621,00
+Alíquota do INSS (%):         11
+Contribuição máxima ao INSS:  R$ 932,31
+Pró-labore no teto do INSS:   R$ 8.475,55
+IRRF a partir de:             R$ 5.000,00
+```
+
+- O pró-labore não pode ser menor que o salário mínimo.
+- O sócio contribui com 11% de INSS até o teto; acima do pró-labore no teto, a contribuição
+  não aumenta.
+- Abaixo do valor de incidência, não há IRRF retido.
