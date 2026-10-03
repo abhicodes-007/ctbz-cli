@@ -22,6 +22,16 @@
   },
   "nomeFantasia": "",
   "optanteSimples": true,
+  "planoPagamentoEmpresa": {
+    "pagtoPlano": {
+      "categoria": "BASICO",
+      "descricao": "2025 - Simples - Serviço - Básico [139]",
+      "ramoAtividades": [
+        "SERVICO"
+      ],
+      "valor": 1000
+    }
+  },
   "ramosAtividade": [
     "SERVICO"
   ],

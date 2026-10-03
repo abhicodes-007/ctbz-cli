@@ -121,6 +121,15 @@ type EmpresaSessao struct {
 			} `json:"uf"`
 		} `json:"municipio"`
 	} `json:"endereco"`
+	// Plano contratado com a Contabilizei (null em empresas sem plano ativo).
+	PlanoPagamentoEmpresa *struct {
+		PagtoPlano struct {
+			Descricao      string   `json:"descricao"`
+			Categoria      string   `json:"categoria"`
+			Valor          *float64 `json:"valor"`
+			RamoAtividades []string `json:"ramoAtividades"`
+		} `json:"pagtoPlano"`
+	} `json:"planoPagamentoEmpresa"`
 }
 
 // EmpresaDaSessao decodifica a empresa gravada pelo login.
