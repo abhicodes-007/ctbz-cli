@@ -55,3 +55,21 @@ Data        Conta          Descrição da conta  Histórico       Contrapartida 
 - Um lançamento por linha, com a conta de contrapartida e o saldo acumulado da conta no
   exercício depois do lançamento.
 - A API devolve um mês por vez; a CLI consulta cada mês do período (até 24).
+
+## Caixa do mês
+
+```sh
+ctbz caixa 2026-09
+ctbz caixa 2026-09 -o csv > caixa-2026-09.csv
+```
+
+```text
+Data        Descrição               Conta                         Classificação        Valor  Situação    Automático
+18/09/2026  Pagamento Contabilizei  Mensalidade de contabilidade  DESPESA         -R$ 141,83  CONFIRMADO  sim
+Total do mês: -R$ 141,83 em 1 lançamento(s)
+```
+
+- Entradas e saídas classificadas do mês, com a conta de classificação (de
+  `ctbz contas`) e o tipo (receita, despesa…). Saídas têm valor negativo.
+- `automatico` indica lançamentos feitos pelo sistema (ex.: a mensalidade da Contabilizei).
+- Como no painel, a CLI pede até 1000 lançamentos por mês e avisa se houver mais.

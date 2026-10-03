@@ -12,6 +12,7 @@ Dados vão para stdout no formato escolhido com -o; mensagens e progresso vão p
 - [`ctbz api`](ctbz_api.md): Chama uma URL da plataforma com a sessão atual
 - [`ctbz balancete`](ctbz_balancete.md): Mostra o balancete de verificação de um mês
 - [`ctbz balanco`](ctbz_balanco.md): Mostra o balanço patrimonial (ativo, passivo e patrimônio líquido)
+- [`ctbz caixa`](ctbz_caixa.md): Lista os lançamentos do caixa de um mês
 - [`ctbz chamados`](ctbz_chamados.md): Lista os chamados de atendimento (em andamento ou finalizados)
 - [`ctbz empresa`](ctbz_empresa.md): Mostra os dados da empresa selecionada
 - [`ctbz empresas`](ctbz_empresas.md): Lista as empresas do usuário, marcando a atual
