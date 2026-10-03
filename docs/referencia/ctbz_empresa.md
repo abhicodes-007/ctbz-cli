@@ -20,6 +20,10 @@ ctbz empresa [flags]
   ctbz empresa -o json | jq -r .certificado_validade
 ```
 
+## Subcomandos
+
+- [`ctbz empresa usar`](ctbz_empresa_usar.md): Troca a empresa da sessão
+
 ## Flags
 
 ```

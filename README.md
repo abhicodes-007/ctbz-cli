@@ -81,6 +81,8 @@ cada `ctbz login` gera um e-mail novo, e só o código mais recente vale.
 ```sh
 ctbz status              # dados da sessão e se ela ainda é válida
 ctbz empresa             # resumo da empresa selecionada
+ctbz empresas            # empresas do usuário, marcando a atual
+ctbz empresa usar CNPJ   # troca de empresa (refaz o login: novo OTP)
 ctbz api menu/get        # qualquer endpoint; caminho relativo → /api/plataforma/
 ctbz api -X POST -d @corpo.json /api/plataforma/algum/endpoint
 ctbz logout              # apaga a sessão local
