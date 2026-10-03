@@ -165,6 +165,9 @@ Códigos de saída: `0` sucesso, `1` erro, `2` uso incorreto (comando, flag ou a
 
 Guia de uso por contexto: [`docs/guia`](docs/guia/README.md).
 
+A partir da 1.0, comandos, flags, chaves de JSON/CSV e códigos de saída só mudam de forma
+incompatível numa versão *major* ([ADR-0017](docs/adr/0017-contrato-publico-da-1-0.md)).
+
 ## Como funciona (engenharia reversa)
 
 > Documentação detalhada, separada por contexto, em [`docs/`](docs/README.md):

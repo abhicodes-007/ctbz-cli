@@ -74,3 +74,4 @@ nav:
       - "0014 CI": adr/0014-ci-no-github-actions.md
       - "0015 Releases": adr/0015-releases-com-goreleaser.md
       - "0016 Monitoramento": adr/0016-monitoramento-agendado.md
+      - "0017 Contrato da 1.0": adr/0017-contrato-publico-da-1-0.md
