@@ -1,21 +1,19 @@
-package main
+package cli
 
 import (
 	"context"
 	"errors"
-	"flag"
 	"fmt"
 	"os"
 	"strconv"
 	"strings"
 	"time"
 
+	"github.com/spf13/cobra"
+
 	"github.com/edusouza/ctbz-cli/internal/ctbz"
 	"github.com/edusouza/ctbz-cli/internal/otp"
 )
-
-// errPending sinaliza que o login foi salvo aguardando uma entrada do usuário.
-var errPending = errors.New("login pendente")
 
 type loginOpts struct {
 	otpCode    string
@@ -26,44 +24,66 @@ type loginOpts struct {
 	quiet      bool
 }
 
-func cmdLogin(ctx context.Context, args []string) error {
-	fs := flag.NewFlagSet("login", flag.ContinueOnError)
+func newLoginCmd() *cobra.Command {
 	var o loginOpts
-	fs.StringVar(&o.otpCode, "otp", "", "código OTP recebido por e-mail (retoma um login pendente)")
-	fs.StringVar(&o.otpCmd, "otp-cmd", os.Getenv("CTBZ_OTP_CMD"), "comando de shell que imprime o OTP (env CTBZ_OTP_CMD)")
-	fs.DurationVar(&o.otpTimeout, "otp-timeout", envDuration("CTBZ_OTP_TIMEOUT", 3*time.Minute), "tempo máximo aguardando o --otp-cmd (env CTBZ_OTP_TIMEOUT)")
-	fs.StringVar(&o.cnpj, "cnpj", os.Getenv("CTBZ_CNPJ"), "CNPJ da empresa a selecionar (env CTBZ_CNPJ)")
-	fs.BoolVar(&o.restart, "restart", false, "descarta um login pendente e recomeça")
-	fs.Usage = func() {
-		fmt.Fprint(fs.Output(), `Uso: ctbz login [flags]
+	cmd := &cobra.Command{
+		Use:   "login",
+		Short: "Autentica na Contabilizei (usuário, senha e código por e-mail)",
+		Long: `Autentica na Contabilizei usando CTBZ_USER e CTBZ_PASSWORD.
 
-Autentica na Contabilizei usando CTBZ_USER e CTBZ_PASSWORD.
-
-O código OTP enviado por e-mail pode vir de:
+O código enviado por e-mail pode vir de:
   1. --otp-cmd / CTBZ_OTP_CMD: comando executado repetidamente até imprimir 6 dígitos;
   2. o terminal, se interativo;
-  3. uma segunda chamada: "ctbz login --otp 123456" (o login fica salvo como pendente).
+  3. uma segunda chamada: "ctbz login --otp 123456" (o login fica salvo como pendente
+     e o processo termina com código 3).
 
-Flags:
-`)
-		fs.PrintDefaults()
+Com mais de uma empresa, escolha com --cnpj (ou CTBZ_CNPJ).`,
+		Example: `  ctbz login --cnpj 00.000.000/0001-00
+  CTBZ_OTP_CMD=./scripts/otp-gmail-gws.sh ctbz login
+  ctbz login --otp 123456`,
+		Args: exactArgs(0, "nenhum argumento"),
+		RunE: func(cmd *cobra.Command, _ []string) error {
+			store, err := ctbz.DefaultStore()
+			if err != nil {
+				return err
+			}
+			o.applyEnv(cmd)
+			s := streamsOf(cmd)
+			sess, err := login(cmd.Context(), store, s, o)
+			if err != nil {
+				return err
+			}
+			fmt.Fprintf(s.err, "Login concluído: %s\n", describeSession(sess))
+			return nil
+		},
 	}
-	if err := fs.Parse(args); err != nil {
-		return err
-	}
-	store, err := ctbz.DefaultStore()
-	if err != nil {
-		return err
-	}
-	sess, err := login(ctx, store, o)
-	if err != nil {
-		return err
-	}
-	fmt.Fprintf(os.Stderr, "Login concluído: %s\n", describeSession(sess))
-	return nil
+	f := cmd.Flags()
+	f.StringVar(&o.otpCode, "otp", "", "código OTP recebido por e-mail (retoma um login pendente)")
+	f.StringVar(&o.otpCmd, "otp-cmd", "", "comando de shell que imprime o OTP (env CTBZ_OTP_CMD)")
+	f.DurationVar(&o.otpTimeout, "otp-timeout", defaultOTPTimeout, "tempo máximo aguardando o --otp-cmd (env CTBZ_OTP_TIMEOUT)")
+	f.StringVar(&o.cnpj, "cnpj", "", "CNPJ da empresa a selecionar (env CTBZ_CNPJ)")
+	f.BoolVar(&o.restart, "restart", false, "descarta um login pendente e recomeça")
+	return cmd
 }
 
-func login(ctx context.Context, store *ctbz.Store, o loginOpts) (*ctbz.Session, error) {
+const defaultOTPTimeout = 3 * time.Minute
+
+// applyEnv preenche com variáveis de ambiente as flags não informadas. É feito na
+// execução (e não como padrão da flag) para a ajuda e a documentação não exibirem
+// valores do ambiente de quem as gerou.
+func (o *loginOpts) applyEnv(cmd *cobra.Command) {
+	if o.otpCmd == "" {
+		o.otpCmd = os.Getenv("CTBZ_OTP_CMD")
+	}
+	if o.cnpj == "" {
+		o.cnpj = os.Getenv("CTBZ_CNPJ")
+	}
+	if !cmd.Flags().Changed("otp-timeout") {
+		o.otpTimeout = envDuration("CTBZ_OTP_TIMEOUT", defaultOTPTimeout)
+	}
+}
+
+func login(ctx context.Context, store *ctbz.Store, s streams, o loginOpts) (*ctbz.Session, error) {
 	base := baseURL()
 	o.cnpj = ctbz.OnlyDigits(o.cnpj)
 	client := ctbz.NewClient(base)
@@ -78,13 +98,13 @@ func login(ctx context.Context, store *ctbz.Store, o loginOpts) (*ctbz.Session, 
 		if o.cnpj != "" {
 			p.WantedCNPJ = o.cnpj
 		}
-		logf(o, "Retomando login pendente (etapa: %s)\n", p.State.Stage)
+		logf(s, o, "Retomando login pendente (etapa: %s)\n", p.State.Stage)
 	}
 	if p == nil {
 		if o.otpCode != "" {
 			return nil, errors.New("não há login pendente para usar --otp: o código vale só para o login que o gerou; rode `ctbz login` primeiro")
 		}
-		logf(o, "Enviando credenciais para %s…\n", base)
+		logf(s, o, "Enviando credenciais para %s…\n", base)
 		st, err := client.StartLogin(ctx, os.Getenv("CTBZ_USER"), os.Getenv("CTBZ_PASSWORD"))
 		if err != nil {
 			return nil, err
@@ -98,7 +118,7 @@ func login(ctx context.Context, store *ctbz.Store, o loginOpts) (*ctbz.Session, 
 		if err := store.SavePending(p); err != nil {
 			return err
 		}
-		fmt.Fprintf(os.Stderr, format, a...)
+		fmt.Fprintf(s.err, format, a...)
 		return errPending
 	}
 
@@ -108,22 +128,22 @@ func login(ctx context.Context, store *ctbz.Store, o loginOpts) (*ctbz.Session, 
 			code := o.otpCode
 			o.otpCode = "" // um código informado na linha de comando é usado uma única vez
 			if code == "" && o.otpCmd != "" {
-				logf(o, "Código enviado para %s; aguardando via --otp-cmd…\n", st.MaskedEmail)
+				logf(s, o, "Código enviado para %s; aguardando via --otp-cmd…\n", st.MaskedEmail)
 				fetched, err := (&otp.Command{
 					Cmd: o.otpCmd,
 					// Margem para atraso de relógio entre esta máquina e o servidor de e-mail.
 					Since:   st.OTPSentAt.Add(-time.Minute),
 					Timeout: o.otpTimeout,
-					Log:     verboseWriter(),
+					Log:     verboseWriter(s),
 				}).Fetch(ctx)
 				if err != nil {
 					return nil, pause("%v\nO login ficou pendente; informe o código com: ctbz login --otp NNNNNN\n", err)
 				}
 				code = fetched
 			}
-			if code == "" && stdinIsTerminal() {
+			if code == "" && s.interactive {
 				var err error
-				code, err = otp.Prompt(os.Stdin, os.Stderr, fmt.Sprintf("Código enviado para %s: ", st.MaskedEmail))
+				code, err = otp.Prompt(s.in, s.err, fmt.Sprintf("Código enviado para %s: ", st.MaskedEmail))
 				if err != nil {
 					return nil, pause("\n%v\nO login ficou pendente; conclua com: ctbz login --otp NNNNNN\n", err)
 				}
@@ -143,9 +163,9 @@ func login(ctx context.Context, store *ctbz.Store, o loginOpts) (*ctbz.Session, 
 			if cnpj == "" && len(st.Companies) == 1 {
 				cnpj = st.Companies[0].CNPJ
 			}
-			if cnpj == "" && stdinIsTerminal() {
+			if cnpj == "" && s.interactive {
 				var err error
-				if cnpj, err = promptCompany(st.Companies); err != nil {
+				if cnpj, err = promptCompany(s, st.Companies); err != nil {
 					return nil, err
 				}
 			}
@@ -186,15 +206,15 @@ func login(ctx context.Context, store *ctbz.Store, o loginOpts) (*ctbz.Session, 
 	}
 }
 
-func promptCompany(companies []ctbz.Company) (string, error) {
-	fmt.Fprintln(os.Stderr, "Selecione a empresa:")
+func promptCompany(s streams, companies []ctbz.Company) (string, error) {
+	fmt.Fprintln(s.err, "Selecione a empresa:")
 	for i, co := range companies {
-		fmt.Fprintf(os.Stderr, "  [%d] %s  %s\n", i+1, co.CNPJ, co.Name)
+		fmt.Fprintf(s.err, "  [%d] %s  %s\n", i+1, co.CNPJ, co.Name)
 	}
 	for {
-		fmt.Fprint(os.Stderr, "Número ou CNPJ: ")
+		fmt.Fprint(s.err, "Número ou CNPJ: ")
 		var answer string
-		if _, err := fmt.Fscanln(os.Stdin, &answer); err != nil {
+		if _, err := fmt.Fscanln(s.in, &answer); err != nil {
 			return "", fmt.Errorf("lendo escolha: %w", err)
 		}
 		if n, err := strconv.Atoi(answer); err == nil && n >= 1 && n <= len(companies) {
@@ -206,21 +226,12 @@ func promptCompany(companies []ctbz.Company) (string, error) {
 				return d, nil
 			}
 		}
-		fmt.Fprintln(os.Stderr, "opção inválida")
+		fmt.Fprintln(s.err, "opção inválida")
 	}
 }
 
-func logf(o loginOpts, format string, a ...any) {
+func logf(s streams, o loginOpts, format string, a ...any) {
 	if !o.quiet {
-		fmt.Fprintf(os.Stderr, format, a...)
+		fmt.Fprintf(s.err, format, a...)
 	}
-}
-
-func envDuration(key string, def time.Duration) time.Duration {
-	if v := os.Getenv(key); v != "" {
-		if d, err := time.ParseDuration(v); err == nil {
-			return d
-		}
-	}
-	return def
 }

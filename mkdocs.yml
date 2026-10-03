@@ -5,6 +5,7 @@ edit_uri: edit/main/docs/
 docs_dir: docs
 not_in_nav: |
   adr/template.md
+  referencia/ctbz*.md
 
 theme:
   name: material
@@ -26,6 +27,7 @@ markdown_extensions:
 
 nav:
   - Início: README.md
+  - Referência de comandos: referencia/README.md
   - Autenticação:
       - Visão geral: autenticacao/README.md
       - Credenciais: autenticacao/01-credenciais.md
@@ -51,3 +53,4 @@ nav:
       - "0005 Documentação": adr/0005-documentacao-em-github-pages.md
       - "0006 Saída padronizada": adr/0006-saida-padronizada.md
       - "0007 Login e sessão": adr/0007-login-sessao-e-otp.md
+      - "0008 Cobra": adr/0008-cobra-para-a-arvore-de-comandos.md

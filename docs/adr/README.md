@@ -12,3 +12,4 @@ decisão nova, copie o [modelo](template.md) e use o próximo número (ver [ADR-
 | [0005](0005-documentacao-em-github-pages.md) | Documentação em Markdown publicada com MkDocs Material | aceita |
 | [0006](0006-saida-padronizada.md) | Saída padronizada com List/Record e tipos de valor | aceita |
 | [0007](0007-login-sessao-e-otp.md) | Login reproduzindo o navegador, sessão em arquivo e OTP por comando externo | aceita |
+| [0008](0008-cobra-para-a-arvore-de-comandos.md) | Cobra para a árvore de comandos | aceita |
