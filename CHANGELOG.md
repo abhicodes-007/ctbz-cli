@@ -16,6 +16,8 @@ usa [Versionamento Semântico](https://semver.org/lang/pt-BR/).
   do IRRF.
 - `ctbz impostos baixar`: PDFs de guias (por ID ou `--pendentes`) com nomes padronizados,
   sem sobrescrever arquivos existentes (`--force`).
+- `ctbz impostos historico`: guias anteriores com valor pago e situação, filtros por ano,
+  mês e situação.
 - Guia de uso por contexto em `docs/guia/`.
 
 ## [0.1.0] - 2026-10-03

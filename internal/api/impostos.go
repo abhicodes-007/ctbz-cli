@@ -3,6 +3,8 @@ package api
 import (
 	"context"
 	"fmt"
+	"net/url"
+	"strconv"
 	"strings"
 )
 
@@ -160,3 +162,81 @@ type LinkDownload struct {
 func BuscarLinkGuia(ctx context.Context, g Getter, id int64, tipo string) (*LinkDownload, error) {
 	return get[LinkDownload](ctx, g, PathLinkGuia(id, tipo))
 }
+
+const (
+	PathHistoricoResumo = "impostos/v2/historico-impostos/init"
+	PathHistoricoGuias  = "impostos/v2/historico-impostos/guias"
+)
+
+// HistoricoResumo é a resposta de impostos/v2/historico-impostos/init.
+type HistoricoResumo struct {
+	EmDia                   bool `json:"emDia"`
+	QuantidadeGuiasVencidas int  `json:"quantidadeGuiasVencidas"`
+}
+
+// BuscarHistoricoResumo lê se a empresa está em dia e quantas guias venceram.
+func BuscarHistoricoResumo(ctx context.Context, g Getter) (*HistoricoResumo, error) {
+	return get[HistoricoResumo](ctx, g, PathHistoricoResumo)
+}
+
+// GuiaHistorico é uma guia do histórico de impostos.
+type GuiaHistorico struct {
+	ID               int64  `json:"id"`
+	Imposto          string `json:"imposto"`
+	ImpostoDescricao string `json:"impostoDescricao"`
+	Competencia      struct {
+		Mes int `json:"mes"`
+		Ano int `json:"ano"`
+	} `json:"competencia"`
+	DataVencimento string   `json:"dataVencimento"` // dd/mm/aaaa
+	ValorPrincipal *float64 `json:"valorPrincipal"`
+	ValorPago      *float64 `json:"valorPago"`
+	Status         string   `json:"status"`
+	Tipo           string   `json:"tipo"`
+}
+
+// HistoricoGuias é uma página de impostos/v2/historico-impostos/guias.
+type HistoricoGuias struct {
+	PaginaAtual  int `json:"paginaAtual"`
+	TotalPaginas int `json:"totalPaginas"`
+	Competencias []struct {
+		Competencia string          `json:"competencia"`
+		Guias       []GuiaHistorico `json:"guias"`
+	} `json:"competencias"`
+}
+
+// FiltroHistorico restringe o histórico; zero ou vazio não filtra.
+type FiltroHistorico struct {
+	Ano, Mes int
+	Status   string
+}
+
+// BuscarHistoricoGuias lê todas as páginas do histórico de guias.
+func BuscarHistoricoGuias(ctx context.Context, g Getter, f FiltroHistorico) ([]GuiaHistorico, error) {
+	var out []GuiaHistorico
+	for pagina := 1; ; pagina++ {
+		q := url.Values{"pagina": {strconv.Itoa(pagina)}}
+		if f.Ano > 0 {
+			q.Set("ano", strconv.Itoa(f.Ano))
+		}
+		if f.Mes > 0 {
+			q.Set("mes", strconv.Itoa(f.Mes))
+		}
+		if f.Status != "" {
+			q.Set("status", f.Status)
+		}
+		h, err := get[HistoricoGuias](ctx, g, PathHistoricoGuias+"?"+q.Encode())
+		if err != nil {
+			return nil, err
+		}
+		for _, c := range h.Competencias {
+			out = append(out, c.Guias...)
+		}
+		if pagina >= h.TotalPaginas || pagina >= maxPaginas {
+			return out, nil
+		}
+	}
+}
+
+// maxPaginas protege contra paginação que nunca termina.
+const maxPaginas = 100

@@ -40,6 +40,8 @@ func Endpoints() []Endpoint {
 		{Name: "calculo_imposto", LivePath: PathCalculoImposto, Type: CalculoImposto{}},
 		{Name: "tabela_irrf", LivePath: PathTabelaIRRF, Type: []FaixaIRRF{}},
 		{Name: "link_guia", Type: LinkDownload{}}, // o ID vem de guias_a_pagar
+		{Name: "historico_resumo", LivePath: PathHistoricoResumo, Type: HistoricoResumo{}},
+		{Name: "historico_guias", LivePath: PathHistoricoGuias + "?pagina=1", Type: HistoricoGuias{}},
 	}
 }
 
