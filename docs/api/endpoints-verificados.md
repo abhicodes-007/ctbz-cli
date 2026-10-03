@@ -31,7 +31,7 @@ Legenda: ✅ 200 · ⚠️ responde, mas precisa de parâmetro ou não está lib
 | `dashboard/situacao-app` | ✅ | `elegivel, cadastroFinalizado, companyInfo{cnpj, cpf, cadastroStatus}, tipoPerfil, variacaoBannerCbank` |
 | `dashboard/fatura` | ✅ | `total, vencimento, competencia, status, label, possuiCartaoPrincipal, botaoAcao…`: mensalidade da Contabilizei |
 | `dashboard/v1/mensalidade` | ✅ | `status, plano, valor, dataVencimento, competenciaAnteriorAtrasada…` |
-| `dashboard/rotinas-mensais` | ✅ | `cardInfo` |
+| `dashboard/rotinas-mensais` | ✅ | `cardInfo[{ramoAtividade, descricaoPerfilEmissao, urlPerfilEmissao, urlConsultaNota}]`: só atalhos de emissão de nota, não rotinas |
 | `dashboard/v2/central-rotinas` | ✅ | `tipoExibicao, tipoPendencia, pendencias, rotinas, rotinasContabilizei` |
 | `dashboard/prolabore` | ✅ | `valorProlabore, competenciaAtual, competenciaAnterior, calculando, sociedade…` |
 | `dashboard/card-certificado` | ✅ | `tipoCard, prazo, certificadoVencido, prazoFinalizado, temEmissor` |
