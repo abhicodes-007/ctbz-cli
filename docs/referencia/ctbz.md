@@ -14,8 +14,10 @@ Dados vão para stdout no formato escolhido com -o; mensagens e progresso vão p
 - [`ctbz balanco`](ctbz_balanco.md): Mostra o balanço patrimonial (ativo, passivo e patrimônio líquido)
 - [`ctbz caixa`](ctbz_caixa.md): Lista os lançamentos do caixa de um mês
 - [`ctbz chamados`](ctbz_chamados.md): Lista os chamados de atendimento (em andamento ou finalizados)
+- [`ctbz contas-bancarias`](ctbz_contas-bancarias.md): Lista as contas bancárias cadastradas da empresa
 - [`ctbz empresa`](ctbz_empresa.md): Mostra os dados da empresa selecionada
 - [`ctbz empresas`](ctbz_empresas.md): Lista as empresas do usuário, marcando a atual
+- [`ctbz extratos`](ctbz_extratos.md): Lista a situação dos extratos bancários por mês e conta
 - [`ctbz impostos`](ctbz_impostos.md): Lista as guias de impostos a pagar (em atraso, do mês e do próximo mês)
 - [`ctbz login`](ctbz_login.md): Autentica na Contabilizei (usuário, senha e código por e-mail)
 - [`ctbz logout`](ctbz_logout.md): Apaga a sessão local

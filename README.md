@@ -116,6 +116,7 @@ ctbz balancete 2026-08                         # balancete do mês (árvore de c
 ctbz balanco 2025                              # balanço patrimonial do exercício
 ctbz razao --conta 1.01 --de 2026-01           # lançamentos do razão por conta
 ctbz caixa 2026-09                             # lançamentos do caixa do mês, com total
+ctbz extratos --ano 2026 | ctbz contas-bancarias  # extratos por mês e contas cadastradas
 ctbz api menu/get        # qualquer endpoint; caminho relativo → /api/plataforma/
 ctbz api -X POST -d @corpo.json /api/plataforma/algum/endpoint
 ctbz logout              # apaga a sessão local
