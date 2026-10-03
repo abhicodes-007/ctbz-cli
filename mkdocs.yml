@@ -27,6 +27,9 @@ markdown_extensions:
 
 nav:
   - Início: README.md
+  - Guia de uso:
+      - Visão geral: guia/README.md
+      - Impostos: guia/impostos.md
   - Referência de comandos: referencia/README.md
   - Autenticação:
       - Visão geral: autenticacao/README.md

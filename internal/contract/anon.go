@@ -21,7 +21,7 @@ func Anonymize(data []byte) ([]byte, error) {
 		return nil, err
 	}
 	a := &anonymizer{ids: map[string]string{}}
-	doc = a.value("", doc)
+	doc = a.value("", doc, false)
 	var buf bytes.Buffer
 	enc := json.NewEncoder(&buf)
 	enc.SetEscapeHTML(false)
@@ -51,7 +51,8 @@ var (
 	keySecret  = regexp.MustCompile(`(?i)^(ref|token|hash|senha|chave|key|clientKey|adyenClientKey|jiraIssueId)$`)
 	keyDigits  = regexp.MustCompile(`(?i)(cpf|cnpj|cep|telefone|celular|conta$|numeroConta|agencia|inscricao|pis|nit|documento|identificador|^numero$|rg$|cnh|eleitor|rne|passaporte)`)
 	keyBirth   = regexp.MustCompile(`(?i)nascimento`)
-	keyMoney   = regexp.MustCompile(`(?i)(valor|saldo|total|faturamento|receita|credito|debito|preco|montante|juros|multa|prolabore|lucro|distribu|adiantamento|base)`)
+	keyMoney   = regexp.MustCompile(`(?i)(valor|saldo|total|faturamento|receita|credito|debito|preco|montante|juros|multa|prolabore|lucro|distribu|adiantamento|base|imposto|economia|cenario|pago|custo)`)
+	keyID      = regexp.MustCompile(`(?i)^id|id$|^(mes|ano|periodo|dia|quantidade\w*|nr\w*|numero\w*)$`)
 )
 
 const (
@@ -59,7 +60,10 @@ const (
 	maxItems = 3   // listas são cortadas neste tamanho
 )
 
-func (a *anonymizer) value(key string, v any) any {
+// value anonimiza v. money indica que algum objeto acima é monetário
+// (ex.: "valor": {"label": 1234.5}): números dentro dele também são trocados.
+func (a *anonymizer) value(key string, v any, money bool) any {
+	money = money || keyMoney.MatchString(key)
 	switch x := v.(type) {
 	case map[string]any:
 		keys := make([]string, 0, len(x))
@@ -68,7 +72,7 @@ func (a *anonymizer) value(key string, v any) any {
 		}
 		sort.Strings(keys) // ordem determinística para os IDs fictícios
 		for _, k := range keys {
-			x[k] = a.value(k, x[k])
+			x[k] = a.value(k, x[k], money)
 		}
 		return x
 	case []any:
@@ -76,13 +80,13 @@ func (a *anonymizer) value(key string, v any) any {
 			x = x[:maxItems] // fixtures pequenas e com menos dados reais para revisar
 		}
 		for i := range x {
-			x[i] = a.value(key, x[i])
+			x[i] = a.value(key, x[i], money)
 		}
 		return x
 	case string:
 		return a.text(key, x)
 	case json.Number:
-		return a.number(key, x)
+		return a.number(key, x, money)
 	}
 	return v
 }
@@ -124,13 +128,13 @@ func zeroDigits(s string) string {
 	}, s)
 }
 
-func (a *anonymizer) number(key string, n json.Number) json.Number {
+func (a *anonymizer) number(key string, n json.Number, money bool) json.Number {
 	s := n.String()
 	isInt := !strings.ContainsAny(s, ".eE")
 	if keyBirth.MatchString(key) {
 		return "0" // data de nascimento identifica a pessoa
 	}
-	if keyMoney.MatchString(key) {
+	if money && !keyID.MatchString(key) {
 		if isInt {
 			return "1000"
 		}

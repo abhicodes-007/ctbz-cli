@@ -1,0 +1,22 @@
+{
+  "emAtraso": [],
+  "esteMes": [
+    {
+      "competencia": "Jul de 2026",
+      "id": 1000000000000001,
+      "identificadorImposto": "DARF_UNIFICADO_ATIVACAO_FATOR_R",
+      "nome": {
+        "label": "DARF Unificado"
+      },
+      "status": {
+        "label": "RECALCULADA"
+      },
+      "tipo": "GUIA",
+      "valor": {
+        "label": 1000
+      },
+      "vencimentoOriginal": "2026-10-06"
+    }
+  ],
+  "proximoMes": []
+}

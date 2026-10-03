@@ -86,6 +86,7 @@ ctbz empresa usar CNPJ   # troca de empresa (refaz o login: novo OTP)
 ctbz empresa certificado # validade do certificado digital
 ctbz empresa socios      # sócios e seus papéis
 ctbz empresa atividades  # CNAEs e anexos do Simples Nacional
+ctbz impostos            # guias a pagar (em atraso, do mês e do próximo mês)
 ctbz api menu/get        # qualquer endpoint; caminho relativo → /api/plataforma/
 ctbz api -X POST -d @corpo.json /api/plataforma/algum/endpoint
 ctbz logout              # apaga a sessão local
@@ -122,7 +123,10 @@ export CTBZ_OUTPUT=json        # muda o padrão
   de objetos viram tabelas. `--raw` imprime o corpo exatamente como veio.
 
 Códigos de saída: `0` sucesso, `1` erro, `2` uso incorreto (comando, flag ou argumento inválido),
-`3` login pendente (aguardando OTP ou CNPJ).
+`3` login pendente (aguardando OTP ou CNPJ), `4` atenção (ex.: impostos em atraso com
+`--fail-on-atraso`).
+
+Guia de uso por contexto: [`docs/guia`](docs/guia/README.md).
 
 ## Como funciona (engenharia reversa)
 

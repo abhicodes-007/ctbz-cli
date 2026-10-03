@@ -146,6 +146,7 @@ ganha os três formatos sem código extra.
 | 1 | erro (inclui HTTP ≥ 400 no `ctbz api`, que ainda imprime o corpo) |
 | 2 | uso incorreto (comando ou flag desconhecidos, argumentos faltando, formato inválido) |
 | 3 | login pendente: falta OTP ou CNPJ |
+| 4 | atenção: o comando funcionou, mas há algo pendente (ex.: `impostos --fail-on-atraso` com guias em atraso) |
 
 ## Testes
 

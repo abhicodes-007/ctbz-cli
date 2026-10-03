@@ -92,6 +92,8 @@ func TestAnonymize(t *testing.T) {
 	  "dataAbertura": 1784581200000,
 	  "valor": 139,
 	  "saldo": 9876.54,
+	  "guia": {"id": 7, "valor": {"label": 4321.98, "descricao": null}, "competencia": {"mes": 7, "ano": 2026}},
+	  "impostoBruto": 777.77,
 	  "status": "ATIVO",
 	  "chamados": [{"subject": "assunto real 1"}, {"subject": "assunto real 2"}, {"subject": "3"}, {"subject": "4"}],
 	  "detalhe": "pagamento do CNPJ 12.345.678/0001-90 por pessoa@gmail.com",
@@ -104,12 +106,12 @@ func TestAnonymize(t *testing.T) {
 		t.Fatal(err)
 	}
 	s := string(out)
-	for _, leaked := range []string{"EMPRESA REAL", "12.345.678", "12345678901", "pessoa@gmail", "RUA DE VERDADE", `"1234"`, "80000123", "4801207998644224", "9876.54", "storage.exemplo", "5e3050a5", "assunto real"} {
+	for _, leaked := range []string{"EMPRESA REAL", "12.345.678", "12345678901", "pessoa@gmail", "RUA DE VERDADE", `"1234"`, "80000123", "4801207998644224", "9876.54", "4321.98", "777.77", "storage.exemplo", "5e3050a5", "assunto real"} {
 		if strings.Contains(s, leaked) {
 			t.Errorf("vazou %q:\n%s", leaked, s)
 		}
 	}
-	for _, kept := range []string{`"status": "ATIVO"`, `"dataAbertura": 1784581200000`, `"cnpj": "00.000.000/0000-00"`, `"<texto omitido>"`} {
+	for _, kept := range []string{`"mes": 7`, `"ano": 2026`, `"id": 7`, `"status": "ATIVO"`, `"dataAbertura": 1784581200000`, `"cnpj": "00.000.000/0000-00"`, `"<texto omitido>"`} {
 		if !strings.Contains(s, kept) {
 			t.Errorf("esperava %q:\n%s", kept, s)
 		}
