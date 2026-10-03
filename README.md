@@ -112,6 +112,7 @@ ctbz prolabore parametros                      # salário mínimo, INSS e IRRF u
 ctbz prolabore fator-r                         # Fator R, motor do Fator R e anexos por atividade
 ctbz lucros                                    # distribuição de lucros do exercício
 ctbz lucros informe --ano 2025                 # valores do informe de rendimentos dos sócios (IR)
+ctbz balancete 2026-08                         # balancete do mês (árvore de contas)
 ctbz api menu/get        # qualquer endpoint; caminho relativo → /api/plataforma/
 ctbz api -X POST -d @corpo.json /api/plataforma/algum/endpoint
 ctbz logout              # apaga a sessão local

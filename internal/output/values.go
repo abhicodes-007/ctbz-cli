@@ -30,6 +30,13 @@ type CPF string
 // JSON/CSV: completo. Texto vazio é tratado como ausente.
 type Text string
 
+// Indent é um texto em uma árvore (ex.: plano de contas). Tabela: recuado em dois espaços
+// por nível abaixo do primeiro; JSON/CSV: só o texto (o nível vai em outra coluna).
+type Indent struct {
+	Level int
+	Text  string
+}
+
 // NewCPF remove a pontuação de um CPF.
 func NewCPF(s string) CPF { return CPF(NewCNPJ(s)) }
 
@@ -156,6 +163,11 @@ func cellText(v any, f Format) string {
 			return truncate(string(x), textMax)
 		}
 		return string(x)
+	case Indent:
+		if table && x.Level > 1 {
+			return strings.Repeat("  ", x.Level-1) + x.Text
+		}
+		return x.Text
 	case CNPJ:
 		if table {
 			return FormatCNPJ(x)

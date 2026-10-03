@@ -74,6 +74,7 @@ func Endpoints() []Endpoint {
 		{Name: "prolabore_historico", Type: []ProlaboreMes{}}, // o id do sócio vem de prolabore_central
 		{Name: "prolabore_parametros", LivePath: PathProlaboreParametros, Type: ProlaboreParametros{}},
 		{Name: "simulador_impostos", LivePath: PathSimuladorImpostos, Type: SimuladorImpostos{}},
+		{Name: "balancete", LivePath: PathBalancete(2026, 9), Type: []ContaRelatorio{}},
 		{Name: "distribuicao_lucros", LivePath: PathDistribuicaoLucros, Type: DistribuicaoLucros{}},
 		{Name: "restricoes_informe", LivePath: PathRestricoesInforme(2025), Type: RestricoesInforme{}},
 		{Name: "socios_informe", LivePath: PathSociosInforme(2025), Type: []SocioInforme{}},
