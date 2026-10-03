@@ -86,6 +86,8 @@ ctbz api -X POST -d @corpo.json /api/plataforma/algum/endpoint
 ctbz logout              # apaga a sessão local
 ```
 
+Ajuda de cada comando: `ctbz COMANDO --help`. Completion de shell: `source <(ctbz completion bash)`.
+
 ## Formatos de saída
 
 Todo comando que imprime dados aceita `-o`/`--output` (antes ou depois do comando) ou a
@@ -112,7 +114,8 @@ export CTBZ_OUTPUT=json        # muda o padrão
 - `ctbz api` sai em JSON por padrão e ignora `CTBZ_OUTPUT`. Com `-o table` ou `-o csv`, listas
   de objetos viram tabelas. `--raw` imprime o corpo exatamente como veio.
 
-Códigos de saída: `0` sucesso, `1` erro, `3` login pendente (aguardando OTP ou CNPJ).
+Códigos de saída: `0` sucesso, `1` erro, `2` uso incorreto (comando, flag ou argumento inválido),
+`3` login pendente (aguardando OTP ou CNPJ).
 
 ## Como funciona (engenharia reversa)
 

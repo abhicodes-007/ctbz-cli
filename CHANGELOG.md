@@ -16,5 +16,12 @@ usa [Versionamento Semântico](https://semver.org/lang/pt-BR/).
 - Formatos de saída `table`, `json` e `csv` (`-o`/`--output`, `CTBZ_OUTPUT`).
 - Script `scripts/otp-gmail-gws.sh` para ler o OTP do Gmail com o Google Workspace CLI.
 - Documentação da engenharia reversa, ADRs e roadmap.
+- Ajuda dos comandos em português.
+- Completion de shell: `ctbz completion bash|zsh|fish|powershell`.
+
+### Changed
+
+- Erros de uso (comando ou flag inexistente, argumento faltando, formato inválido) terminam
+  com código de saída 2.
 
 [Unreleased]: https://github.com/edusouza/ctbz-cli/commits/main

@@ -7,9 +7,12 @@ interno.
 
 ```text
 cmd/ctbz/
-  main.go        subcomandos (status, empresa, api, logout), re-login automático
-  output.go      flags -o/--output (global e por comando) e precedência de formato
-  login.go       orquestração do login: retomada, fontes de OTP, escolha de empresa
+  main.go        só chama cli.Execute (versão injetada por -ldflags)
+internal/cli/
+  root.go        árvore Cobra, flag global -o, códigos de saída, ajuda em português
+  login.go       comando login: retomada, fontes de OTP, escolha de empresa
+  session.go     chamadas autenticadas (re-login automático), dados da sessão
+  status.go, empresa.go, api.go, logout.go   um arquivo por comando
 internal/ctbz/
   client.go      HTTP: cookies manuais, redirecionamentos manuais, API(), erros
   login.go       etapas do login e parsers de HTML/localStorage
@@ -26,9 +29,21 @@ scripts/
   extrair-endpoints.py   gera docs/api/catalogo.md
 ```
 
-Só biblioteca padrão, mais `golang.org/x/term` (detectar terminal). A versão de
-`x/term` está fixada em `v0.30.0` para manter o mínimo em Go 1.24; versões mais novas
-exigem Go 1.26.
+Dependências: [Cobra](https://github.com/spf13/cobra) para a árvore de comandos
+([ADR-0008](../adr/0008-cobra-para-a-arvore-de-comandos.md)) e `golang.org/x/term` para
+detectar terminal. A versão de `x/term` está fixada em `v0.30.0` para manter o mínimo em
+Go 1.24; versões mais novas exigem Go 1.26.
+
+## Como adicionar um comando
+
+1. Criar `internal/cli/<comando>.go` com `func newXxxCmd() *cobra.Command` e registrá-lo em
+   `NewRootCmd` (ou no comando pai).
+2. `Short` curto no imperativo/descritivo, `Long` e `Example` em português.
+3. Ler a API com `getJSON(ctx, streams, caminho, &resposta)` e montar um `output.Record`
+   ou `output.List` ([ADR-0006](../adr/0006-saida-padronizada.md)); escrever com
+   `output.Write(s.out, formato, dados)`, formato vindo de `outputFormat(cmd, "")`.
+4. Testes com `execCLI` e `fakeAPI` (ver `internal/cli/output_test.go`).
+5. Entrada no `CHANGELOG.md`.
 
 ## Máquina de estados do login
 
@@ -47,7 +62,7 @@ empresas) é serializável. Sempre que falta uma entrada (OTP ou CNPJ) e não h�
 nem `CTBZ_OTP_CMD`, o estado vai para `pending.json` e o processo sai com código 3. A
 próxima chamada com `--otp` ou `--cnpj` retoma do ponto exato, com os mesmos cookies.
 
-Regras de retomada (`cmd/ctbz/login.go`):
+Regras de retomada (`internal/cli/login.go`):
 
 - `--otp N` só faz sentido retomando: sem login pendente, é erro (o código pertence ao
   login que o gerou).
@@ -118,7 +133,7 @@ ganha os três formatos sem código extra.
 |---|---|
 | 0 | sucesso |
 | 1 | erro (inclui HTTP ≥ 400 no `ctbz api`, que ainda imprime o corpo) |
-| 2 | uso incorreto (comando desconhecido, sem argumentos) |
+| 2 | uso incorreto (comando ou flag desconhecidos, argumentos faltando, formato inválido) |
 | 3 | login pendente: falta OTP ou CNPJ |
 
 ## Testes
@@ -132,8 +147,10 @@ go test ./...
   `localStorage` com acentos e símbolos, 401 sem cookies.
 - `internal/output`: golden files dos três formatos (lista, registro, JSON arbitrário e
   aninhado), formatação de reais, zero negativo, listas vazias.
-- `cmd/ctbz`: precedência de `-o`/`CTBZ_OUTPUT`, `--json` como atalho, stdout só com dados.
+- `internal/cli`: execução da árvore real (`execCLI`) com API simulada (`fakeAPI`):
+  precedência de `-o`/`CTBZ_OUTPUT`, `--json` como atalho, stdout só com dados, códigos
+  de saída e ajuda em português.
 - `internal/otp`: extração do código, polling com falhas seguidas de sucesso, timeout
   preservando o último erro útil, prompt.
-- `cmd/ctbz`: fluxo completo com `--otp-cmd` e fluxo em etapas (pendente → `--otp` →
+- `internal/cli` (login): fluxo completo com `--otp-cmd` e fluxo em etapas (pendente → `--otp` →
   pendente → `--cnpj`).

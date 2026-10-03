@@ -1,4 +1,4 @@
-package main
+package cli
 
 import (
 	"context"
@@ -54,7 +54,7 @@ func TestLoginWithOTPCommand(t *testing.T) {
 	t.Setenv("CTBZ_PASSWORD", "x")
 	store := &ctbz.Store{Dir: t.TempDir()}
 
-	sess, err := login(context.Background(), store, loginOpts{
+	sess, err := login(context.Background(), store, testStreams(), loginOpts{
 		otpCmd:     `echo "Seu código: 123456"`,
 		otpTimeout: 5 * time.Second,
 		cnpj:       "22.222.222/0001-22",
@@ -83,21 +83,25 @@ func TestLoginPendingThenResume(t *testing.T) {
 	ctx := context.Background()
 
 	// Sem OTP e sem terminal: o login fica pendente.
-	if _, err := login(ctx, store, loginOpts{quiet: true}); !errors.Is(err, errPending) {
+	if _, err := login(ctx, store, testStreams(), loginOpts{quiet: true}); !errors.Is(err, errPending) {
 		t.Fatalf("esperava errPending, veio %v", err)
 	}
 	// OTP certo, mas há duas empresas e nenhuma escolhida: continua pendente.
-	if _, err := login(ctx, store, loginOpts{otpCode: "123456", quiet: true}); !errors.Is(err, errPending) {
+	if _, err := login(ctx, store, testStreams(), loginOpts{otpCode: "123456", quiet: true}); !errors.Is(err, errPending) {
 		t.Fatalf("esperava errPending na seleção de empresa, veio %v", err)
 	}
 	if p, err := store.LoadPending(); err != nil || p.State.Stage != ctbz.StageSelectCompany {
 		t.Fatalf("pendência inesperada: %+v %v", p, err)
 	}
-	sess, err := login(ctx, store, loginOpts{cnpj: "22222222000122", quiet: true})
+	sess, err := login(ctx, store, testStreams(), loginOpts{cnpj: "22222222000122", quiet: true})
 	if err != nil {
 		t.Fatal(err)
 	}
 	if sess.CNPJ != "22222222000122" {
 		t.Fatalf("CNPJ = %q", sess.CNPJ)
 	}
+}
+
+func testStreams() streams {
+	return streams{in: strings.NewReader(""), out: io.Discard, err: io.Discard}
 }
