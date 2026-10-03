@@ -60,6 +60,7 @@ func Endpoints() []Endpoint {
 		{Name: "mensalidade", LivePath: PathMensalidade, Type: Mensalidade{}},
 		{Name: "recorrencia", LivePath: PathRecorrenciaInit, Type: Recorrencia{}},
 		{Name: "recorrencia_historico", LivePath: PathRecorrenciaHistorico, Type: HistoricoRecorrencia{}},
+		{Name: "contrato_servico", LivePath: PathContratoServico, Type: ContratoServico{}},
 	}
 }
 
