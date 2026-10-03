@@ -112,7 +112,7 @@ ctbz api impostos/v3/impostos-a-pagar/guia/<id>/baixar-guia | jq -r .url
 | `payments/recorrencia/historico` | ✅ | `pagamentos` |
 | `inadimplencia/consultasituacaomensalidadeempresa` | ✅ | texto `OK` |
 | `atendimento/chamados?em-andamento=true` | ✅ | lista de chamados abertos |
-| `atendimento/chamados?finalizados=true` | ⚠️ 400 | texto `timeout` (lento no servidor) |
+| `atendimento/chamados?finalizados=true` | ⚠️ 400 | `timeout` ou `Memcache put: Item may not be more than 1048503 bytes` (lista grande demais para o cache do servidor). A CLI usa `dadosempresa/get` → `chamados` (100 mais recentes, `{id, status, subject, created_at, url}`), ver [ADR-0013](../adr/0013-sem-retentativa-com-fonte-alternativa.md) |
 | `escritorio-virtual/recuperar-mensagens` | ❌ 560 | serviço não contratado |
 
 ## Não chamados de propósito

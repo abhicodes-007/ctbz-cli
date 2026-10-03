@@ -30,7 +30,7 @@ nav:
   - Guia de uso:
       - Visão geral: guia/README.md
       - Impostos: guia/impostos.md
-      - Pendências e rotinas: guia/pendencias.md
+      - Pendências, rotinas e atendimento: guia/pendencias.md
   - Referência de comandos: referencia/README.md
   - Autenticação:
       - Visão geral: autenticacao/README.md

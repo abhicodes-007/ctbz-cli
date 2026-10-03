@@ -15,6 +15,9 @@ usa [Versionamento Semântico](https://semver.org/lang/pt-BR/).
   valor e alerta; `--mes AAAA-MM` e `--fail-on-vencidas`.
 - `ctbz pendencias conciliacao`: notas sem recebimento e recebimentos sem nota, com a
   competência de referência; `--listar notas|recebimentos` e `--fail-on-pendencias`.
+- `ctbz chamados [--finalizados]`: chamados de atendimento com link para a central de ajuda.
+  Quando o servidor não consegue listar os finalizados, usa os 100 chamados mais recentes
+  de `dadosempresa/get` e avisa no stderr.
 
 ## [0.2.0] - 2026-10-03
 
