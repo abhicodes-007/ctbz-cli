@@ -52,6 +52,8 @@ func Endpoints() []Endpoint {
 		{Name: "chamados_em_andamento", LivePath: PathChamadosEmAndamento, Type: []Chamado{}},
 		{Name: "fatura", LivePath: PathFatura, Type: Fatura{}},
 		{Name: "mensalidade", LivePath: PathMensalidade, Type: Mensalidade{}},
+		{Name: "recorrencia", LivePath: PathRecorrenciaInit, Type: Recorrencia{}},
+		{Name: "recorrencia_historico", LivePath: PathRecorrenciaHistorico, Type: HistoricoRecorrencia{}},
 	}
 }
 
