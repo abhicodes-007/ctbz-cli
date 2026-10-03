@@ -22,7 +22,7 @@ Labels usadas: `épico`, `versão: vX.Y`, `contexto: …`, `tipo: funcionalidade
 | **v0.2** | Impostos | [#10](https://github.com/edusouza/ctbz-cli/issues/10) | 6 | concluída |
 | **v0.3** | Pendências, rotinas e atendimento | [#17](https://github.com/edusouza/ctbz-cli/issues/17) | 5 | concluída |
 | **v0.4** | Mensalidade e pagamentos da Contabilizei | [#23](https://github.com/edusouza/ctbz-cli/issues/23) | 4 | concluída |
-| **v0.5** | Notas fiscais | [#28](https://github.com/edusouza/ctbz-cli/issues/28) | 5 | planejada |
+| **v0.5** | Notas fiscais | [#28](https://github.com/edusouza/ctbz-cli/issues/28) | 5 | concluída |
 | **v0.6** | Pró-labore e distribuição de lucros | [#34](https://github.com/edusouza/ctbz-cli/issues/34) | 5 | planejada |
 | **v0.7** | Contabilidade: relatórios, caixa e extratos | [#40](https://github.com/edusouza/ctbz-cli/issues/40) | 6 | planejada |
 | **v0.8** | Documentos e certificado digital | [#47](https://github.com/edusouza/ctbz-cli/issues/47) | 2 | planejada |
@@ -103,11 +103,11 @@ Consulta das notas fiscais de serviço emitidas, dos tomadores e da configuraç�
 
 | | Issue | Funcionalidade | Tipo |
 |---|---|---|---|
-| ⬜ | [#29](https://github.com/edusouza/ctbz-cli/issues/29) | Listar notas fiscais emitidas | funcionalidade |
-| ⬜ | [#30](https://github.com/edusouza/ctbz-cli/issues/30) | Baixar PDF e XML das notas | investigação |
-| ⬜ | [#31](https://github.com/edusouza/ctbz-cli/issues/31) | Tomadores (clientes) | funcionalidade |
-| ⬜ | [#32](https://github.com/edusouza/ctbz-cli/issues/32) | Configuração do emissor e alíquotas | funcionalidade |
-| ⬜ | [#33](https://github.com/edusouza/ctbz-cli/issues/33) | Notas tomadas e notas de entrada | investigação |
+| ✅ | [#29](https://github.com/edusouza/ctbz-cli/issues/29) | Listar notas fiscais emitidas | funcionalidade |
+| ✅ | [#30](https://github.com/edusouza/ctbz-cli/issues/30) | Baixar PDF e XML das notas (inviável: a API não oferece; ver docs/api/notas-fiscais.md) | investigação |
+| ✅ | [#31](https://github.com/edusouza/ctbz-cli/issues/31) | Tomadores (clientes) | funcionalidade |
+| ✅ | [#32](https://github.com/edusouza/ctbz-cli/issues/32) | Configuração do emissor e alíquotas | funcionalidade |
+| ✅ | [#33](https://github.com/edusouza/ctbz-cli/issues/33) | Notas tomadas e notas de entrada | investigação |
 
 Fora de escopo: Emitir, cancelar, replicar ou agendar notas; cadastrar tomador (escrita).
 
