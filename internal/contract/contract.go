@@ -91,6 +91,10 @@ func Check(data []byte, v any) (Report, error) {
 	return r, nil
 }
 
+// rawJSON (json.RawMessage) marca um campo cujo formato ainda não foi verificado: é aceito
+// como vier e mantido inteiro na poda.
+var rawJSON = reflect.TypeOf(json.RawMessage(nil))
+
 // maxElements limita quantos itens de cada lista são verificados.
 const maxElements = 5
 
@@ -98,8 +102,8 @@ func check(r *Report, path string, val any, t reflect.Type) {
 	for t.Kind() == reflect.Pointer {
 		t = t.Elem()
 	}
-	if val == nil || t.Kind() == reflect.Interface {
-		return // null é aceito em qualquer campo; any aceita qualquer coisa
+	if val == nil || t.Kind() == reflect.Interface || t == rawJSON {
+		return // null é aceito em qualquer campo; any e json.RawMessage aceitam qualquer coisa
 	}
 	if want, got := expected(t), jsonKind(val); want != "qualquer" && want != got {
 		r.Findings = append(r.Findings, Finding{Path: label(path), Kind: TypeChanged, Expected: want, Got: got})
@@ -261,6 +265,9 @@ func Prune(data []byte, v any) ([]byte, error) {
 func prune(val any, t reflect.Type) any {
 	for t.Kind() == reflect.Pointer {
 		t = t.Elem()
+	}
+	if t == rawJSON {
+		return val
 	}
 	switch t.Kind() {
 	case reflect.Struct:

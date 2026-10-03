@@ -81,6 +81,7 @@ ctbz api impostos/v3/impostos-a-pagar/guia/<id>/baixar-guia | jq -r .url
 | `contabancaria/list` | ✅ | `bancos, contasBancarias, processandoCtbzBank` |
 | `informerendimento/recuperardadosdistribuicaocliente` | ✅ | `ano, saldo, totalDistribuido, totalAdiantamentos, exercicioFechado, lucrosSocios, dataLimite…`: distribuição de lucros |
 | `conciliacao-fiscal/v2/init` | ✅ | `qtdNotasFiscaisPendentes, qtdRecebimentosPendentes, qtdConciliacoesAutomaticasMesAnterior…` |
+| `conciliacao-fiscal/v2/pendencias?pagina&totalPagina&status&tipoPendencia&periodoInicial&periodoFinal` | ✅ | `{pagina[], totalRegistros, totalPaginas}`; itens não vistos (conta sem pendências) |
 | `simulador-impostos-avancado/init` | ✅ | `disponibilidade, atividades, primeiroCiclo, motorFatorR…` |
 
 ## Pró-labore

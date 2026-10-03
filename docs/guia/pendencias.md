@@ -34,6 +34,27 @@ ctbz pendencias --fail-on-vencidas -o csv > /dev/null || notify-send "Há pendê
 ctbz pendencias -o json | jq -r '.[] | select(.alerta != null) | "\(.prazo) \(.tipo)"'
 ```
 
+## Conciliação fiscal
+
+```sh
+ctbz pendencias conciliacao
+```
+
+```text
+Competência de referência:        09/2026
+Notas fiscais sem recebimento:    0
+Recebimentos sem nota fiscal:     0
+Conciliações automáticas no mês:  0
+```
+
+- **Notas sem recebimento**: notas fiscais emitidas que não foram ligadas a um crédito no extrato.
+- **Recebimentos sem nota**: créditos no extrato sem nota fiscal correspondente.
+- A competência de referência é o mês anterior, o mesmo que o painel mostra.
+- `--listar notas` ou `--listar recebimentos` lista os itens pendentes dos últimos 12 meses.
+  O formato desses itens ainda não foi verificado (a conta de desenvolvimento não tinha
+  pendências), por isso os campos saem como a API os devolve.
+- `--fail-on-pendencias` termina com código 4 quando há algo a conciliar.
+
 ## Rotinas e obrigações do mês
 
 ```sh
