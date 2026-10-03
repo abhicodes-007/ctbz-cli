@@ -14,7 +14,8 @@ usa [Versionamento Semântico](https://semver.org/lang/pt-BR/).
 - Seleção de empresa no login (`--cnpj`/`CTBZ_CNPJ`) e re-login automático quando a sessão expira.
 - `ctbz status`, `ctbz empresa`, `ctbz api` e `ctbz logout`.
 - Formatos de saída `table`, `json` e `csv` (`-o`/`--output`, `CTBZ_OUTPUT`).
-- Script `scripts/otp-gmail-gws.sh` para ler o OTP do Gmail com o Google Workspace CLI.
+- Script `scripts/otp-gmail-gws.sh` para ler o OTP do Gmail com o Google Workspace CLI,
+  com mensagem clara (código 127) quando `gws` ou `jq` não estão instalados.
 - Documentação da engenharia reversa, ADRs e roadmap.
 - `ctbz version` (e `--version`), com versão, commit e data do build.
 - Ajuda em português e referência de comandos gerada em `docs/referencia/`.

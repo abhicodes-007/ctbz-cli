@@ -14,9 +14,18 @@
 #                   Se você encaminha o e-mail para outra caixa, ajuste aqui,
 #                   ex.: 'subject:"código de verificação" to:bot@seudominio.com'
 #   GWS             caminho do binário gws (padrão: gws)
+#
+# Para testar sozinho (sem a CLI), rode o script logo depois de receber um código:
+# ele procura e-mails dos últimos 10 minutos e imprime o código mais recente.
 set -eu
 
 GWS="${GWS:-gws}"
+for bin in "$GWS" jq; do
+	command -v "$bin" >/dev/null 2>&1 || {
+		echo "comando não encontrado: $bin (veja docs/otp-automatico)" >&2
+		exit 127
+	}
+done
 SINCE="${CTBZ_OTP_SINCE:-$(($(date +%s) - 600))}"
 QUERY="${CTBZ_OTP_QUERY:-from:seguranca@contabilizei.com.br} after:${SINCE}"
 
