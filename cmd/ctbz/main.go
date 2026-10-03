@@ -27,6 +27,7 @@ Comandos:
   login [--otp N] [--otp-cmd CMD] [--cnpj CNPJ]   autentica (usuário/senha + OTP)
   status                                          mostra a sessão atual e testa se ainda vale
   empresa                                         dados da empresa selecionada
+  mensalidade historico                           pagamentos anteriores e débito automático
   api [-X MÉTODO] [-d CORPO] CAMINHO              chama uma URL da plataforma com a sessão
   logout                                          apaga a sessão local
 
@@ -66,6 +67,8 @@ func main() {
 		err = cmdStatus(ctx, args)
 	case "empresa":
 		err = cmdEmpresa(ctx, args)
+	case "mensalidade":
+		err = cmdMensalidade(ctx, args)
 	case "api":
 		err = cmdAPI(ctx, args)
 	case "help", "-h", "--help":

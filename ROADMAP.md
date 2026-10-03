@@ -89,7 +89,7 @@ A relação financeira com a própria Contabilizei: mensalidade atual, faturas, 
 | | Issue | Funcionalidade | Tipo |
 |---|---|---|---|
 | ⬜ | [#24](https://github.com/edusouza/ctbz-cli/issues/24) | Mensalidade e fatura atual | funcionalidade |
-| ⬜ | [#25](https://github.com/edusouza/ctbz-cli/issues/25) | Histórico de pagamentos e débito automático | funcionalidade |
+| ✅ | [#25](https://github.com/edusouza/ctbz-cli/issues/25) | Histórico de pagamentos e débito automático | funcionalidade |
 | ⬜ | [#26](https://github.com/edusouza/ctbz-cli/issues/26) | Situação de inadimplência | funcionalidade |
 | ⬜ | [#27](https://github.com/edusouza/ctbz-cli/issues/27) | Plano e contrato de serviço | funcionalidade |
 
