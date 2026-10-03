@@ -27,6 +27,7 @@ Gerada a partir da própria CLI (`go run ./tools/gendocs`); não edite à mão.
 | [`ctbz impostos tabela-irrf`](ctbz_impostos_tabela-irrf.md) | Mostra a tabela progressiva do IRRF usada no cálculo do pró-labore |
 | [`ctbz login`](ctbz_login.md) | Autentica na Contabilizei (usuário, senha e código por e-mail) |
 | [`ctbz logout`](ctbz_logout.md) | Apaga a sessão local |
+| [`ctbz lucros`](ctbz_lucros.md) | Mostra a distribuição de lucros do exercício e o que a impede |
 | [`ctbz mensalidade`](ctbz_mensalidade.md) | Mostra a mensalidade atual da Contabilizei (valor, vencimento e situação) |
 | [`ctbz mensalidade situacao`](ctbz_mensalidade_situacao.md) | Indica se a empresa está em dia com a Contabilizei |
 | [`ctbz notas`](ctbz_notas.md) | Lista as notas fiscais de serviço (NFS-e) emitidas |

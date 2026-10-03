@@ -9,7 +9,7 @@ comando e flag está em [Referência de comandos](../referencia/README.md).
 | [Pendências, rotinas e atendimento](pendencias.md) | Resumo do que precisa de atenção, pendências, rotinas do mês, conciliação e chamados |
 | [Mensalidade e pagamentos](mensalidade.md) | Mensalidade, situação com a Contabilizei, plano e contrato |
 | [Notas fiscais](notas.md) | Notas emitidas e de entrada, tomadores, configuração do emissor e alíquotas |
-| [Pró-labore e lucros](prolabore.md) | Pró-labore por sócio, histórico e parâmetros de cálculo |
+| [Pró-labore e lucros](prolabore.md) | Pró-labore por sócio, histórico, parâmetros de cálculo e distribuição de lucros |
 
 Antes de tudo, faça o login (veja o [README](https://github.com/edusouza/ctbz-cli#login)).
 Todos os comandos aceitam `-o table|json|csv`.

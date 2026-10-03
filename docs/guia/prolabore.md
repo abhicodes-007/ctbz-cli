@@ -56,3 +56,33 @@ IRRF a partir de:             R$ 5.000,00
 - O sócio contribui com 11% de INSS até o teto; acima do pró-labore no teto, a contribuição
   não aumenta.
 - Abaixo do valor de incidência, não há IRRF retido.
+
+## Distribuição de lucros
+
+```sh
+ctbz lucros
+```
+
+```text
+Exercício:               2025
+Saldo na empresa:        R$ 5.000,00
+Total distribuído:       R$ 3.000,00
+Adiantamentos:           R$ 0,00
+Limite para distribuir:  R$ 8.000,00
+Exercício fechado:       sim
+Pode alterar:            não
+Data limite:             31/03/2026
+Pendência documental:    não
+Débitos federais:        não
+Reabertura do balanço:   NENHUM
+Por sócio:
+  Sócio          Valor
+  FULANO DE TAL  R$ 3.000,00
+```
+
+- O exercício é o que a Contabilizei tem aberto para distribuição; a API não aceita outro
+  ano. Sem exercício aberto, as restrições mostradas são as do ano anterior (como no painel).
+- **Restrições**: pendências documentais e débitos federais impedem o informe de
+  rendimentos; `reabertura_balanco` mostra se há um pedido de reabertura do balanço em
+  andamento.
+- Distribuir ou alterar os valores continua sendo feito pelo painel.

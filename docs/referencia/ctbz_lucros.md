@@ -1,0 +1,34 @@
+# ctbz lucros
+
+Mostra a distribuição de lucros do exercício e o que a impede
+
+Mostra a distribuição de lucros como a tela de informe de rendimentos do painel: exercício,
+saldo disponível na empresa, total distribuído aos sócios, adiantamentos, limite permitido,
+se o exercício está fechado, se a distribuição ainda pode ser alterada (e até quando) e o
+valor por sócio.
+
+Também mostra as restrições do exercício: pendências documentais, débitos federais e
+reabertura do balanço. A API não recebe ano: o exercício é o que a Contabilizei tem aberto
+(sem exercício aberto, as restrições são as do ano anterior).
+
+## Uso
+
+```
+ctbz lucros
+```
+
+## Exemplos
+
+```sh
+  ctbz lucros
+  ctbz lucros -o json | jq .saldo
+```
+
+## Flags globais
+
+```
+  -h, --help            mostra a ajuda do comando
+  -o, --output string   formato de saída: table, json ou csv (padrão: CTBZ_OUTPUT ou table)
+```
+
+Veja também: [`ctbz`](ctbz.md).

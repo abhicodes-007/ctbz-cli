@@ -16,6 +16,7 @@ Dados vão para stdout no formato escolhido com -o; mensagens e progresso vão p
 - [`ctbz impostos`](ctbz_impostos.md): Lista as guias de impostos a pagar (em atraso, do mês e do próximo mês)
 - [`ctbz login`](ctbz_login.md): Autentica na Contabilizei (usuário, senha e código por e-mail)
 - [`ctbz logout`](ctbz_logout.md): Apaga a sessão local
+- [`ctbz lucros`](ctbz_lucros.md): Mostra a distribuição de lucros do exercício e o que a impede
 - [`ctbz mensalidade`](ctbz_mensalidade.md): Mostra a mensalidade atual da Contabilizei (valor, vencimento e situação)
 - [`ctbz notas`](ctbz_notas.md): Lista as notas fiscais de serviço (NFS-e) emitidas
 - [`ctbz pendencias`](ctbz_pendencias.md): Lista as pendências da empresa (tipo, detalhe, prazo e situação)
