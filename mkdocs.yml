@@ -61,3 +61,4 @@ nav:
       - "0009 Camada api": adr/0009-camada-api-tipada.md
       - "0010 Contratos": adr/0010-testes-de-contrato.md
       - "0011 Fixtures podadas": adr/0011-fixtures-podadas-ao-contrato.md
+      - "0012 Prazos e alertas": adr/0012-prazos-e-alertas.md
