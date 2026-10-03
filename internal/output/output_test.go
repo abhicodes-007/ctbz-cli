@@ -128,6 +128,22 @@ func TestCPF(t *testing.T) {
 	}
 }
 
+func TestText(t *testing.T) {
+	longo := Text(strings.Repeat("á", 70) + " <fim>")
+	if got := cellText(longo, FormatTable); len([]rune(got)) != textMax || !strings.HasSuffix(got, "…") {
+		t.Errorf("tabela: %q", got)
+	}
+	if got := cellText(longo, FormatCSV); got != string(longo) {
+		t.Errorf("CSV deveria trazer o texto completo: %q", got)
+	}
+	if raw, _ := marshal(longo); !strings.HasSuffix(string(raw), ` <fim>"`) {
+		t.Errorf("JSON deveria trazer o texto completo, sem escapar <>: %s", raw)
+	}
+	if raw, _ := marshal(Text("")); string(raw) != "null" {
+		t.Errorf("Text vazio em JSON = %s", raw)
+	}
+}
+
 func TestParseFormat(t *testing.T) {
 	for _, s := range []string{"table", "JSON", " csv "} {
 		if _, err := ParseFormat(s); err != nil {
