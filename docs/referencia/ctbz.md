@@ -24,6 +24,7 @@ Dados vão para stdout no formato escolhido com -o; mensagens e progresso vão p
 - [`ctbz pendencias`](ctbz_pendencias.md): Lista as pendências da empresa (tipo, detalhe, prazo e situação)
 - [`ctbz plano`](ctbz_plano.md): Mostra o plano contratado com a Contabilizei
 - [`ctbz prolabore`](ctbz_prolabore.md): Mostra o pró-labore vigente por sócio e o tipo de gerenciamento
+- [`ctbz razao`](ctbz_razao.md): Lista os lançamentos do razão contábil por conta
 - [`ctbz resumo`](ctbz_resumo.md): Mostra numa lista só o que precisa de atenção
 - [`ctbz rotinas`](ctbz_rotinas.md): Lista as rotinas e obrigações do mês (da empresa e da Contabilizei)
 - [`ctbz status`](ctbz_status.md): Mostra a sessão atual e testa se ainda é válida

@@ -60,3 +60,29 @@ func TestBalanco(t *testing.T) {
 		t.Errorf("período inválido: código %d, quero %d", code, ExitUsage)
 	}
 }
+
+func TestRazao(t *testing.T) {
+	fixNow(t, "2026-10-03")
+	agosto := `[{"id":"1.01.01.01.00","descricao":"Caixa Geral","nivel":5,"listaLancamento":[
+{"id":1,"data":1784635200000,"descricao":"Capital social","debito":1000,"credito":null,"saldoExercicio":1000,
+ "contaContrapartida":{"id":"2.07.01.01.00","descricao":"Capital Social Realizado no País"}}]},
+{"id":"2.01.01","descricao":"Fornecedores","nivel":3,"listaLancamento":[
+{"id":2,"data":1786536000000,"descricao":"Pagamento","debito":null,"credito":50.5,"saldoExercicio":-50.5,"contaContrapartida":null}]}]`
+	withSession(t, fakeAPI(t, map[string]string{
+		"/api/plataforma/relatorios-ms/gerarrazaotipoa/2026/8": agosto,
+		"/api/plataforma/relatorios-ms/gerarrazaotipoa/2026/9": fixture(t, "razao"),
+	}))
+	out, stderr, code := execCLI(t, "", "razao", "--de", "2026-08", "--ate", "2026-08", "--conta", "1.01", "-o", "csv")
+	if code != ExitOK {
+		t.Fatalf("código %d: %s", code, stderr)
+	}
+	want := "data,conta,conta_descricao,historico,contrapartida,debito,credito,saldo\n" +
+		"2026-07-21,1.01.01.01.00,Caixa Geral,Capital social,2.07.01.01.00 Capital Social Realizado no País,1000.00,,1000.00\n"
+	if out != want {
+		t.Errorf("CSV:\n%s\nesperado:\n%s", out, want)
+	}
+	out, _, code = execCLI(t, "", "razao", "--de", "2026-08", "--ate", "2026-09", "-o", "json")
+	if code != ExitOK || !strings.Contains(out, `"conta": "2.01.01"`) || !strings.Contains(out, "FULANO DE TAL") {
+		t.Errorf("dois meses (código %d):\n%s", code, out)
+	}
+}

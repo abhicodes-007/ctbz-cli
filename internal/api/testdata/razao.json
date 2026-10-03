@@ -1,0 +1,141 @@
+[
+  {
+    "classificacaoConta": "ATIVO",
+    "descricao": "Caixa Geral",
+    "id": "1.01.01.01.00",
+    "idContaPai": "1.01.01.01",
+    "listaLancamento": [
+      {
+        "contaContrapartida": {
+          "descricao": "Capital Social Realizado no País",
+          "id": "2.07.01.01.00"
+        },
+        "credito": null,
+        "data": 1784592000000,
+        "debito": 1234.56,
+        "descricao": "Capital social",
+        "id": 412965741,
+        "saldoExercicio": 1234.56,
+        "tipo": "Sistema"
+      },
+      {
+        "contaContrapartida": {
+          "descricao": "Créditos com Pessoas Ligadas - FISICAS",
+          "id": "1.07.00.02.00"
+        },
+        "credito": 1234.56,
+        "data": 1785456000000,
+        "debito": null,
+        "descricao": "Retirada para sócio - FULANO DE TAL",
+        "id": 418131388,
+        "saldoExercicio": 1234.56,
+        "tipo": "Sistema"
+      },
+      {
+        "contaContrapartida": {
+          "descricao": "Fornecedores",
+          "id": "2.01.01.01.00"
+        },
+        "credito": 1234.56,
+        "data": 1785456000000,
+        "debito": null,
+        "descricao": "Pagamento de Fornecedores",
+        "id": 418131387,
+        "saldoExercicio": 1234.56,
+        "tipo": "Sistema"
+      }
+    ],
+    "natureza": "DEVEDORA",
+    "nivel": 5,
+    "saldoAnterior": 1234.56,
+    "saldoExercicio": 1234.56,
+    "saldoExercicioAnterior": 1000,
+    "tipo": "A",
+    "totalCredito": 1234.56,
+    "totalDebito": 1234.56
+  },
+  {
+    "classificacaoConta": "ATIVO",
+    "descricao": "Créditos com Pessoas Ligadas - FISICAS",
+    "id": "1.07.00.02.00",
+    "idContaPai": "1.07.00.02",
+    "listaLancamento": [
+      {
+        "contaContrapartida": {
+          "descricao": "Caixa Geral",
+          "id": "1.01.01.01.00"
+        },
+        "credito": null,
+        "data": 1785456000000,
+        "debito": 1234.56,
+        "descricao": "Retirada para sócio - FULANO DE TAL",
+        "id": 418131388,
+        "saldoExercicio": 1234.56,
+        "tipo": "Sistema"
+      },
+      {
+        "contaContrapartida": {
+          "descricao": "Caixa Geral",
+          "id": "1.01.01.01.00"
+        },
+        "credito": 1234.56,
+        "data": 1785542400000,
+        "debito": null,
+        "descricao": "Devolução do sócio à empresa - FULANO DE TAL",
+        "id": 425883191,
+        "saldoExercicio": 1234.56,
+        "tipo": "Sistema"
+      }
+    ],
+    "natureza": "DEVEDORA",
+    "nivel": 5,
+    "saldoAnterior": 1234.56,
+    "saldoExercicio": 1234.56,
+    "saldoExercicioAnterior": 1000,
+    "tipo": "A",
+    "totalCredito": 1234.56,
+    "totalDebito": 1234.56
+  },
+  {
+    "classificacaoConta": "PASSIVO",
+    "descricao": "Fornecedores",
+    "id": "2.01.01.01.00",
+    "idContaPai": "2.01.01.01",
+    "listaLancamento": [
+      {
+        "contaContrapartida": {
+          "descricao": "Prestação de Serviço Pessoa Jurídica",
+          "id": "3.01.01.08.01.12"
+        },
+        "credito": 1234.56,
+        "data": 1784678400000,
+        "debito": null,
+        "descricao": "Nota Fiscal Tomada No.: 102851 - SOLUTI - SOLUCOES EM NEGOCIOS INTELIGENTES S/A - CERTIFICADO PJ A1",
+        "id": 415701154,
+        "saldoExercicio": 1234.56,
+        "tipo": "Sistema"
+      },
+      {
+        "contaContrapartida": {
+          "descricao": "Caixa Geral",
+          "id": "1.01.01.01.00"
+        },
+        "credito": null,
+        "data": 1785456000000,
+        "debito": 1234.56,
+        "descricao": "Pagamento de Fornecedores",
+        "id": 418131387,
+        "saldoExercicio": 1234.56,
+        "tipo": "Sistema"
+      }
+    ],
+    "natureza": "CREDORA",
+    "nivel": 5,
+    "saldoAnterior": 1234.56,
+    "saldoExercicio": 1234.56,
+    "saldoExercicioAnterior": 1000,
+    "tipo": "A",
+    "totalCredito": 1234.56,
+    "totalDebito": 1234.56
+  }
+]

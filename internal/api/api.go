@@ -76,6 +76,7 @@ func Endpoints() []Endpoint {
 		{Name: "simulador_impostos", LivePath: PathSimuladorImpostos, Type: SimuladorImpostos{}},
 		{Name: "balancete", LivePath: PathBalancete(2026, 9), Type: []ContaRelatorio{}},
 		{Name: "balanco", LivePath: PathBalanco(2026, 9), Type: []ContaRelatorio{}},
+		{Name: "razao", LivePath: PathRazao(2026, 9), Type: []ContaRelatorio{}},
 		{Name: "distribuicao_lucros", LivePath: PathDistribuicaoLucros, Type: DistribuicaoLucros{}},
 		{Name: "restricoes_informe", LivePath: PathRestricoesInforme(2025), Type: RestricoesInforme{}},
 		{Name: "socios_informe", LivePath: PathSociosInforme(2025), Type: []SocioInforme{}},

@@ -38,3 +38,20 @@ Conta  Descrição            Nível  Grupo            Saldo  Exercício anterio
 
 - Ativo, passivo e patrimônio líquido, com o saldo do exercício e o do exercício anterior.
 - As contas de resultado (receitas e despesas) ficam de fora, como no painel.
+
+## Razão
+
+```sh
+ctbz razao --de 2026-01 --ate 2026-09               # todas as contas no período
+ctbz razao --conta 1.01.01.01.00 --de 2026-07       # uma conta
+ctbz razao --conta 1.01 -o csv > circulante.csv     # prefixo: todas as contas de 1.01
+```
+
+```text
+Data        Conta          Descrição da conta  Histórico       Contrapartida                                    Débito  Crédito        Saldo
+21/07/2026  1.01.01.01.00  Caixa Geral         Capital social  2.07.01.01.00 Capital Social Realizado no País  R$ 1.000,00         R$ 1.000,00
+```
+
+- Um lançamento por linha, com a conta de contrapartida e o saldo acumulado da conta no
+  exercício depois do lançamento.
+- A API devolve um mês por vez; a CLI consulta cada mês do período (até 24).

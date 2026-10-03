@@ -2,6 +2,7 @@ package cli
 
 import (
 	"fmt"
+	"strings"
 	"time"
 
 	"github.com/spf13/cobra"
@@ -119,6 +120,74 @@ func balancoList(contas []api.ContaRelatorio) *output.List {
 		}
 		l.Append(c.ID, output.Indent{Level: c.Nivel, Text: c.Descricao}, c.Nivel, nilIfEmpty(c.ClassificacaoConta),
 			moneyOrNil(c.SaldoExercicio), moneyOrNil(c.SaldoExercicioAnterior))
+	}
+	return l
+}
+
+func newRazaoCmd() *cobra.Command {
+	var de, ate, conta string
+	cmd := &cobra.Command{
+		Use:   "razao",
+		Short: "Lista os lançamentos do razão contábil por conta",
+		Long: `Lista os lançamentos do razão de cada conta no período: data, conta, histórico,
+contrapartida, débito, crédito e o saldo acumulado no exercício depois do lançamento.
+
+O período vai de --de até --ate (meses AAAA-MM; padrão: o mês atual), no máximo 24 meses;
+a API devolve um mês por vez. --conta filtra pelo código da conta (ex.: 1.01.01.01.00) ou
+por um prefixo dele (ex.: 1.01 para todo o ativo circulante).`,
+		Example: `  ctbz razao --de 2026-01 --ate 2026-09
+  ctbz razao --conta 1.01.01.01.00 --de 2026-07 -o csv`,
+		Args: exactArgs(0, "nenhum argumento"),
+		RunE: func(cmd *cobra.Command, _ []string) error {
+			f, err := outputFormat(cmd, "")
+			if err != nil {
+				return err
+			}
+			meses, err := mesesDoPeriodo(de, ate)
+			if err != nil {
+				return err
+			}
+			s := streamsOf(cmd)
+			var contas []api.ContaRelatorio
+			for _, m := range meses {
+				cs, err := api.BuscarRelatorio(cmd.Context(), sessionGetter{s}, api.PathRazao(m.Year(), int(m.Month())))
+				if err != nil {
+					return err
+				}
+				contas = append(contas, cs...)
+			}
+			return output.Write(s.out, f, razaoList(contas, conta))
+		},
+	}
+	cmd.Flags().StringVar(&de, "de", "", "primeiro mês, AAAA-MM (padrão: o mês atual)")
+	cmd.Flags().StringVar(&ate, "ate", "", "último mês, AAAA-MM (padrão: --de ou o mês atual)")
+	cmd.Flags().StringVar(&conta, "conta", "", "código da conta ou prefixo (ex.: 1.01)")
+	return cmd
+}
+
+func razaoList(contas []api.ContaRelatorio, prefixo string) *output.List {
+	l := &output.List{Columns: []output.Column{
+		{Key: "data", Header: "Data"},
+		{Key: "conta", Header: "Conta"},
+		{Key: "conta_descricao", Header: "Descrição da conta"},
+		{Key: "historico", Header: "Histórico"},
+		{Key: "contrapartida", Header: "Contrapartida"},
+		{Key: "debito", Header: "Débito"},
+		{Key: "credito", Header: "Crédito"},
+		{Key: "saldo", Header: "Saldo"},
+	}}
+	for _, c := range contas {
+		if prefixo != "" && !strings.HasPrefix(c.ID, prefixo) {
+			continue
+		}
+		for _, lc := range c.ListaLancamento {
+			var contrapartida any
+			if cp := lc.ContaContrapartida; cp != nil {
+				contrapartida = nilIfEmpty(strings.TrimSpace(cp.ID + " " + cp.Descricao))
+			}
+			l.Append(dateFromMillis(lc.Data), c.ID, c.Descricao, output.Text(lc.Descricao), contrapartida,
+				moneyOrNil(lc.Debito), moneyOrNil(lc.Credito), moneyOrNil(lc.SaldoExercicio))
+		}
 	}
 	return l
 }
