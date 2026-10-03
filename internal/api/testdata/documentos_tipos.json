@@ -1,0 +1,20 @@
+[
+  {
+    "dataModificacao": "",
+    "nome": "FULANO DE TAL",
+    "quantidade": 0,
+    "tipo": "EXTRATO_BANCARIO_MOVIMENTACOES"
+  },
+  {
+    "dataModificacao": "",
+    "nome": "FULANO DE TAL",
+    "quantidade": 0,
+    "tipo": "EXTRATO_APLICACAO_FINANCEIRA"
+  },
+  {
+    "dataModificacao": "",
+    "nome": "FULANO DE TAL",
+    "quantidade": 0,
+    "tipo": "INFORME_DE_RENDIMENTO_INVESTIMENTOS"
+  }
+]
