@@ -21,3 +21,20 @@ Conta          Descrição                          Nível  Saldo anterior      
 - Em CSV e JSON a descrição vem sem recuo e o nível fica na coluna `nivel`, o que facilita
   filtrar (ex.: só o nível 1 para ATIVO, PASSIVO e PATRIMÔNIO LÍQUIDO).
 - O PDF do painel é gerado no navegador a partir dos mesmos dados; a API não oferece PDF.
+
+## Balanço patrimonial
+
+```sh
+ctbz balanco 2025          # fechamento do exercício (dezembro)
+ctbz balanco 2026-09       # posição em um mês
+```
+
+```text
+Conta  Descrição            Nível  Grupo            Saldo  Exercício anterior
+1      ATIVO                    1  ATIVO        R$ 395,17             R$ 0,00
+1.01     CIRCULANTE             2  ATIVO        R$ 395,17             R$ 0,00
+2      PASSIVO                  1  PASSIVO     -R$ 395,17             R$ 0,00
+```
+
+- Ativo, passivo e patrimônio líquido, com o saldo do exercício e o do exercício anterior.
+- As contas de resultado (receitas e despesas) ficam de fora, como no painel.

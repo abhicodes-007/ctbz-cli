@@ -11,6 +11,8 @@ usa [Versionamento Semântico](https://semver.org/lang/pt-BR/).
 
 - `ctbz balancete AAAA-MM`: contas com saldo anterior, débitos, créditos e saldo, recuadas
   por nível na tabela e planas (com coluna `nivel`) em CSV e JSON.
+- `ctbz balanco AAAA[-MM]`: ativo, passivo e patrimônio líquido com saldo do exercício e do
+  exercício anterior (só o ano: dezembro).
 
 ## [0.6.0] - 2026-10-03
 

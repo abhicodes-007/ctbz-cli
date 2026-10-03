@@ -33,3 +33,30 @@ func TestBalancete(t *testing.T) {
 		t.Errorf("mês inválido: código %d, quero %d", code, ExitUsage)
 	}
 }
+
+func TestBalanco(t *testing.T) {
+	balanco := `[
+{"id":"1","descricao":"ATIVO","nivel":1,"classificacaoConta":"ATIVO","saldoExercicio":395.17,"saldoExercicioAnterior":0},
+{"id":"2","descricao":"PASSIVO","nivel":1,"classificacaoConta":"PASSIVO","saldoExercicio":-395.17,"saldoExercicioAnterior":0},
+{"id":"3","descricao":"RECEITAS","nivel":1,"classificacaoConta":"RESULTADO","saldoExercicio":100,"saldoExercicioAnterior":0}]`
+	withSession(t, fakeAPI(t, map[string]string{
+		"/api/plataforma/relatorios-ms/gerarbalanco/2025/12": balanco,
+		"/api/plataforma/relatorios-ms/gerarbalanco/2026/9":  fixture(t, "balanco"),
+	}))
+	out, stderr, code := execCLI(t, "", "balanco", "2025", "-o", "csv")
+	if code != ExitOK {
+		t.Fatalf("código %d: %s", code, stderr)
+	}
+	want := "conta,descricao,nivel,grupo,saldo,saldo_exercicio_anterior\n" +
+		"1,ATIVO,1,ATIVO,395.17,0.00\n" +
+		"2,PASSIVO,1,PASSIVO,-395.17,0.00\n"
+	if out != want {
+		t.Errorf("CSV:\n%s\nesperado:\n%s", out, want)
+	}
+	if out, _, code := execCLI(t, "", "balanco", "2026-09", "-o", "json"); code != ExitOK || !strings.Contains(out, `"grupo": "ATIVO"`) {
+		t.Errorf("fixture (código %d):\n%s", code, out)
+	}
+	if _, _, code := execCLI(t, "", "balanco", "set/2025"); code != ExitUsage {
+		t.Errorf("período inválido: código %d, quero %d", code, ExitUsage)
+	}
+}
