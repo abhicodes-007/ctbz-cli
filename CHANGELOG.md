@@ -7,6 +7,11 @@ usa [Versionamento Semântico](https://semver.org/lang/pt-BR/).
 
 ## [Unreleased]
 
+### Added
+
+- `ctbz mensalidade`: competência, valor, vencimento, situação e observações da mensalidade
+  atual, e se há competência anterior em atraso (`--fail-on-atraso`, código 4).
+
 ## [0.3.0] - 2026-10-03
 
 ### Added
