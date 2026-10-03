@@ -5,6 +5,7 @@ edit_uri: edit/main/docs/
 docs_dir: docs
 not_in_nav: |
   adr/template.md
+  referencia/ctbz*.md
 
 theme:
   name: material
@@ -26,6 +27,7 @@ markdown_extensions:
 
 nav:
   - Início: README.md
+  - Referência de comandos: referencia/README.md
   - Autenticação:
       - Visão geral: autenticacao/README.md
       - Credenciais: autenticacao/01-credenciais.md

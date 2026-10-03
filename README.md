@@ -87,7 +87,8 @@ ctbz logout              # apaga a sessão local
 ctbz version             # versão do binário
 ```
 
-Ajuda de cada comando: `ctbz COMANDO --help`. Completion de shell: `source <(ctbz completion bash)`.
+Referência completa de cada comando: [`docs/referencia`](docs/referencia/README.md)
+(também em `ctbz COMANDO --help`). Completion de shell: `source <(ctbz completion bash)`.
 
 ## Formatos de saída
 

@@ -13,6 +13,7 @@ internal/cli/
   login.go       comando login: retomada, fontes de OTP, escolha de empresa
   session.go     chamadas autenticadas (re-login automático), dados da sessão
   status.go, empresa.go, api.go, logout.go, version.go   um arquivo por comando
+  docs.go        gerador da referência de comandos (docs/referencia)
 internal/ctbz/
   client.go      HTTP: cookies manuais, redirecionamentos manuais, API(), erros
   login.go       etapas do login e parsers de HTML/localStorage
@@ -24,6 +25,7 @@ internal/output/
   values.go      tipos de valor (Money, Date, DateTime, CNPJ) e formatação por formato
   render.go      renderizadores: tabela alinhada, JSON ordenado, CSV
   fromjson.go    JSON arbitrário → List/Record (ordem dos campos e números preservados)
+tools/gendocs/   regenera docs/referencia
 scripts/
   otp-gmail-gws.sh       OTP a partir do Gmail (gws)
   extrair-endpoints.py   gera docs/api/catalogo.md
@@ -43,7 +45,7 @@ Go 1.24; versões mais novas exigem Go 1.26.
    ou `output.List` ([ADR-0006](../adr/0006-saida-padronizada.md)); escrever com
    `output.Write(s.out, formato, dados)`, formato vindo de `outputFormat(cmd, "")`.
 4. Testes com `execCLI` e `fakeAPI` (ver `internal/cli/output_test.go`).
-5. Entrada no `CHANGELOG.md`.
+5. `go run ./tools/gendocs` e entrada no `CHANGELOG.md`.
 
 ## Máquina de estados do login
 
@@ -149,7 +151,7 @@ go test ./...
   aninhado), formatação de reais, zero negativo, listas vazias.
 - `internal/cli`: execução da árvore real (`execCLI`) com API simulada (`fakeAPI`):
   precedência de `-o`/`CTBZ_OUTPUT`, `--json` como atalho, stdout só com dados, códigos
-  de saída e ajuda em português.
+  de saída, ajuda em português e referência de comandos atualizada.
 - `internal/otp`: extração do código, polling com falhas seguidas de sucesso, timeout
   preservando o último erro útil, prompt.
 - `internal/cli` (login): fluxo completo com `--otp-cmd` e fluxo em etapas (pendente → `--otp` →
