@@ -71,3 +71,4 @@ nav:
       - "0012 Prazos e alertas": adr/0012-prazos-e-alertas.md
       - "0013 Sem retentativa": adr/0013-sem-retentativa-com-fonte-alternativa.md
       - "0014 CI": adr/0014-ci-no-github-actions.md
+      - "0015 Releases": adr/0015-releases-com-goreleaser.md
