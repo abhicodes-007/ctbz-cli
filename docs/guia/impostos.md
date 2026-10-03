@@ -62,3 +62,13 @@ ctbz impostos baixar 1000000000000001           # guias específicas
   sobrescrever.
 - O PDF vem de um link temporário gerado pela Contabilizei; o download não envia os cookies
   da sessão.
+
+## Histórico
+
+```sh
+ctbz impostos historico --ano 2026
+ctbz impostos historico --ano 2026 --mes 7 --status pago -o csv
+```
+
+Lista as guias de meses anteriores com valor, valor pago, vencimento e situação, lendo todas
+as páginas da API. Na tabela, o resumo "em dia / guias vencidas" sai no stderr.

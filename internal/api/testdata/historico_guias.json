@@ -1,0 +1,29 @@
+{
+  "competencias": [
+    {
+      "competencia": "Agosto / 2026",
+      "guias": []
+    },
+    {
+      "competencia": "Julho / 2026",
+      "guias": [
+        {
+          "competencia": {
+            "ano": 2026,
+            "mes": 7
+          },
+          "dataVencimento": "06/10/2026",
+          "id": 1000000000000001,
+          "imposto": "DARF_UNIFICADO_ATIVACAO_FATOR_R",
+          "impostoDescricao": "DARF Unificado",
+          "status": "PENDENTE",
+          "tipo": "GUIA",
+          "valorPago": 1234.56,
+          "valorPrincipal": 1000
+        }
+      ]
+    }
+  ],
+  "paginaAtual": 1,
+  "totalPaginas": 1
+}

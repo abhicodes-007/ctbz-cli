@@ -51,7 +51,7 @@ Legenda: ✅ 200 · ⚠️ responde, mas precisa de parâmetro ou não está lib
 | `impostos/v5/historico-impostos/anos-vigentes` | ✅ | lista de anos |
 | `impostos/v5/historico-impostos/faturamento-mensal` | ✅ | `faturamentoMensal` |
 | `impostos/v2/historico-impostos/init` | ✅ | `emDia, quantidadeGuiasVencidas` |
-| `impostos/v2/historico-impostos/guias?pagina=1` | ✅ | `paginaAtual, totalPaginas, competencias`; aceita também `status`, `mes`, `ano` |
+| `impostos/v2/historico-impostos/guias?pagina=1` | ✅ | `paginaAtual, totalPaginas, competencias[{competencia, guias[{id, imposto, impostoDescricao, competencia{mes,ano}, dataVencimento, valorPrincipal, valorPago, status, tipo, codigoBarras…}]}]`; aceita `status`, `mes` (1–12), `ano` — usado por `ctbz impostos historico` |
 | `impostos/v2/historico-impostos/guias` (sem `pagina`) | ❌ 560 | `{identificador, detalhe, dataHora}` |
 | `impostos/como-imposto-foi-calculado/init` | ✅ | `nomeMesCompetencia, faturamentoTotal, dasSimples{…}, darf{inss{…}, irrf{…}, total}, valorFaturamentoUltimos12Meses, valorProlaboreUltimos12Meses, percentualFatorR, historicoFaturamento[{mes, valorFaturamento, valorProlabore}]` — usado por `ctbz impostos calculo` |
 | `impostos/como-imposto-foi-calculado/tabela-irrf` | ✅ | lista `{baseCalculo, aliquota, deducao}` em texto (ex.: `"7,5%"`) |

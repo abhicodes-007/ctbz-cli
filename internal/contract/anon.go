@@ -54,7 +54,7 @@ var (
 	keyDigits      = regexp.MustCompile(`(?i)(cpf|cnpj|cep|telefone|celular|conta$|numeroConta|agencia|inscricao|pis|nit|documento|identificador|^numero$|rg$|cnh|eleitor|rne|passaporte)`)
 	keyBirth       = regexp.MustCompile(`(?i)nascimento`)
 	keyMoney       = regexp.MustCompile(`(?i)(valor|saldo|total|faturamento|receita|credito|debito|preco|montante|juros|multa|prolabore|lucro|distribu|adiantamento|base|imposto|economia|cenario|pago|custo)`)
-	keyID          = regexp.MustCompile(`(?i)^id|id$|^(mes|ano|periodo|dia|quantidade\w*|nr\w*|numero\w*)$`)
+	keyID          = regexp.MustCompile(`(?i)^id|id$|^(mes|ano|periodo|dia|quantidade\w*|nr\w*|numero\w*|total(paginas|registros|elementos|pages|elements)|pagina\w*)$`)
 )
 
 const (
