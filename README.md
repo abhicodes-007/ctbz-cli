@@ -88,6 +88,9 @@ Códigos de saída: `0` sucesso, `1` erro, `3` login pendente (aguardando OTP ou
 
 ## Como funciona (engenharia reversa)
 
+> Documentação detalhada, separada por contexto, em [`docs/`](docs/README.md):
+> autenticação, OTP automático, API (endpoints verificados e catálogo), front-end, CLI e metodologia.
+
 1. `GET /login` → formulário com um `token` anti-CSRF.
 2. `POST /login` (`user`, `password`, `token`) → tela de OTP e cookie de pré-sessão `__C`.
    Erros voltam como redirecionamento para `/login#incorreto`, `#bloqueado`, `#limite-sessoes`…
