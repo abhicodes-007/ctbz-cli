@@ -42,6 +42,7 @@ nav:
   - Front-end: frontend/README.md
   - Desenvolvimento:
       - Arquitetura da CLI: cli/README.md
+      - Testes de contrato: contratos.md
       - Contribuindo: contribuindo.md
       - Metodologia: metodologia/README.md
   - Decisões (ADRs):
@@ -54,3 +55,5 @@ nav:
       - "0006 Saída padronizada": adr/0006-saida-padronizada.md
       - "0007 Login e sessão": adr/0007-login-sessao-e-otp.md
       - "0008 Cobra": adr/0008-cobra-para-a-arvore-de-comandos.md
+      - "0009 Camada api": adr/0009-camada-api-tipada.md
+      - "0010 Contratos": adr/0010-testes-de-contrato.md
