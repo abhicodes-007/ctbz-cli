@@ -30,6 +30,8 @@ Gerada a partir da própria CLI (`go run ./tools/gendocs`); não edite à mão.
 | [`ctbz mensalidade`](ctbz_mensalidade.md) | Mostra a mensalidade atual da Contabilizei (valor, vencimento e situação) |
 | [`ctbz mensalidade situacao`](ctbz_mensalidade_situacao.md) | Indica se a empresa está em dia com a Contabilizei |
 | [`ctbz notas`](ctbz_notas.md) | Lista as notas fiscais de serviço (NFS-e) emitidas |
+| [`ctbz notas aliquotas`](ctbz_notas_aliquotas.md) | Lista as alíquotas e os códigos de serviço por atividade |
+| [`ctbz notas config`](ctbz_notas_config.md) | Mostra a configuração do emissor de notas |
 | [`ctbz notas tomadores`](ctbz_notas_tomadores.md) | Lista os tomadores (clientes) cadastrados no emissor de notas |
 | [`ctbz notas tomadores consulta`](ctbz_notas_tomadores_consulta.md) | Consulta os dados cadastrais de um CNPJ na Receita |
 | [`ctbz pendencias`](ctbz_pendencias.md) | Lista as pendências da empresa (tipo, detalhe, prazo e situação) |
