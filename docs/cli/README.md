@@ -126,9 +126,10 @@ Todos os comandos montam os dados como `output.List` (várias linhas) ou `output
 ganha os três formatos sem código extra.
 
 - **Tipos de valor**: use `output.Money`, `output.Date`, `output.DateTime`, `output.CNPJ`,
-  `output.CPF` e `output.Text` em vez de strings formatadas. Cada formato decide a apresentação
+  `output.CPF`, `output.Text` e `output.Indent` em vez de strings formatadas. Cada formato decide a apresentação
   (ex.: `Money` vira `R$ 1.234,56` na tabela e `1234.56` no JSON/CSV; `Text`, para descrições
-  longas, é cortado em 60 caracteres só na tabela).
+  longas, é cortado em 60 caracteres só na tabela; `Indent`, para árvores como o plano de
+  contas, é recuado só na tabela).
 - **Chaves** (`Key`) em `snake_case` português sem acento (`razao_social`), estáveis entre
   versões: são o contrato com scripts. **Rótulos** (`Label`/`Header`) são livres.
 - **Precedência do formato**: `-o` antes do comando > `-o` do comando > `CTBZ_OUTPUT` >

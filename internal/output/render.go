@@ -79,6 +79,8 @@ func marshal(v any) ([]byte, error) {
 			return []byte("null"), nil
 		}
 		return marshalString(string(x))
+	case Indent:
+		return marshalString(x.Text)
 	case CNPJ:
 		if x == "" {
 			return []byte("null"), nil

@@ -161,6 +161,22 @@ func TestText(t *testing.T) {
 	}
 }
 
+func TestIndent(t *testing.T) {
+	v := Indent{Level: 3, Text: "Caixa"}
+	if got := cellText(v, FormatTable); got != "    Caixa" {
+		t.Errorf("tabela: %q", got)
+	}
+	if got := cellText(v, FormatCSV); got != "Caixa" {
+		t.Errorf("CSV: %q", got)
+	}
+	if raw, _ := marshal(v); string(raw) != `"Caixa"` {
+		t.Errorf("JSON: %s", raw)
+	}
+	if got := cellText(Indent{Text: "ATIVO"}, FormatTable); got != "ATIVO" {
+		t.Errorf("nível zero: %q", got)
+	}
+}
+
 func TestParseFormat(t *testing.T) {
 	for _, s := range []string{"table", "JSON", " csv "} {
 		if _, err := ParseFormat(s); err != nil {
