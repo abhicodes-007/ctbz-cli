@@ -4,6 +4,8 @@ CLI que substitui a interface web da [Contabilizei](https://app.contabilizei.com
 faz o mesmo login que o navegador (usuário/senha → código por e-mail → escolha
 da empresa) e chama as mesmas URLs internas que o painel usa, como se fossem uma API.
 
+Próximas versões e funcionalidades: [ROADMAP.md](ROADMAP.md).
+
 ## Instalação
 
 ```sh
