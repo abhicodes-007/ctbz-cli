@@ -7,6 +7,12 @@ usa [Versionamento Semântico](https://semver.org/lang/pt-BR/).
 
 ## [Unreleased]
 
+### Added
+
+- `ctbz impostos`: guias a pagar em atraso, do mês e do próximo mês, com totais por grupo;
+  `--atrasadas` e `--fail-on-atraso` (código de saída 4 quando há atraso).
+- Guia de uso por contexto em `docs/guia/`.
+
 ## [0.1.0] - 2026-10-03
 
 ### Added

@@ -12,6 +12,7 @@ Dados vão para stdout no formato escolhido com -o; mensagens e progresso vão p
 - [`ctbz api`](ctbz_api.md): Chama uma URL da plataforma com a sessão atual
 - [`ctbz empresa`](ctbz_empresa.md): Mostra os dados da empresa selecionada
 - [`ctbz empresas`](ctbz_empresas.md): Lista as empresas do usuário, marcando a atual
+- [`ctbz impostos`](ctbz_impostos.md): Lista as guias de impostos a pagar (em atraso, do mês e do próximo mês)
 - [`ctbz login`](ctbz_login.md): Autentica na Contabilizei (usuário, senha e código por e-mail)
 - [`ctbz logout`](ctbz_logout.md): Apaga a sessão local
 - [`ctbz status`](ctbz_status.md): Mostra a sessão atual e testa se ainda é válida

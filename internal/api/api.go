@@ -35,6 +35,7 @@ func Endpoints() []Endpoint {
 		{Name: "certificado_status", LivePath: PathCertificadoStatus, Type: CertificadoStatus{}},
 		{Name: "socios", LivePath: PathSocios, Type: []Socio{}},
 		{Name: "cnaes", LivePath: PathCNAEs, Type: []CNAEEmpresa{}},
+		{Name: "guias_a_pagar", LivePath: PathGuiasAPagar, Type: GuiasAPagar{}},
 	}
 }
 

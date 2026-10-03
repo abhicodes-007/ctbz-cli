@@ -2,6 +2,8 @@ package cli
 
 import (
 	"fmt"
+	"strconv"
+	"strings"
 	"time"
 
 	"github.com/edusouza/ctbz-cli/internal/output"
@@ -31,4 +33,42 @@ func competencia(mes, ano int) any {
 		return nil
 	}
 	return fmt.Sprintf("%02d/%d", mes, ano)
+}
+
+var mesesAbreviados = map[string]int{
+	"jan": 1, "fev": 2, "mar": 3, "abr": 4, "mai": 5, "jun": 6,
+	"jul": 7, "ago": 8, "set": 9, "out": 10, "nov": 11, "dez": 12,
+}
+
+// competenciaDeTexto converte competências escritas pela API ("Jul de 2026",
+// "Julho / 2026", "set./26") para "07/2026". Texto desconhecido volta como veio.
+func competenciaDeTexto(s string) any {
+	if s == "" {
+		return nil
+	}
+	campos := strings.FieldsFunc(strings.ToLower(s), func(r rune) bool {
+		return r == ' ' || r == '/' || r == '.'
+	})
+	var mes, ano int
+	for _, c := range campos {
+		if c == "de" {
+			continue
+		}
+		if len(c) >= 3 {
+			if m, ok := mesesAbreviados[c[:3]]; ok && mes == 0 {
+				mes = m
+				continue
+			}
+		}
+		if n, err := strconv.Atoi(c); err == nil {
+			if n < 100 {
+				n += 2000
+			}
+			ano = n
+		}
+	}
+	if mes == 0 || ano == 0 {
+		return s
+	}
+	return competencia(mes, ano)
 }

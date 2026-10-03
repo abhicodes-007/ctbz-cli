@@ -22,7 +22,13 @@ const (
 	ExitError   = 1
 	ExitUsage   = 2
 	ExitPending = 3
+	// ExitAttention indica que o comando funcionou, mas há algo que exige atenção
+	// (ex.: guias em atraso com --fail-on-atraso).
+	ExitAttention = 4
 )
+
+// errAttention sinaliza, sem mensagem de erro, que há algo que exige atenção.
+var errAttention = errors.New("atenção")
 
 // errPending sinaliza que o login foi salvo aguardando uma entrada do usuário.
 var errPending = errors.New("login pendente")
@@ -45,6 +51,8 @@ func run(ctx context.Context, root *cobra.Command) int {
 		return ExitOK
 	case errors.Is(err, errPending):
 		return ExitPending
+	case errors.Is(err, errAttention):
+		return ExitAttention
 	}
 	fmt.Fprintln(root.ErrOrStderr(), "erro:", err)
 	var ue usageError
@@ -92,6 +100,7 @@ Dados vão para stdout no formato escolhido com -o; mensagens e progresso vão p
 		newStatusCmd(),
 		newEmpresaCmd(),
 		newEmpresasCmd(),
+		newImpostosCmd(),
 		newAPICmd(),
 		newLogoutCmd(),
 		newVersionCmd(version),
