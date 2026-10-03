@@ -3,6 +3,7 @@ package cli
 import (
 	"github.com/spf13/cobra"
 
+	"github.com/edusouza/ctbz-cli/internal/api"
 	"github.com/edusouza/ctbz-cli/internal/ctbz"
 	"github.com/edusouza/ctbz-cli/internal/output"
 )
@@ -29,42 +30,19 @@ A resposta crua da API está em "ctbz api dadosempresa/get".`,
 				return err
 			}
 			s := streamsOf(cmd)
-			var data dadosEmpresa
-			if err := getJSON(cmd.Context(), s, "dadosempresa/get", &data); err != nil {
+			data, err := api.BuscarDadosEmpresa(cmd.Context(), sessionGetter{s})
+			if err != nil {
 				return err
 			}
-			return output.Write(s.out, f, data.record())
+			return output.Write(s.out, f, empresaRecord(data))
 		},
 	}
 	cmd.Flags().BoolVar(&asJSON, "json", false, "atalho para -o json")
 	return cmd
 }
 
-// dadosEmpresa é a resposta de GET /api/plataforma/dadosempresa/get.
-type dadosEmpresa struct {
-	EmpresaAtual struct {
-		CNPJ               string   `json:"cnpj"`
-		RazaoSocial        string   `json:"razaoSocial"`
-		InscricaoMunicipal string   `json:"inscricaoMunicipal"`
-		RegimeTributario   string   `json:"regimeTributario"`
-		StatusEmpresa      string   `json:"statusEmpresa"`
-		RamosAtividade     []string `json:"ramosAtividade"`
-		Plano              string   `json:"plano"`
-		Certificado        *struct {
-			Status struct {
-				Descricao string `json:"descricao"`
-			} `json:"status"`
-			DataValidade string `json:"dataValidade"`
-		} `json:"certificado"`
-	} `json:"empresaAtual"`
-	Empresas []struct {
-		CNPJ          string `json:"cnpj"`
-		RazaoSocial   string `json:"razaoSocial"`
-		StatusEmpresa string `json:"statusEmpresa"`
-	} `json:"empresas"`
-}
-
-func (d dadosEmpresa) record() *output.Record {
+// empresaRecord monta a saída de "ctbz empresa".
+func empresaRecord(d *api.DadosEmpresa) *output.Record {
 	e := d.EmpresaAtual
 	var certSituacao any
 	var certValidade output.Date
