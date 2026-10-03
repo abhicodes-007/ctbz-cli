@@ -39,3 +39,19 @@ Convenções do dia a dia. Decisões maiores estão nos [ADRs](adr/README.md).
 
 - Só `GET` nos comandos de domínio ([ADR-0002](adr/0002-somente-leitura-ate-1-0.md)).
 - Sessão e credenciais nunca vão para logs, testes ou commits.
+
+## Lançar uma versão
+
+Segue o [ADR-0003](adr/0003-versionamento-e-changelog.md). O último PR de um épico:
+
+1. Move o conteúdo de `## [Unreleased]` do `CHANGELOG.md` para `## [X.Y.0] - AAAA-MM-DD`,
+   deixando `## [Unreleased]` vazio.
+2. Atualiza os links no fim do arquivo:
+   `[Unreleased]: …/compare/vX.Y.0...HEAD` e `[X.Y.0]: …/releases/tag/vX.Y.0`.
+3. Marca no `ROADMAP.md` as issues entregues.
+
+Depois do merge em `main`, quem faz o merge cria a tag no commit de merge:
+
+```sh
+git tag -a vX.Y.0 -m "vX.Y.0" && git push origin vX.Y.0
+```

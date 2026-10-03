@@ -7,6 +7,8 @@ usa [Versionamento Semântico](https://semver.org/lang/pt-BR/).
 
 ## [Unreleased]
 
+## [0.1.0] - 2026-10-03
+
 ### Added
 
 - `ctbz login`: autenticação com usuário/senha e código OTP enviado por e-mail, obtido por
@@ -19,6 +21,7 @@ usa [Versionamento Semântico](https://semver.org/lang/pt-BR/).
 - Documentação da engenharia reversa, ADRs e roadmap.
 - `ctbz version` (e `--version`), com versão, commit e data do build.
 - Ajuda em português e referência de comandos gerada em `docs/referencia/`.
+- Códigos de saída: 0 (sucesso), 1 (erro), 2 (uso incorreto) e 3 (login pendente).
 - Completion de shell: `ctbz completion bash|zsh|fish|powershell`.
 - `ctbz empresas`: lista as empresas do usuário (inclusive inativas), marcando a atual.
 - `ctbz empresa usar CNPJ`: troca a empresa da sessão refazendo o login.
@@ -29,9 +32,5 @@ usa [Versionamento Semântico](https://semver.org/lang/pt-BR/).
   categoria, salário-base e data de entrada.
 - `ctbz empresa atividades`: CNAEs da empresa, a principal e os anexos do Simples Nacional.
 
-### Changed
-
-- Erros de uso (comando ou flag inexistente, argumento faltando, formato inválido) terminam
-  com código de saída 2.
-
-[Unreleased]: https://github.com/edusouza/ctbz-cli/commits/main
+[Unreleased]: https://github.com/edusouza/ctbz-cli/compare/v0.1.0...HEAD
+[0.1.0]: https://github.com/edusouza/ctbz-cli/releases/tag/v0.1.0
