@@ -1,0 +1,15 @@
+{
+  "processoReabertura": {
+    "status": "NENHUM"
+  },
+  "restricoes": {
+    "debitosFederais": {
+      "divergenciaContabilFiscal": false,
+      "possuiPendencia": false
+    },
+    "pendenciaDocumental": {
+      "fluxoRegularizacao": "NAO_NECESSARIO",
+      "possuiPendencia": false
+    }
+  }
+}
