@@ -95,6 +95,7 @@ ctbz impostos faturamento                      # faturamento, pró-labore e Fato
 ctbz impostos parcelamentos                    # parcelamentos de impostos
 ctbz impostos debitos                          # débitos federais em aberto?
 ctbz pendencias                                # pendências abertas, com alerta de prazo
+ctbz pendencias conciliacao                    # notas e recebimentos a conciliar
 ctbz rotinas --mes 2026-10                     # rotinas e obrigações do mês (empresa e Contabilizei)
 ctbz api menu/get        # qualquer endpoint; caminho relativo → /api/plataforma/
 ctbz api -X POST -d @corpo.json /api/plataforma/algum/endpoint

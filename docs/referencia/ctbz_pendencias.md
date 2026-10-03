@@ -25,6 +25,10 @@ ctbz pendencias [flags]
   ctbz pendencias --fail-on-vencidas || notify-send "Há pendências vencidas"
 ```
 
+## Subcomandos
+
+- [`ctbz pendencias conciliacao`](ctbz_pendencias_conciliacao.md): Mostra as pendências de conciliação fiscal (notas e recebimentos)
+
 ## Flags
 
 ```

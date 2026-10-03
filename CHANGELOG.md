@@ -13,6 +13,8 @@ usa [Versionamento Semântico](https://semver.org/lang/pt-BR/).
   coluna `alerta` (`vencida`/`próxima`), `--todas` e `--fail-on-vencidas` (código 4).
 - `ctbz rotinas`: rotinas do mês da empresa e obrigações da Contabilizei, com prazo, status,
   valor e alerta; `--mes AAAA-MM` e `--fail-on-vencidas`.
+- `ctbz pendencias conciliacao`: notas sem recebimento e recebimentos sem nota, com a
+  competência de referência; `--listar notas|recebimentos` e `--fail-on-pendencias`.
 
 ## [0.2.0] - 2026-10-03
 
