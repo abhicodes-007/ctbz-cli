@@ -60,3 +60,18 @@ func TestDataDeValor(t *testing.T) {
 		}
 	}
 }
+
+func TestMensalidadeSituacao(t *testing.T) {
+	path := "/api/plataforma/inadimplencia/consultasituacaomensalidadeempresa"
+	withSession(t, fakeAPI(t, map[string]string{path: "OK"}))
+	out, stderr, code := execCLI(t, "", "mensalidade", "situacao", "--fail-on-inadimplencia", "-o", "csv")
+	if code != ExitOK || out != "em_dia,situacao\ntrue,OK\n" {
+		t.Errorf("em dia (código %d): %q %s", code, out, stderr)
+	}
+
+	withSession(t, fakeAPI(t, map[string]string{path: "INADIMPLENTE"}))
+	out, _, code = execCLI(t, "", "mensalidade", "situacao", "--fail-on-inadimplencia", "-o", "csv")
+	if code != ExitAttention || out != "em_dia,situacao\nfalse,INADIMPLENTE\n" {
+		t.Errorf("inadimplente (código %d): %q", code, out)
+	}
+}

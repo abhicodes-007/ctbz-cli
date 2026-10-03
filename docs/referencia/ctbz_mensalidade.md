@@ -21,6 +21,10 @@ ctbz mensalidade [flags]
   ctbz mensalidade --fail-on-atraso
 ```
 
+## Subcomandos
+
+- [`ctbz mensalidade situacao`](ctbz_mensalidade_situacao.md): Indica se a empresa está em dia com a Contabilizei
+
 ## Flags
 
 ```

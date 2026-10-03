@@ -85,6 +85,18 @@ func (g sessionGetter) GetJSON(ctx context.Context, path string, v any) error {
 	return getJSON(ctx, g.s, path, v)
 }
 
+// GetText implementa api.TextGetter: devolve o corpo de um GET como texto.
+func (g sessionGetter) GetText(ctx context.Context, path string) (string, error) {
+	resp, err := authedAPI(ctx, g.s, "GET", path, nil)
+	if err != nil {
+		return "", err
+	}
+	if resp.Status != 200 {
+		return "", &ctbz.HTTPError{Step: path, Status: resp.Status, Body: resp.Body}
+	}
+	return string(resp.Body), nil
+}
+
 // saveCookies persiste cookies renovados pelo servidor durante as chamadas.
 func saveCookies(store *ctbz.Store, sess *ctbz.Session, c *ctbz.Client, errOut io.Writer) {
 	sess.Cookies = c.Cookies
