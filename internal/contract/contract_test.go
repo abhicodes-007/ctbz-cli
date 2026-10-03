@@ -1,6 +1,7 @@
 package contract
 
 import (
+	"encoding/json"
 	"strings"
 	"testing"
 )
@@ -128,6 +129,21 @@ func TestAnonymize(t *testing.T) {
 	again, _ := Anonymize([]byte(in))
 	if string(again) != s {
 		t.Error("anonimização não é determinística")
+	}
+}
+
+func TestRawMessageNaoVerificado(t *testing.T) {
+	type pagina struct {
+		Itens []json.RawMessage `json:"itens"`
+	}
+	in := `{"itens":[{"qualquer":1,"coisa":["a"]},"texto"]}`
+	r, err := Check([]byte(in), pagina{})
+	if err != nil || len(r.Findings) != 0 {
+		t.Errorf("json.RawMessage deveria aceitar qualquer item: %v %v", err, r.Findings)
+	}
+	out, _ := Prune([]byte(in), pagina{})
+	if !strings.Contains(string(out), `"coisa"`) {
+		t.Errorf("a poda deveria manter o item inteiro:\n%s", out)
 	}
 }
 
