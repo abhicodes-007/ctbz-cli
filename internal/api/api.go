@@ -64,6 +64,9 @@ func Endpoints() []Endpoint {
 		{Name: "notas_emitidas", LivePath: PathNotasEmitidas + "?pagina=1&limite=10&ano=2026&mes=10", Type: ListaNotas{}},
 		{Name: "tomadores", LivePath: PathTomadores, Type: Tomadores{}},
 		{Name: "consulta_cnpj", LivePath: PathConsultaCNPJ("00000000000191"), Type: ConsultaCNPJ{}}, // CNPJ público (Banco do Brasil)
+		{Name: "emissor_init", LivePath: PathEmissorInit, Type: EmissorInit{}},
+		{Name: "versao_emissor", LivePath: PathVersaoEmissor, Type: VersaoEmissor{}},
+		{Name: "aliquotas_emissor", LivePath: PathAliquotasEmissor, Type: AliquotasEmissor{}},
 	}
 }
 
