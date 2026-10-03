@@ -25,3 +25,9 @@ Total: R$ 1.000,00 em 1 nota(s)
 - Os campos das notas vêm do código do painel: a conta usada no desenvolvimento não tinha
   notas emitidas. Se algo vier diferente, abra uma issue com a saída de
   `ctbz api "novo-emissor/v2/listagem/notas/filtro?pagina=1&limite=10&ano=AAAA&mes=M"`.
+
+## PDF e XML das notas
+
+A API do painel não oferece o PDF nem o XML das NFS-e emitidas: a Contabilizei envia o
+documento por e-mail, com o link da prefeitura, quando a nota é autorizada. Detalhes da
+investigação em [Notas fiscais: o que a API oferece](../api/notas-fiscais.md).

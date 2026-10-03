@@ -45,6 +45,7 @@ nav:
       - Visão geral: api/README.md
       - Endpoints verificados: api/endpoints-verificados.md
       - Catálogo: api/catalogo.md
+      - Notas fiscais: api/notas-fiscais.md
   - Front-end: frontend/README.md
   - Desenvolvimento:
       - Arquitetura da CLI: cli/README.md

@@ -6,6 +6,7 @@ estabilidade: os caminhos podem mudar quando o front for atualizado.
 
 - [endpoints-verificados.md](endpoints-verificados.md): chamados de verdade, com status e formato da resposta
 - [catalogo.md](catalogo.md): todos os endpoints encontrados no JavaScript (gerado por script)
+- [notas-fiscais.md](notas-fiscais.md): o que existe (e o que não existe) para baixar notas
 
 ## Bases
 
@@ -17,6 +18,7 @@ O front cria uma instância axios por base (todas com `withCredentials: true`, e
 | `/api/legado/` | monólito antigo (notas, consulta de CNPJ, artigos de ajuda) | visto no front |
 | `/api/multiusuario/` | usuários e convites da conta | visto no front |
 | `/api/fintech/` | conta digital | visto no front |
+| `/api/emissor/` | notas de entrada: manifestação, classificação, XML e DANFE (front `/nota-entrada/`) | ✅ listagens chamadas |
 | `/api/pagamentos/` | pagamentos | declarado, sem chamadas encontradas |
 | `/api/public/` | endpoints públicos | declarado, sem chamadas encontradas |
 | `/api/leads/hubspot/` | envio de eventos de marketing (sem cookies) | visto no front |
