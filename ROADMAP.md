@@ -3,16 +3,22 @@
 Funcionalidades planejadas para o `ctbz`, organizadas em versões. Cada versão cobre **um contexto completo** da
 Contabilizei. Cada versão tem um épico no GitHub e uma sub-issue por funcionalidade.
 
+Até a 1.0 a CLI só lê. A partir da 1.1 entram as ações de escrita (adicionar, alterar, remover e marcar como
+concluído), uma versão por contexto, em ordem crescente de risco.
+
 Princípios:
 
-- **Somente leitura até a 1.0.** Nenhuma versão inclui ações que alterem dados na Contabilizei (emitir nota, confirmar
-  pagamento, alterar pró-labore, enviar documento…). Elas estão listadas em [Depois da 1.0](#depois-da-10).
+- **Somente leitura até a 1.0** ([ADR-0002](docs/adr/0002-somente-leitura-ate-1-0.md)). As ações de escrita
+  começam na v1.1 e seguem a [ADR-0018](docs/adr/0018-escrita-com-confirmacao.md): confirmação ou `--yes`,
+  `--dry-run`, risco declarado, uma única tentativa, releitura do estado e teste de requisição.
 - **Saída padronizada e testes de contrato desde a v0.1**: todo comando novo aceita `--output table|json|csv` e
   ganha um contrato que detecta mudanças no formato das respostas.
-- Endpoints de cada funcionalidade vêm de [docs/api](docs/api/README.md). Os itens marcados como *investigação*
-  dependem de descobrir parâmetros ainda não testados.
+- Endpoints de cada funcionalidade vêm de [docs/api](docs/api/README.md); os de escrita, de
+  [docs/api/escrita](docs/api/escrita/README.md). Os itens marcados como *investigação* dependem de descobrir
+  parâmetros ainda não testados.
 
-Labels usadas: `épico`, `versão: vX.Y`, `contexto: …`, `tipo: funcionalidade|investigação|infra|documentação`.
+Labels usadas: `épico`, `versão: vX.Y`, `contexto: …`, `tipo: funcionalidade|investigação|infra|documentação` e, nas
+escritas, `risco: baixo|médio|alto`.
 
 ## Visão geral
 
@@ -27,6 +33,14 @@ Labels usadas: `épico`, `versão: vX.Y`, `contexto: …`, `tipo: funcionalidade
 | **v0.7** | Contabilidade: relatórios, caixa e extratos | [#40](https://github.com/edusouza/ctbz-cli/issues/40) | 6 | concluída |
 | **v0.8** | Documentos e certificado digital | [#47](https://github.com/edusouza/ctbz-cli/issues/47) | 2 | concluída |
 | **v1.0** | Estabilidade e distribuição | [#50](https://github.com/edusouza/ctbz-cli/issues/50) | 3 | concluída |
+| **v1.1** | Fundação da escrita | [#173](https://github.com/edusouza/ctbz-cli/issues/173) | 6 | planejada |
+| **v1.2** | Caixa e classificação de lançamentos | [#180](https://github.com/edusouza/ctbz-cli/issues/180) | 7 | planejada |
+| **v1.3** | Impostos: confirmar pagamento, recálculo e parcelamento | [#188](https://github.com/edusouza/ctbz-cli/issues/188) | 4 | planejada |
+| **v1.4** | Pendências, termos e conciliação | [#193](https://github.com/edusouza/ctbz-cli/issues/193) | 5 | planejada |
+| **v1.5** | Extratos, contas bancárias e documentos | [#199](https://github.com/edusouza/ctbz-cli/issues/199) | 6 | planejada |
+| **v1.6** | Notas fiscais: tomadores e notas de entrada | [#206](https://github.com/edusouza/ctbz-cli/issues/206) | 4 | planejada |
+| **v1.7** | Pró-labore, distribuição de lucros e informe de rendimentos | [#211](https://github.com/edusouza/ctbz-cli/issues/211) | 6 | planejada |
+| **v1.8** | Conta, usuários e acessos | [#218](https://github.com/edusouza/ctbz-cli/issues/218) | 4 | planejada |
 
 ## v0.1 — Login e dados da empresa
 
@@ -171,15 +185,143 @@ Itens transversais adiados: integração contínua, releases com binários e mon
 
 Fora de escopo: Ações de escrita (avaliadas depois da 1.0).
 
-## Depois da 1.0
+## v1.1 — Fundação da escrita
 
-Ações de escrita, a serem avaliadas depois que a leitura estiver estável. Todas exigiriam confirmação explícita (`--yes`)
-e `--dry-run`:
+Épico: [#173](https://github.com/edusouza/ctbz-cli/issues/173) · contexto `infra`
 
-- **Impostos:** confirmar pagamento de guia, solicitar recálculo, contratar parcelamento
-- **Pendências:** resolver pendências, aceitar termos e cartas de responsabilidade, abrir chamado
-- **Mensalidade:** pagar fatura, cadastrar cartão
-- **Notas fiscais:** emitir, cancelar, replicar e agendar NFS-e; cadastrar tomadores
-- **Pró-labore:** alterar ou zerar pró-labore, gestão inteligente, registrar distribuição de lucros
-- **Contabilidade:** importar extratos, classificar e desmembrar lançamentos
-- **Documentos e certificado:** enviar documentos, emitir/renovar certificado
+Base comum para todas as escritas: política registrada em ADR, camada HTTP de escrita (JSON e multipart) sem retentativa, confirmação e `--dry-run`, testes de requisição, registro local das ações e catálogo que enxerga as escritas.
+
+| | Issue | Funcionalidade | Tipo | Risco |
+|---|---|---|---|---|
+| ⬜ | [#174](https://github.com/edusouza/ctbz-cli/issues/174) | Documentar endpoints de escrita e decidir a política de escrita (ADR-0018) | documentação | — |
+| ⬜ | [#175](https://github.com/edusouza/ctbz-cli/issues/175) | Camada de escrita: JSON e multipart, sem retentativa nem re-login no meio | infra | — |
+| ⬜ | [#176](https://github.com/edusouza/ctbz-cli/issues/176) | Confirmação, --dry-run, --yes e níveis de risco nos comandos de escrita | infra | — |
+| ⬜ | [#177](https://github.com/edusouza/ctbz-cli/issues/177) | Testes de requisição para as escritas | infra | — |
+| ⬜ | [#178](https://github.com/edusouza/ctbz-cli/issues/178) | Registro local das ações de escrita (ctbz acoes) | funcionalidade | — |
+| ⬜ | [#179](https://github.com/edusouza/ctbz-cli/issues/179) | Catálogo: capturar escritas em axios({method,url}) e caminhos em variáveis | infra | — |
+
+Fora de escopo: Comandos de domínio que escrevem (a partir da v1.2).
+
+## v1.2 — Caixa e classificação de lançamentos
+
+Épico: [#180](https://github.com/edusouza/ctbz-cli/issues/180) · contexto `contabilidade`
+
+Primeiro contexto de escrita: lançamentos do caixa e classificação dos lançamentos do extrato. Risco médio e reversível enquanto o período está aberto, ideal para estrear a fundação.
+
+| | Issue | Funcionalidade | Tipo | Risco |
+|---|---|---|---|---|
+| ⬜ | [#181](https://github.com/edusouza/ctbz-cli/issues/181) | Classificações disponíveis para lançamentos do caixa e do extrato | funcionalidade | baixo |
+| ⬜ | [#182](https://github.com/edusouza/ctbz-cli/issues/182) | Adicionar lançamento no caixa | funcionalidade | médio |
+| ⬜ | [#183](https://github.com/edusouza/ctbz-cli/issues/183) | Editar lançamento do caixa | funcionalidade | médio |
+| ⬜ | [#184](https://github.com/edusouza/ctbz-cli/issues/184) | Remover lançamento do caixa | funcionalidade | médio |
+| ⬜ | [#185](https://github.com/edusouza/ctbz-cli/issues/185) | Listar e classificar lançamentos do extrato | funcionalidade | médio |
+| ⬜ | [#186](https://github.com/edusouza/ctbz-cli/issues/186) | Desmembrar lançamento do extrato e desfazer o desmembramento | funcionalidade | médio |
+| ⬜ | [#187](https://github.com/edusouza/ctbz-cli/issues/187) | Reclassificar lançamento pendente e concluir a rotina | funcionalidade | médio |
+
+Fora de escopo: Importar ou excluir extrato (v1.5); reabrir balanço (v1.7).
+
+## v1.3 — Impostos: confirmar pagamento, recálculo e parcelamento
+
+Épico: [#188](https://github.com/edusouza/ctbz-cli/issues/188) · contexto `impostos`
+
+Marcar guias como pagas (ou desmarcar), pedir recálculo de guia vencida e simular ou contratar parcelamentos.
+
+| | Issue | Funcionalidade | Tipo | Risco |
+|---|---|---|---|---|
+| ⬜ | [#189](https://github.com/edusouza/ctbz-cli/issues/189) | Confirmar pagamento de guia, "não paguei" e desmarcar | funcionalidade | médio |
+| ⬜ | [#190](https://github.com/edusouza/ctbz-cli/issues/190) | Pedir recálculo de guia vencida | funcionalidade | alto |
+| ⬜ | [#191](https://github.com/edusouza/ctbz-cli/issues/191) | Simular parcelamento de débitos | investigação | baixo |
+| ⬜ | [#192](https://github.com/edusouza/ctbz-cli/issues/192) | Contratar parcelamento de débitos | funcionalidade | alto |
+
+Fora de escopo: Pagar imposto com cartão e débito automático (pagamentos fora do roadmap de escrita).
+
+## v1.4 — Pendências, termos e conciliação
+
+Épico: [#193](https://github.com/edusouza/ctbz-cli/issues/193) · contexto `pendências`
+
+Resolver o que a Central de Rotinas aponta: ler e aceitar termos, declarar a procuração do e-CAC, resolver conciliação fiscal e concluir tarefas de primeiros passos.
+
+| | Issue | Funcionalidade | Tipo | Risco |
+|---|---|---|---|---|
+| ⬜ | [#194](https://github.com/edusouza/ctbz-cli/issues/194) | Ler termos e cartas pendentes da Central de Rotinas | funcionalidade | baixo |
+| ⬜ | [#195](https://github.com/edusouza/ctbz-cli/issues/195) | Aceitar carta de responsabilidade e termos | funcionalidade | alto |
+| ⬜ | [#196](https://github.com/edusouza/ctbz-cli/issues/196) | Declarar procuração do e-CAC criada | funcionalidade | médio |
+| ⬜ | [#197](https://github.com/edusouza/ctbz-cli/issues/197) | Resolver pendência de conciliação fiscal | funcionalidade | alto |
+| ⬜ | [#198](https://github.com/edusouza/ctbz-cli/issues/198) | Primeiros passos: listar, concluir tarefa, dispensar e reativar | funcionalidade | baixo |
+
+Fora de escopo: Abrir ou responder chamados (não há API: o atendimento é no Zendesk); aceites do informe de rendimentos (v1.7).
+
+## v1.5 — Extratos, contas bancárias e documentos
+
+Épico: [#199](https://github.com/edusouza/ctbz-cli/issues/199) · contexto `documentos`
+
+Enviar o que a Contabilizei pede todo mês (extratos, documentos e declarações de "não tenho") e manter as contas bancárias. Primeiras escritas com upload multipart.
+
+| | Issue | Funcionalidade | Tipo | Risco |
+|---|---|---|---|---|
+| ⬜ | [#200](https://github.com/edusouza/ctbz-cli/issues/200) | Cadastrar e editar conta bancária | funcionalidade | médio |
+| ⬜ | [#201](https://github.com/edusouza/ctbz-cli/issues/201) | Remover conta bancária | funcionalidade | alto |
+| ⬜ | [#202](https://github.com/edusouza/ctbz-cli/issues/202) | Importar extrato bancário (OFX ou PDF) | funcionalidade | médio |
+| ⬜ | [#203](https://github.com/edusouza/ctbz-cli/issues/203) | Excluir extrato importado | funcionalidade | alto |
+| ⬜ | [#204](https://github.com/edusouza/ctbz-cli/issues/204) | Enviar documento para uma pendência | funcionalidade | médio |
+| ⬜ | [#205](https://github.com/edusouza/ctbz-cli/issues/205) | Declarar ausência de documento ou de aplicação financeira | funcionalidade | alto |
+
+Fora de escopo: Open Finance e BS2; certificado digital (fora do roadmap de escrita).
+
+## v1.6 — Notas fiscais: tomadores e notas de entrada
+
+Épico: [#206](https://github.com/edusouza/ctbz-cli/issues/206) · contexto `notas fiscais`
+
+Cadastro de tomadores e as obrigações sobre as NF-e de compra: manifestação à SEFAZ e classificação.
+
+| | Issue | Funcionalidade | Tipo | Risco |
+|---|---|---|---|---|
+| ⬜ | [#207](https://github.com/edusouza/ctbz-cli/issues/207) | Cadastrar e editar tomador | funcionalidade | médio |
+| ⬜ | [#208](https://github.com/edusouza/ctbz-cli/issues/208) | Excluir tomador | funcionalidade | médio |
+| ⬜ | [#209](https://github.com/edusouza/ctbz-cli/issues/209) | Manifestar notas de entrada | funcionalidade | alto |
+| ⬜ | [#210](https://github.com/edusouza/ctbz-cli/issues/210) | Classificar notas de entrada | funcionalidade | médio |
+
+Fora de escopo: Emitir, replicar, registrar e cancelar NFS-e (fora do roadmap de escrita); anexo principal do Simples.
+
+## v1.7 — Pró-labore, distribuição de lucros e informe de rendimentos
+
+Épico: [#211](https://github.com/edusouza/ctbz-cli/issues/211) · contexto `pró-labore`
+
+Remuneração dos sócios: alterar o pró-labore, zeramento em meses sem faturamento, gestão inteligente, distribuição de lucros, aceites do informe de rendimentos e reabertura de balanço.
+
+| | Issue | Funcionalidade | Tipo | Risco |
+|---|---|---|---|---|
+| ⬜ | [#212](https://github.com/edusouza/ctbz-cli/issues/212) | Alterar o pró-labore de um sócio | funcionalidade | alto |
+| ⬜ | [#213](https://github.com/edusouza/ctbz-cli/issues/213) | Zerar pró-labore em meses sem faturamento | funcionalidade | alto |
+| ⬜ | [#214](https://github.com/edusouza/ctbz-cli/issues/214) | Gestão inteligente: ativar e sair do cálculo automático | investigação | alto |
+| ⬜ | [#215](https://github.com/edusouza/ctbz-cli/issues/215) | Registrar distribuição de lucros entre os sócios | funcionalidade | alto |
+| ⬜ | [#216](https://github.com/edusouza/ctbz-cli/issues/216) | Aceites do informe de rendimentos por ano | funcionalidade | alto |
+| ⬜ | [#217](https://github.com/edusouza/ctbz-cli/issues/217) | Reabrir balanço para regularizar pendência documental | funcionalidade | alto |
+
+Fora de escopo: Assistente de pró-labore (holerite, dependentes, duplo vínculo); reabertura como serviço pago.
+
+## v1.8 — Conta, usuários e acessos
+
+Épico: [#218](https://github.com/edusouza/ctbz-cli/issues/218) · contexto `conta`
+
+Usuários da empresa, credenciais de órgãos públicos, dados de login e escritório virtual. Senhas só por prompt oculto.
+
+| | Issue | Funcionalidade | Tipo | Risco |
+|---|---|---|---|---|
+| ⬜ | [#219](https://github.com/edusouza/ctbz-cli/issues/219) | Usuários da empresa: listar, convidar, ativar e desativar | funcionalidade | alto |
+| ⬜ | [#220](https://github.com/edusouza/ctbz-cli/issues/220) | Dados de acesso a órgãos públicos: ver, atualizar e confirmar senha da prefeitura | funcionalidade | alto |
+| ⬜ | [#221](https://github.com/edusouza/ctbz-cli/issues/221) | Alterar e-mail, telefone e senha da conta com código OTP | funcionalidade | alto |
+| ⬜ | [#222](https://github.com/edusouza/ctbz-cli/issues/222) | Escritório virtual: correspondências, endereço de envio e autorização | investigação | médio |
+
+Fora de escopo: Segundo fator por app autenticador; revogar convite pendente (sem endpoint).
+
+## Fora do roadmap de escrita
+
+Endpoints documentados em [docs/api/escrita](docs/api/escrita/README.md), sem comando previsto:
+
+- **Pagamentos e cartões:** pagar imposto ou fatura com cartão, cadastrar cartão, débito automático, troca de plano
+  (o cartão é cifrado no navegador pelo Adyen ou pela Iugu)
+- **Certificado digital:** upload do A1, emissão, agendamento e remoção
+- **NFS-e:** emitir, replicar, registrar e cancelar
+- **Chamados:** não há API para abrir ou responder
+- Marcações de tela e telemetria (modais vistos, tours, NPS, timeline de ativação)

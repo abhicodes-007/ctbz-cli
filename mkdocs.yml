@@ -49,6 +49,12 @@ nav:
       - Endpoints verificados: api/endpoints-verificados.md
       - Catálogo: api/catalogo.md
       - Notas fiscais: api/notas-fiscais.md
+      - Escrita:
+          - Visão geral: api/escrita/README.md
+          - Pendências e conta: api/escrita/pendencias-e-conta.md
+          - Impostos e pagamentos: api/escrita/impostos-e-pagamentos.md
+          - Contabilidade e documentos: api/escrita/contabilidade-e-documentos.md
+          - Notas e pró-labore: api/escrita/notas-e-prolabore.md
   - Front-end: frontend/README.md
   - Desenvolvimento:
       - Arquitetura da CLI: cli/README.md
@@ -75,3 +81,4 @@ nav:
       - "0015 Releases": adr/0015-releases-com-goreleaser.md
       - "0016 Monitoramento": adr/0016-monitoramento-agendado.md
       - "0017 Contrato da 1.0": adr/0017-contrato-publico-da-1-0.md
+      - "0018 Escrita": adr/0018-escrita-com-confirmacao.md

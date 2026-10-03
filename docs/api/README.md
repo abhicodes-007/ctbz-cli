@@ -7,6 +7,7 @@ estabilidade: os caminhos podem mudar quando o front for atualizado.
 - [endpoints-verificados.md](endpoints-verificados.md): chamados de verdade, com status e formato da resposta
 - [catalogo.md](catalogo.md): todos os endpoints encontrados no JavaScript (gerado por script)
 - [notas-fiscais.md](notas-fiscais.md): o que existe (e o que não existe) para baixar notas
+- [escrita/](escrita/README.md): endpoints que alteram dados (corpos, riscos e como desfazer)
 
 ## Bases
 
