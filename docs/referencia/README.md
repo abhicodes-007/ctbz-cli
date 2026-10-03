@@ -13,6 +13,9 @@ Gerada a partir da própria CLI (`go run ./tools/gendocs`); não edite à mão.
 | [`ctbz empresa usar`](ctbz_empresa_usar.md) | Troca a empresa da sessão |
 | [`ctbz empresas`](ctbz_empresas.md) | Lista as empresas do usuário, marcando a atual |
 | [`ctbz impostos`](ctbz_impostos.md) | Lista as guias de impostos a pagar (em atraso, do mês e do próximo mês) |
+| [`ctbz impostos calculo`](ctbz_impostos_calculo.md) | Mostra como o imposto do mês foi calculado |
+| [`ctbz impostos guia`](ctbz_impostos_guia.md) | Mostra o detalhe de uma guia de imposto |
+| [`ctbz impostos tabela-irrf`](ctbz_impostos_tabela-irrf.md) | Mostra a tabela progressiva do IRRF usada no cálculo do pró-labore |
 | [`ctbz login`](ctbz_login.md) | Autentica na Contabilizei (usuário, senha e código por e-mail) |
 | [`ctbz logout`](ctbz_logout.md) | Apaga a sessão local |
 | [`ctbz status`](ctbz_status.md) | Mostra a sessão atual e testa se ainda é válida |

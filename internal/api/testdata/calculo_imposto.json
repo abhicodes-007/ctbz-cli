@@ -1,0 +1,46 @@
+{
+  "darf": {
+    "inss": {
+      "aliquota": null,
+      "prolabore": null,
+      "teto": null,
+      "totalImposto": null
+    },
+    "irrf": {
+      "aliquota": null,
+      "baseCalculoIrrf": null,
+      "deducaoIrrf": null,
+      "prolabore": null,
+      "totalImposto": null
+    },
+    "total": null
+  },
+  "dasSimples": {
+    "deducaoRetencao": null,
+    "impostoBruto": null,
+    "impostoTotal": null,
+    "inconsistente": false
+  },
+  "faturamentoTotal": 1000,
+  "historicoFaturamento": [
+    {
+      "mes": "set./26",
+      "valorFaturamento": 1000,
+      "valorProlabore": 1000
+    },
+    {
+      "mes": "ago./26",
+      "valorFaturamento": 1000,
+      "valorProlabore": 1000
+    },
+    {
+      "mes": "jul./26",
+      "valorFaturamento": 1000,
+      "valorProlabore": 1000
+    }
+  ],
+  "nomeMesCompetencia": "Setembro",
+  "percentualFatorR": 100.00,
+  "valorFaturamentoUltimos12Meses": 1000,
+  "valorProlaboreUltimos12Meses": 1000
+}

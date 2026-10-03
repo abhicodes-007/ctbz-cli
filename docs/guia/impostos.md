@@ -25,3 +25,26 @@ Totais — Em atraso: R$ 0,00 (0) · Este mês: R$ 1.000,00 (1) · Próximo mês
 # cron diário
 ctbz impostos --fail-on-atraso -o csv > /dev/null || notify-send "Há impostos em atraso"
 ```
+
+## Detalhe de uma guia
+
+```sh
+ctbz impostos guia 1000000000000001
+```
+
+Mostra valor total, valor original, juros e multa, situação, as ações disponíveis no painel
+(ex.: `PAGAR`, `INFORMAR_PAGAMENTO`) e a explicação do imposto (o que é, frequência e o
+impacto do atraso).
+
+## Como o imposto foi calculado
+
+```sh
+ctbz impostos calculo
+ctbz impostos tabela-irrf
+```
+
+`calculo` mostra a memória de cálculo do mês mais recente (a competência é escolhida pela
+Contabilizei): faturamento, DAS do Simples Nacional, DARF de INSS e IRRF sobre o pró-labore,
+faturamento e pró-labore dos últimos 12 meses e o percentual do Fator R. Valores ainda não
+calculados aparecem vazios (`null` em JSON). `tabela-irrf` mostra as faixas do IRRF usadas no
+cálculo do pró-labore.

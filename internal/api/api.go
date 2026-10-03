@@ -36,6 +36,9 @@ func Endpoints() []Endpoint {
 		{Name: "socios", LivePath: PathSocios, Type: []Socio{}},
 		{Name: "cnaes", LivePath: PathCNAEs, Type: []CNAEEmpresa{}},
 		{Name: "guias_a_pagar", LivePath: PathGuiasAPagar, Type: GuiasAPagar{}},
+		{Name: "guia_detalhe", Type: GuiaDetalhe{}}, // o ID vem de guias_a_pagar
+		{Name: "calculo_imposto", LivePath: PathCalculoImposto, Type: CalculoImposto{}},
+		{Name: "tabela_irrf", LivePath: PathTabelaIRRF, Type: []FaixaIRRF{}},
 	}
 }
 

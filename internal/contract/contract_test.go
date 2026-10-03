@@ -95,6 +95,7 @@ func TestAnonymize(t *testing.T) {
 	  "guia": {"id": 7, "valor": {"label": 4321.98, "descricao": null}, "competencia": {"mes": 7, "ano": 2026}},
 	  "impostoBruto": 777.77,
 	  "status": "ATIVO",
+	  "nomeMesCompetencia": "Setembro",
 	  "chamados": [{"subject": "assunto real 1"}, {"subject": "assunto real 2"}, {"subject": "3"}, {"subject": "4"}],
 	  "detalhe": "pagamento do CNPJ 12.345.678/0001-90 por pessoa@gmail.com",
 	  "url": "https://storage.exemplo.com/assinado?token=abc",
@@ -111,7 +112,7 @@ func TestAnonymize(t *testing.T) {
 			t.Errorf("vazou %q:\n%s", leaked, s)
 		}
 	}
-	for _, kept := range []string{`"mes": 7`, `"ano": 2026`, `"id": 7`, `"status": "ATIVO"`, `"dataAbertura": 1784581200000`, `"cnpj": "00.000.000/0000-00"`, `"<texto omitido>"`} {
+	for _, kept := range []string{`"nomeMesCompetencia": "Setembro"`, `"mes": 7`, `"ano": 2026`, `"id": 7`, `"status": "ATIVO"`, `"dataAbertura": 1784581200000`, `"cnpj": "00.000.000/0000-00"`, `"<texto omitido>"`} {
 		if !strings.Contains(s, kept) {
 			t.Errorf("esperava %q:\n%s", kept, s)
 		}
