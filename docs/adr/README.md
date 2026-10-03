@@ -17,3 +17,4 @@ decisão nova, copie o [modelo](template.md) e use o próximo número (ver [ADR-
 | [0010](0010-testes-de-contrato.md) | Testes de contrato derivados dos tipos, com fixtures anonimizadas | aceita |
 | [0011](0011-fixtures-podadas-ao-contrato.md) | Fixtures podadas ao contrato | aceita |
 | [0012](0012-prazos-e-alertas.md) | Alertas de prazo calculados pela CLI e código 4 | aceita |
+| [0013](0013-sem-retentativa-com-fonte-alternativa.md) | Sem retentativa; fonte alternativa para erros conhecidos | aceita |

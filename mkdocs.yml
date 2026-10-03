@@ -63,3 +63,4 @@ nav:
       - "0010 Contratos": adr/0010-testes-de-contrato.md
       - "0011 Fixtures podadas": adr/0011-fixtures-podadas-ao-contrato.md
       - "0012 Prazos e alertas": adr/0012-prazos-e-alertas.md
+      - "0013 Sem retentativa": adr/0013-sem-retentativa-com-fonte-alternativa.md
