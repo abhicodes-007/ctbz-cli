@@ -1,0 +1,147 @@
+{
+  "pendencias": {
+    "outrasPendencias": {
+      "pendenciaCadastroContaBancaria": {
+        "possuiPendencia": false
+      },
+      "pendenciaCadastroProlabore": {
+        "possuiPendencia": false
+      },
+      "pendenciaImportacaoExtrato": {
+        "possuiPendencia": false
+      },
+      "pendenciaIntegracaoAExpirar": {
+        "possuiPendencia": false
+      },
+      "pendenciaIntegracaoExpirada": {
+        "possuiPendencia": false
+      },
+      "pendenciaProcuracaoEcac": {
+        "possuiPendencia": false
+      },
+      "pendenciaTermoAdesaoTotalPass": {
+        "possuiPendencia": false
+      }
+    },
+    "pendenciasCriticas": {
+      "pendenciaAceiteTermoDebitos": {
+        "possuiPendencia": false
+      },
+      "pendenciaAquisicaoAtivoImobilizado": {
+        "possuiPendencia": false
+      },
+      "pendenciaCadastroContaBancaria": {
+        "possuiPendencia": false
+      },
+      "pendenciaCartaResponsabilidade": {
+        "possuiPendencia": false
+      },
+      "pendenciaCertificadoDigital": {
+        "possuiPendencia": false
+      },
+      "pendenciaConciliacaoFiscal": {
+        "possuiPendencia": false
+      },
+      "pendenciaContratoAFAC": {
+        "possuiPendencia": false
+      },
+      "pendenciaContratoDeEmprestimo": {
+        "possuiPendencia": false
+      },
+      "pendenciaContratoDeFinanciamento": {
+        "possuiPendencia": false
+      },
+      "pendenciaContratoDeInvestimentoAnjo": {
+        "possuiPendencia": false
+      },
+      "pendenciaContratoPrestacaoServico": {
+        "possuiPendencia": false
+      },
+      "pendenciaControleDeIntermediacoes": {
+        "possuiPendencia": false
+      },
+      "pendenciaCredencialPrefeitura": {
+        "possuiPendencia": false
+      },
+      "pendenciaEstoque": {
+        "possuiPendencia": false
+      },
+      "pendenciaExigibilidadeDocumental": {
+        "possuiPendencia": false
+      },
+      "pendenciaExtratoAplicacaoFinanceira": {
+        "possuiPendencia": false
+      },
+      "pendenciaImportacaoExtrato": {
+        "possuiPendencia": false
+      },
+      "pendenciaImposto": {
+        "possuiPendencia": false
+      },
+      "pendenciaInformeDeRendimentoInvestimentos": {
+        "possuiPendencia": false
+      },
+      "pendenciaMensalidade": {
+        "possuiPendencia": false
+      },
+      "pendenciaProcuracaoEcac": {
+        "possuiPendencia": false
+      }
+    }
+  },
+  "rotinas": [
+    {
+      "automatica": false,
+      "prazo": "2026-09-05",
+      "propriedades": {
+        "mesReferencia": "agosto"
+      },
+      "status": "REALIZADA",
+      "tipo": "IMPORTACAO_EXTRATO"
+    },
+    {
+      "automatica": false,
+      "prazo": "2026-09-15",
+      "propriedades": {
+        "valorPagamento": 1234.56
+      },
+      "status": "REALIZADA",
+      "tipo": "VENCIMENTO_MENSALIDADE"
+    },
+    {
+      "automatica": false,
+      "prazo": "2026-10-05",
+      "propriedades": {
+        "mesReferencia": "setembro"
+      },
+      "status": "EM_ABERTO",
+      "tipo": "IMPORTACAO_EXTRATO"
+    }
+  ],
+  "rotinasContabilizei": [
+    {
+      "conteudo": {
+        "sigla": "ESOCIAL"
+      },
+      "prazo": "2026-09-15",
+      "status": "EM_ABERTO",
+      "titulo": "eSocial (Escrituração Digital das Obrigações Fiscais, Previdenciárias e Trabalhistas)"
+    },
+    {
+      "conteudo": {
+        "sigla": "EFD-REINF_R2099"
+      },
+      "prazo": "2026-09-15",
+      "status": "EM_ABERTO",
+      "titulo": "EFD-Reinf (Escrituração Fiscal Digital de Retenção e Outras Informações Fiscais) - R2099 (Previdenciário)"
+    },
+    {
+      "conteudo": {
+        "sigla": "EFD-REINF_R4099"
+      },
+      "prazo": "2026-09-15",
+      "status": "EM_ABERTO",
+      "titulo": "EFD-Reinf (Escrituração Fiscal Digital de Retenção e Outras Informações Fiscais) - R4099 (Não Previdenciario)"
+    }
+  ]
+}

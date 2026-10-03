@@ -11,6 +11,8 @@ usa [Versionamento Semântico](https://semver.org/lang/pt-BR/).
 
 - `ctbz pendencias`: pendências da empresa com tipo, detalhe, criação, prazo e situação;
   coluna `alerta` (`vencida`/`próxima`), `--todas` e `--fail-on-vencidas` (código 4).
+- `ctbz rotinas`: rotinas do mês da empresa e obrigações da Contabilizei, com prazo, status,
+  valor e alerta; `--mes AAAA-MM` e `--fail-on-vencidas`.
 
 ## [0.2.0] - 2026-10-03
 

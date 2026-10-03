@@ -46,6 +46,7 @@ func Endpoints() []Endpoint {
 		{Name: "parcelamentos", LivePath: PathImpostosV3, Type: ParcelamentosV3{}},
 		{Name: "debitos_federais", LivePath: PathDebitosFederais, Type: DebitosFederais{}},
 		{Name: "pendencias_empresa", LivePath: PathPendenciasEmpresa, Type: []PendenciaEmpresa{}},
+		{Name: "central_rotinas", LivePath: PathCentralRotinas, Type: CentralRotinas{}},
 	}
 }
 

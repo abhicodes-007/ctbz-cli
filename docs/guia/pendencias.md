@@ -33,3 +33,28 @@ A coluna `alerta` só é preenchida para pendências abertas
 ctbz pendencias --fail-on-vencidas -o csv > /dev/null || notify-send "Há pendências vencidas"
 ctbz pendencias -o json | jq -r '.[] | select(.alerta != null) | "\(.prazo) \(.tipo)"'
 ```
+
+## Rotinas e obrigações do mês
+
+```sh
+ctbz rotinas
+ctbz rotinas --mes 2026-11
+```
+
+```text
+Responsável   Rotina                                 Prazo       Status     Valor     Alerta
+empresa       Importar extrato bancário de setembro  05/10/2026  EM_ABERTO            próxima
+empresa       DARF Unificada (Ativação do fator R)   06/10/2026  EM_ABERTO            próxima
+empresa       Mensalidade da Contabilizei            15/10/2026  EM_ABERTO  R$ 15,90
+contabilizei  eSocial                                15/10/2026  EM_ABERTO
+contabilizei  DCTFWeb                                15/10/2026  EM_ABERTO
+```
+
+- `responsavel` separa o que a **empresa** precisa fazer do que a **Contabilizei** entrega
+  (eSocial, DCTFWeb, EFD-Reinf…).
+- O filtro é pelo mês do prazo. A API não aceita competência nem mês: devolve sempre o mês
+  anterior, o atual e o próximo, e a CLI filtra. Fora dessa janela, a lista sai vazia.
+- `alerta` segue a mesma regra das pendências: `vencida` ou `próxima` para rotinas não
+  realizadas ([ADR-0012](../adr/0012-prazos-e-alertas.md)).
+- `--fail-on-vencidas` (código 4) considera só as rotinas da **empresa**: atraso numa
+  obrigação da Contabilizei não é algo que você resolve sozinho.
