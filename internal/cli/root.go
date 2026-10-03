@@ -118,6 +118,7 @@ Dados vão para stdout no formato escolhido com -o; mensagens e progresso vão p
 		newContasBancariasCmd(),
 		newContasCmd(),
 		newDocumentosCmd(),
+		newCertificadoCmd(),
 		newAPICmd(),
 		newLogoutCmd(),
 		newVersionCmd(version),

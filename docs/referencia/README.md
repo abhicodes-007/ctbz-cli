@@ -9,13 +9,14 @@ Gerada a partir da própria CLI (`go run ./tools/gendocs`); não edite à mão.
 | [`ctbz balancete`](ctbz_balancete.md) | Mostra o balancete de verificação de um mês |
 | [`ctbz balanco`](ctbz_balanco.md) | Mostra o balanço patrimonial (ativo, passivo e patrimônio líquido) |
 | [`ctbz caixa`](ctbz_caixa.md) | Lista os lançamentos do caixa de um mês |
+| [`ctbz certificado`](ctbz_certificado.md) | Mostra a situação do certificado digital da empresa e da renovação |
 | [`ctbz chamados`](ctbz_chamados.md) | Lista os chamados de atendimento (em andamento ou finalizados) |
 | [`ctbz contas`](ctbz_contas.md) | Lista o plano de contas usado para classificar os lançamentos |
 | [`ctbz contas-bancarias`](ctbz_contas-bancarias.md) | Lista as contas bancárias cadastradas da empresa |
 | [`ctbz documentos`](ctbz_documentos.md) | Lista os tipos de documento aceitos e os documentos enviados |
 | [`ctbz empresa`](ctbz_empresa.md) | Mostra os dados da empresa selecionada |
 | [`ctbz empresa atividades`](ctbz_empresa_atividades.md) | Lista os CNAEs da empresa e os anexos do Simples Nacional |
-| [`ctbz empresa certificado`](ctbz_empresa_certificado.md) | Mostra a situação do certificado digital da empresa |
+| [`ctbz empresa certificado`](ctbz_empresa_certificado.md) | Mostra a situação do certificado digital da empresa e da renovação |
 | [`ctbz empresa socios`](ctbz_empresa_socios.md) | Lista os sócios da empresa |
 | [`ctbz empresa usar`](ctbz_empresa_usar.md) | Troca a empresa da sessão |
 | [`ctbz empresas`](ctbz_empresas.md) | Lista as empresas do usuário, marcando a atual |
