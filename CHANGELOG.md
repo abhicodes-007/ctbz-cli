@@ -12,6 +12,8 @@ usa [Versionamento Semântico](https://semver.org/lang/pt-BR/).
 - `ctbz notas`: NFS-e emitidas no período (`--de`/`--ate`, até 24 meses) com número, emissão,
   tomador, documento, valor, status e situação; filtros `--tomador` (nome ou CPF/CNPJ) e
   `--numero`; total do período no stderr.
+- `ctbz notas tomadores`: tomadores cadastrados no emissor; `consulta CNPJ` mostra o cadastro
+  de um CNPJ na Receita (situação cadastral, atividade, Simples, endereço).
 
 ## [0.4.0] - 2026-10-03
 

@@ -8,7 +8,7 @@ comando e flag está em [Referência de comandos](../referencia/README.md).
 | [Impostos](impostos.md) | Guias a pagar e em atraso, histórico, faturamento, parcelamentos e pagamento recorrente |
 | [Pendências, rotinas e atendimento](pendencias.md) | Resumo do que precisa de atenção, pendências, rotinas do mês, conciliação e chamados |
 | [Mensalidade e pagamentos](mensalidade.md) | Mensalidade, situação com a Contabilizei, plano e contrato |
-| [Notas fiscais](notas.md) | Notas emitidas |
+| [Notas fiscais](notas.md) | Notas emitidas e tomadores |
 
 Antes de tudo, faça o login (veja o [README](https://github.com/edusouza/ctbz-cli#login)).
 Todos os comandos aceitam `-o table|json|csv`.

@@ -99,6 +99,7 @@ ctbz api impostos/v3/impostos-a-pagar/guia/<id>/baixar-guia | jq -r .url
 | `novo-emissor/listagem/notas` | ✅ | lista de notas emitidas (v1, usada só com a feature flag desligada) |
 | `novo-emissor/v2/listagem/notas/filtro?pagina&limite&ano&mes[&nomeTomador\|documento\|numeroNota=]` | ✅ | `{list[], total}`; usada pelo `ctbz notas` |
 | `novo-emissor/tomadores/init` | ✅ | `emissaoSemTomador, tomadores, permiteEmissaoExterior` |
+| `novo-emissor/clientes/consulta/{cnpj}` | ✅ | cadastro na Receita: `cnpj, razaoSocial, nomeFantasia, dataAbertura, atividadePrincipal, naturezaJuridica, situacaoCadastral, optanteSimples, endereço, socios…` |
 | `novo-emissor/v2/versao-emissor` | ✅ | `versaoNovoEmissor` |
 | `notafiscal/listaliquotaatividade` | ✅ | `regimeTributario, temCodigoServicoItemServico, interno, externo` |
 

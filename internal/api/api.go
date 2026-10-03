@@ -62,6 +62,8 @@ func Endpoints() []Endpoint {
 		{Name: "recorrencia_historico", LivePath: PathRecorrenciaHistorico, Type: HistoricoRecorrencia{}},
 		{Name: "contrato_servico", LivePath: PathContratoServico, Type: ContratoServico{}},
 		{Name: "notas_emitidas", LivePath: PathNotasEmitidas + "?pagina=1&limite=10&ano=2026&mes=10", Type: ListaNotas{}},
+		{Name: "tomadores", LivePath: PathTomadores, Type: Tomadores{}},
+		{Name: "consulta_cnpj", LivePath: PathConsultaCNPJ("00000000000191"), Type: ConsultaCNPJ{}}, // CNPJ público (Banco do Brasil)
 	}
 }
 
