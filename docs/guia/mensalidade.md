@@ -36,6 +36,33 @@ Situação:  OK
   mostrado como veio, com `em_dia` falso.
 - `--fail-on-inadimplencia` termina com **código 4** quando a empresa não está em dia.
 
+## Histórico de pagamentos e débito automático
+
+```sh
+ctbz mensalidade historico
+```
+
+```text
+Débito automático ativo:       sim
+Débito automático habilitado:  sim
+Status:                        ATIVO
+Competência:                   10/2026
+Próxima cobrança:              10/11/2026
+Pagamentos:
+  Data        Competência        Valor  Status
+  10/09/2026  09/2026        R$ 189,90  PAGO
+  10/09/2026  08/2026      R$ 1.189,90  PAGO
+```
+
+- Lê `payments/recorrencia/init` e `payments/recorrencia/historico`.
+- O formato de cada pagamento não está documentado e não foi verificado contra uma conta com
+  histórico: os nomes dos campos (data, competência, valor, status) são inferidos, com
+  alternativas aceitas. Se nenhum for reconhecido, o comando avisa no stderr e indica
+  `ctbz api payments/recorrencia/historico`.
+- Só campos conhecidos são copiados para a saída: chaves do gateway de pagamento e dados de
+  cartão nunca aparecem.
+- Para o pagamento recorrente de **impostos**, veja `ctbz impostos recorrente`.
+
 ## Plano e contrato
 
 ```sh

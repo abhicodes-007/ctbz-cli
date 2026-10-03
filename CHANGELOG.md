@@ -7,6 +7,10 @@ usa [Versionamento Semântico](https://semver.org/lang/pt-BR/).
 
 ## [Unreleased]
 
+### Added
+
+- `ctbz mensalidade historico`: pagamentos anteriores da mensalidade e situação do débito automático.
+
 ## [1.0.0] - 2026-10-03
 
 Primeira versão estável: comandos, flags, chaves de JSON/CSV e códigos de saída passam a

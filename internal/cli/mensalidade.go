@@ -48,6 +48,7 @@ Com --fail-on-atraso, o comando termina com código 4 quando há competência an
 	}
 	cmd.Flags().BoolVar(&failOnAtraso, "fail-on-atraso", false, "termina com código 4 se houver competência anterior em atraso")
 	cmd.AddCommand(newMensalidadeSituacaoCmd())
+	cmd.AddCommand(newMensalidadeHistoricoCmd())
 	return cmd
 }
 

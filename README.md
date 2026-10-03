@@ -105,6 +105,7 @@ ctbz rotinas --mes 2026-10                     # rotinas e obrigações do mês 
 ctbz chamados [--finalizados]                  # chamados de atendimento
 ctbz mensalidade                               # mensalidade atual da Contabilizei
 ctbz mensalidade situacao                      # a empresa está em dia com a Contabilizei?
+ctbz mensalidade historico                     # pagamentos anteriores e débito automático
 ctbz plano [contrato|proposta] [--texto]       # plano contratado e contrato de serviço
 ctbz notas --de 2026-01 --ate 2026-09          # NFS-e emitidas no período, com total
 ctbz notas tomadores [consulta CNPJ]           # clientes do emissor; cadastro de um CNPJ
