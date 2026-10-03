@@ -69,6 +69,7 @@ quando a prefeitura autoriza a nota.`,
 	cmd.Flags().StringVar(&ate, "ate", "", "último mês, AAAA-MM (padrão: --de ou o mês atual)")
 	cmd.Flags().StringVar(&tomador, "tomador", "", "nome do tomador ou CPF/CNPJ")
 	cmd.Flags().StringVar(&numero, "numero", "", "número da nota")
+	cmd.AddCommand(newNotasTomadoresCmd())
 	return cmd
 }
 

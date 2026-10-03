@@ -26,6 +26,20 @@ Total: R$ 1.000,00 em 1 nota(s)
   notas emitidas. Se algo vier diferente, abra uma issue com a saída de
   `ctbz api "novo-emissor/v2/listagem/notas/filtro?pagina=1&limite=10&ano=AAAA&mes=M"`.
 
+## Tomadores (clientes)
+
+```sh
+ctbz notas tomadores                               # tomadores cadastrados no emissor
+ctbz notas tomadores consulta 00.000.000/0001-91   # cadastro de um CNPJ na Receita
+```
+
+- `tomadores` lista nome, documento, e-mail, telefone, inscrição municipal, município, UF e
+  se o tomador é do exterior. Os campos vêm do código do painel (a conta de desenvolvimento
+  não tinha tomadores cadastrados).
+- `consulta` usa a mesma busca que o emissor faz ao cadastrar um cliente: razão social, nome
+  fantasia, abertura, atividade principal, natureza jurídica, situação cadastral, opção pelo
+  Simples, endereço e contatos. Serve para conferir um cliente antes de emitir a nota.
+
 ## PDF e XML das notas
 
 A API do painel não oferece o PDF nem o XML das NFS-e emitidas: a Contabilizei envia o

@@ -27,6 +27,10 @@ ctbz notas [flags]
   ctbz notas --tomador "ACME" --de 2026-07
 ```
 
+## Subcomandos
+
+- [`ctbz notas tomadores`](ctbz_notas_tomadores.md): Lista os tomadores (clientes) cadastrados no emissor de notas
+
 ## Flags
 
 ```
