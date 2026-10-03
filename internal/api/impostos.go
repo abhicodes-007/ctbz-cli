@@ -3,6 +3,7 @@ package api
 import (
 	"context"
 	"fmt"
+	"strings"
 )
 
 const PathGuiasAPagar = "impostos/v5/impostos-a-pagar/guias"
@@ -139,4 +140,23 @@ func BuscarTabelaIRRF(ctx context.Context, g Getter) ([]FaixaIRRF, error) {
 		return nil, err
 	}
 	return *t, nil
+}
+
+// PathLinkGuia é o link de download do PDF de uma guia ou parcela. A rota é a v3 mesmo
+// na tela v5 do painel.
+func PathLinkGuia(id int64, tipo string) string {
+	if strings.EqualFold(tipo, "PARCELA") {
+		return fmt.Sprintf("impostos/v3/impostos-a-pagar/parcela/%d/baixar-parcela", id)
+	}
+	return fmt.Sprintf("impostos/v3/impostos-a-pagar/guia/%d/baixar-guia", id)
+}
+
+// LinkDownload é um link temporário (URL assinada) para baixar um arquivo.
+type LinkDownload struct {
+	URL string `json:"url"`
+}
+
+// BuscarLinkGuia lê o link de download do PDF de uma guia ou parcela.
+func BuscarLinkGuia(ctx context.Context, g Getter, id int64, tipo string) (*LinkDownload, error) {
+	return get[LinkDownload](ctx, g, PathLinkGuia(id, tipo))
 }

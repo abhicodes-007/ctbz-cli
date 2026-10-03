@@ -48,3 +48,17 @@ Contabilizei): faturamento, DAS do Simples Nacional, DARF de INSS e IRRF sobre o
 faturamento e pró-labore dos últimos 12 meses e o percentual do Fator R. Valores ainda não
 calculados aparecem vazios (`null` em JSON). `tabela-irrf` mostra as faixas do IRRF usadas no
 cálculo do pró-labore.
+
+## Baixar as guias em PDF
+
+```sh
+ctbz impostos baixar --pendentes -d ~/guias     # todas as guias a pagar
+ctbz impostos baixar 1000000000000001           # guias específicas
+```
+
+- Os arquivos são nomeados `COMPETÊNCIA-IMPOSTO-VENCIMENTO.pdf`, por exemplo
+  `2026-07-darf-unificado-2026-10-06.pdf`.
+- Um arquivo que já existe não é baixado de novo (situação `já existe`); use `--force` para
+  sobrescrever.
+- O PDF vem de um link temporário gerado pela Contabilizei; o download não envia os cookies
+  da sessão.

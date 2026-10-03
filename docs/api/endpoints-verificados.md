@@ -44,7 +44,7 @@ Legenda: ✅ 200 · ⚠️ responde, mas precisa de parâmetro ou não está lib
 |---|---|---|
 | `impostos/v5/impostos-a-pagar/guias` | ✅ | `emAtraso[], esteMes[], proximoMes[]`; cada guia: `id, nome{label}, origem, tipo, identificadorImposto, vencimento, vencimentoOriginal, valor{label}, competencia, status{label}, acaoBotao, pendencias[]` |
 | `impostos/v5/impostos-a-pagar/guia/{id}` | ✅ | `id, origem, tipo, identificadorImposto, vencimento, valorTotal, valorEstimado, valorOriginal, valorJurosEMulta, valorEmAtraso, oraculo, banner…` |
-| `impostos/v3/impostos-a-pagar/guia/{id}/baixar-guia` | ✅ | `url`: link para o PDF da guia (DAS etc.) |
+| `impostos/v3/impostos-a-pagar/guia/{id}/baixar-guia` | ✅ | `url`: URL assinada do Google Cloud Storage (expira) que devolve o PDF da guia sem cookies — usado por `ctbz impostos baixar`. Para parcelas: `parcela/{id}/baixar-parcela` |
 | `impostos/v5/impostos-a-pagar/init` | ✅ | `podeGerenciarDebitoAutomatico, exibirComoMeuImpostoFoiCalculado, exibirMemoriaDeCalculo, dadosMemoriaDeCalculo` |
 | `impostos/v5/impostos-a-pagar/banners` | ✅ | `banners` |
 | `impostos/v5/historico-impostos/guias` | ✅ | `impostos` |

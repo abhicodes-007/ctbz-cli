@@ -14,6 +14,8 @@ usa [Versionamento Semântico](https://semver.org/lang/pt-BR/).
 - `ctbz impostos guia ID`: detalhe de uma guia (valores, juros e multa, situação, ações).
 - `ctbz impostos calculo` e `ctbz impostos tabela-irrf`: memória de cálculo do mês e tabela
   do IRRF.
+- `ctbz impostos baixar`: PDFs de guias (por ID ou `--pendentes`) com nomes padronizados,
+  sem sobrescrever arquivos existentes (`--force`).
 - Guia de uso por contexto em `docs/guia/`.
 
 ## [0.1.0] - 2026-10-03
