@@ -13,6 +13,8 @@ usa [Versionamento Semântico](https://semver.org/lang/pt-BR/).
   por nível na tabela e planas (com coluna `nivel`) em CSV e JSON.
 - `ctbz balanco AAAA[-MM]`: ativo, passivo e patrimônio líquido com saldo do exercício e do
   exercício anterior (só o ano: dezembro).
+- `ctbz razao`: lançamentos por conta no período (`--de`/`--ate`, `--conta` por código ou
+  prefixo), com contrapartida e saldo acumulado.
 
 ## [0.6.0] - 2026-10-03
 
