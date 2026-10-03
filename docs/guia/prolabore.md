@@ -57,6 +57,31 @@ IRRF a partir de:             R$ 5.000,00
   não aumenta.
 - Abaixo do valor de incidência, não há IRRF retido.
 
+## Fator R
+
+```sh
+ctbz prolabore fator-r
+```
+
+```text
+Motor do Fator R:      sim
+Fator R (%):           28.75
+Pró-labore 12 meses:   R$ 27.600,00
+Faturamento 12 meses:  R$ 96.000,00
+Simulador:             DISPONIVEL
+Atividades:
+  CNAE       Atividade                                       Anexos    Alíquotas                                     Anexo fixo
+  6311-90/0  Tratamento de dados, provedores de serviços d…  V ou III  Alíquota inicial de 6% ou 15,5%; Alíquota 6%  sim
+```
+
+- **Fator R** = pró-labore ÷ faturamento dos últimos 12 meses. A partir de 28%, as atividades
+  sujeitas a ele saem do Anexo V (alíquota inicial de 15,5%) para o Anexo III (6%).
+- **Motor do Fator R** indica que a Contabilizei ajusta o pró-labore todo mês para manter o
+  Fator R no melhor ponto.
+- `anexos` mostra em quais anexos cada atividade pode ser tributada; `anexo_fixo` diz se
+  alguma delas não depende do Fator R.
+- O simulador do painel é só consultado: simular cenários continua sendo feito por lá.
+
 ## Distribuição de lucros
 
 ```sh

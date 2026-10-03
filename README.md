@@ -109,6 +109,7 @@ ctbz notas config | ctbz notas aliquotas       # emissor e alíquotas por ativid
 ctbz notas entrada [--lista manifestadas]      # NF-e recebidas (notas de entrada)
 ctbz prolabore [historico --ano 2026]          # pró-labore por sócio e histórico mensal
 ctbz prolabore parametros                      # salário mínimo, INSS e IRRF usados no cálculo
+ctbz prolabore fator-r                         # Fator R, motor do Fator R e anexos por atividade
 ctbz lucros                                    # distribuição de lucros do exercício
 ctbz lucros informe --ano 2025                 # valores do informe de rendimentos dos sócios (IR)
 ctbz api menu/get        # qualquer endpoint; caminho relativo → /api/plataforma/

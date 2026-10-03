@@ -41,7 +41,7 @@ O histórico mensal está em "ctbz prolabore historico".`,
 			return output.Write(s.out, f, prolaboreRecord(c, d))
 		},
 	}
-	cmd.AddCommand(newProlaboreHistoricoCmd(), newProlaboreParametrosCmd())
+	cmd.AddCommand(newProlaboreHistoricoCmd(), newProlaboreParametrosCmd(), newProlaboreFatorRCmd())
 	return cmd
 }
 

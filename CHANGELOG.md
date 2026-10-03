@@ -14,6 +14,8 @@ usa [Versionamento Semântico](https://semver.org/lang/pt-BR/).
   descontos por competência (`--ano`, `--socio`).
 - `ctbz prolabore parametros`: salário mínimo, alíquota e teto do INSS e o valor a partir
   do qual incide IRRF.
+- `ctbz prolabore fator-r`: motor do Fator R, percentual atual, pró-labore e faturamento de 12
+  meses e os anexos do Simples possíveis para cada atividade.
 - `ctbz lucros`: saldo, total distribuído, adiantamentos, limite, prazo e valor por sócio do
   exercício aberto, com as restrições do informe (pendência documental, débitos federais,
   reabertura do balanço).

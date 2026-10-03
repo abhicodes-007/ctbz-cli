@@ -57,3 +57,22 @@ func TestProlaboreParametros(t *testing.T) {
 		t.Errorf("código %d (%s):\n%s\nesperado:\n%s", code, stderr, out, want)
 	}
 }
+
+func TestProlaboreFatorR(t *testing.T) {
+	withSession(t, fakeAPI(t, map[string]string{
+		"/api/plataforma/prolabore/init":                   fixture(t, "prolabore_parametros"),
+		"/api/plataforma/simulador-impostos-avancado/init": fixture(t, "simulador_impostos"),
+		"/api/plataforma/impostos/como-imposto-foi-calculado/init": `{"percentualFatorR":28.75,"valorProlaboreUltimos12Meses":27600,
+"valorFaturamentoUltimos12Meses":96000,"historicoFaturamento":[]}`,
+	}))
+	out, stderr, code := execCLI(t, "", "prolabore", "fator-r", "-o", "json")
+	if code != ExitOK {
+		t.Fatalf("código %d: %s", code, stderr)
+	}
+	for _, want := range []string{`"motor_fator_r": true`, `"fator_r": 28.75`, `"faturamento_12_meses": 96000.00`,
+		`"simulador": "DISPONIVEL"`, `"cnae": "6311-90/0"`, `"anexos": "V ou III"`, `"anexo_fixo": true`} {
+		if !strings.Contains(out, want) {
+			t.Errorf("JSON sem %s:\n%s", want, out)
+		}
+	}
+}
