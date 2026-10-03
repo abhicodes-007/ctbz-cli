@@ -26,7 +26,7 @@ Labels usadas: `épico`, `versão: vX.Y`, `contexto: …`, `tipo: funcionalidade
 | **v0.6** | Pró-labore e distribuição de lucros | [#34](https://github.com/edusouza/ctbz-cli/issues/34) | 5 | concluída |
 | **v0.7** | Contabilidade: relatórios, caixa e extratos | [#40](https://github.com/edusouza/ctbz-cli/issues/40) | 6 | concluída |
 | **v0.8** | Documentos e certificado digital | [#47](https://github.com/edusouza/ctbz-cli/issues/47) | 2 | concluída |
-| **v1.0** | Estabilidade e distribuição (futuro) | [#50](https://github.com/edusouza/ctbz-cli/issues/50) | 3 | planejada |
+| **v1.0** | Estabilidade e distribuição | [#50](https://github.com/edusouza/ctbz-cli/issues/50) | 3 | concluída |
 
 ## v0.1 — Login e dados da empresa
 
@@ -157,7 +157,7 @@ Documentos enviados à Contabilizei e situação do certificado digital (candida
 
 Fora de escopo: Enviar documentos, emitir/renovar/remover certificado (escrita).
 
-## v1.0 — Estabilidade e distribuição (futuro)
+## v1.0 — Estabilidade e distribuição
 
 Épico: [#50](https://github.com/edusouza/ctbz-cli/issues/50) · contexto `infra`
 
@@ -165,9 +165,9 @@ Itens transversais adiados: integração contínua, releases com binários e mon
 
 | | Issue | Funcionalidade | Tipo |
 |---|---|---|---|
-| ⬜ | [#51](https://github.com/edusouza/ctbz-cli/issues/51) | CI: testes, vet e lint no GitHub Actions | infra |
-| ⬜ | [#52](https://github.com/edusouza/ctbz-cli/issues/52) | Releases com binários | infra |
-| ⬜ | [#53](https://github.com/edusouza/ctbz-cli/issues/53) | Monitorar mudanças no front e na API | infra |
+| ✅ | [#51](https://github.com/edusouza/ctbz-cli/issues/51) | CI: testes, vet e lint no GitHub Actions | infra |
+| ✅ | [#52](https://github.com/edusouza/ctbz-cli/issues/52) | Releases com binários | infra |
+| ✅ | [#53](https://github.com/edusouza/ctbz-cli/issues/53) | Monitorar mudanças no front e na API | infra |
 
 Fora de escopo: Ações de escrita (avaliadas depois da 1.0).
 
