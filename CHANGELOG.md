@@ -18,6 +18,8 @@ usa [Versionamento Semântico](https://semver.org/lang/pt-BR/).
   sem sobrescrever arquivos existentes (`--force`).
 - `ctbz impostos historico`: guias anteriores com valor pago e situação, filtros por ano,
   mês e situação.
+- `ctbz impostos faturamento`: faturamento, pró-labore e impostos pagos nos últimos 12 meses,
+  com RBT12 e Fator R.
 - Guia de uso por contexto em `docs/guia/`.
 
 ## [0.1.0] - 2026-10-03

@@ -1,0 +1,40 @@
+{
+  "meses": {
+    "1": {
+      "totalPago": 1000
+    },
+    "10": {
+      "totalPago": 1000
+    },
+    "11": {
+      "totalPago": null
+    },
+    "12": {
+      "totalPago": null
+    },
+    "2": {
+      "totalPago": 1000
+    },
+    "3": {
+      "totalPago": 1000
+    },
+    "4": {
+      "totalPago": 1000
+    },
+    "5": {
+      "totalPago": 1000
+    },
+    "6": {
+      "totalPago": 1000
+    },
+    "7": {
+      "totalPago": 1000
+    },
+    "8": {
+      "totalPago": 1000
+    },
+    "9": {
+      "totalPago": 1000
+    }
+  }
+}

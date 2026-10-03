@@ -42,6 +42,7 @@ func Endpoints() []Endpoint {
 		{Name: "link_guia", Type: LinkDownload{}}, // o ID vem de guias_a_pagar
 		{Name: "historico_resumo", LivePath: PathHistoricoResumo, Type: HistoricoResumo{}},
 		{Name: "historico_guias", LivePath: PathHistoricoGuias + "?pagina=1", Type: HistoricoGuias{}},
+		{Name: "impostos_pagos_no_ano", Type: DadosGrafico{}}, // o ano vem do histórico de faturamento
 	}
 }
 

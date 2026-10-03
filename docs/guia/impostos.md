@@ -72,3 +72,21 @@ ctbz impostos historico --ano 2026 --mes 7 --status pago -o csv
 
 Lista as guias de meses anteriores com valor, valor pago, vencimento e situação, lendo todas
 as páginas da API. Na tabela, o resumo "em dia / guias vencidas" sai no stderr.
+
+## Faturamento e Fator R
+
+```sh
+ctbz impostos faturamento
+```
+
+```text
+Competência  Faturamento    Pró-labore  Impostos pagos
+10/2025       R$ 8.000,00  R$ 2.300,00     R$ 1.150,00
+…
+Faturamento 12 meses (RBT12): R$ 96.000,00 · Pró-labore 12 meses: R$ 27.600,00 · Fator R: 28.75%
+```
+
+Mostra os últimos 12 meses do mais antigo ao mais recente: faturamento e pró-labore usados na
+apuração e o total pago em impostos em cada mês. O resumo traz o faturamento acumulado (RBT12,
+que define a alíquota do Simples Nacional) e o Fator R (pró-labore ÷ faturamento; a partir de
+28% algumas atividades saem do Anexo V para o Anexo III).
