@@ -126,3 +126,26 @@ func TestAnonymize(t *testing.T) {
 		t.Error("anonimização não é determinística")
 	}
 }
+
+func TestPrune(t *testing.T) {
+	in := `{"cnpj":"1","segredo":"x","itens":[{"id":1,"label":"a","cpf":"123"}],"opcional":null,"ativo":true}`
+	out, err := Prune([]byte(in), resposta{})
+	if err != nil {
+		t.Fatal(err)
+	}
+	s := string(out)
+	for _, gone := range []string{"segredo", `"cpf"`} {
+		if strings.Contains(s, gone) {
+			t.Errorf("campo não declarado ficou: %s\n%s", gone, s)
+		}
+	}
+	for _, kept := range []string{`"cnpj": "1"`, `"label": "a"`, `"opcional": null`, `"ativo": true`} {
+		if !strings.Contains(s, kept) {
+			t.Errorf("faltou %s:\n%s", kept, s)
+		}
+	}
+	r, _ := Check(out, resposta{})
+	if len(r.Added()) != 0 {
+		t.Errorf("fixture podada não deveria ter campos novos: %v", r.Added())
+	}
+}

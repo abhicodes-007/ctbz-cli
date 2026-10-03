@@ -23,6 +23,7 @@ func main() {
 	from := flag.String("from", "", "lê a resposta deste arquivo em vez de chamar a API (um endpoint por vez)")
 	path := flag.String("path", "", "caminho a chamar, para endpoints sem LivePath (ex.: com um ID)")
 	dir := flag.String("dir", filepath.Join("internal", "api", "testdata"), "diretório das fixtures")
+	full := flag.Bool("full", false, "mantém campos que o contrato não usa (por padrão a fixture é podada)")
 	flag.Usage = func() {
 		fmt.Fprintln(os.Stderr, "uso: go run ./tools/capture [-from ARQUIVO | -path CAMINHO] ENDPOINT...")
 		fmt.Fprintln(os.Stderr, "\nendpoints:")
@@ -37,14 +38,14 @@ func main() {
 		os.Exit(2)
 	}
 	for _, name := range flag.Args() {
-		if err := capture(name, *from, *path, *dir); err != nil {
+		if err := capture(name, *from, *path, *dir, *full); err != nil {
 			fmt.Fprintf(os.Stderr, "%s: %v\n", name, err)
 			os.Exit(1)
 		}
 	}
 }
 
-func capture(name, from, path, dir string) error {
+func capture(name, from, path, dir string, full bool) error {
 	ep, ok := find(name)
 	if !ok {
 		return fmt.Errorf("endpoint desconhecido (veja a lista com -h)")
@@ -53,11 +54,16 @@ func capture(name, from, path, dir string) error {
 	if err != nil {
 		return err
 	}
-	anon, err := contract.Anonymize(raw)
+	report, err := contract.Check(raw, ep.Type)
 	if err != nil {
 		return err
 	}
-	report, err := contract.Check(anon, ep.Type)
+	if !full {
+		if raw, err = contract.Prune(raw, ep.Type); err != nil {
+			return err
+		}
+	}
+	anon, err := contract.Anonymize(raw)
 	if err != nil {
 		return err
 	}

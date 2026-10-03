@@ -25,6 +25,8 @@ Saída de uma quebra:
 2. Registrar em `Endpoints()` (`internal/api/api.go`). `LivePath` vazio quando o caminho
    depende de um ID de outra resposta.
 3. Gerar a fixture: `go run ./tools/capture NOME` (ou `-from resposta.json`, ou `-path CAMINHO`).
+   A captura poda a resposta aos campos do tipo e depois anonimiza
+   ([ADR-0011](adr/0011-fixtures-podadas-ao-contrato.md)); `-full` mantém tudo.
 4. **Revisar a fixture** (checklist abaixo) e rodar `go test ./...`.
 
 ## Checklist de revisão de fixture

@@ -2,12 +2,8 @@
   {
     "application": "painel-de-controle",
     "children": [],
-    "icon": "action/home",
     "id": "home",
-    "isMobile": true,
-    "isNew": false,
     "label": "Home",
-    "order": 0,
     "route": "",
     "type": "MENU"
   },
@@ -17,7 +13,6 @@
       {
         "application": "",
         "id": "notas-fiscais",
-        "isNew": false,
         "label": "Notas Fiscais",
         "route": "",
         "type": "DIVIDER"
@@ -25,7 +20,6 @@
       {
         "application": "painel-de-controle",
         "id": "emitir-nfse",
-        "isNew": false,
         "label": "Emitir NFs-e",
         "route": "emissor/listagem",
         "type": "ITEM_MENU"
@@ -33,18 +27,13 @@
       {
         "application": "sistema",
         "id": "como-emitir-notas-de-servico",
-        "isNew": false,
         "label": "Como emitir notas de serviço",
         "route": "como-emitir",
         "type": "ITEM_MENU"
       }
     ],
-    "icon": "action/calendar_month",
     "id": "rotinas",
-    "isMobile": true,
-    "isNew": false,
     "label": "Minhas Rotinas",
-    "order": 1,
     "route": "",
     "type": "MENU"
   },
@@ -54,7 +43,6 @@
       {
         "application": "sistema",
         "id": "mensais",
-        "isNew": false,
         "label": "Declarações mensais",
         "route": "declaracoes-mensais",
         "type": "ITEM_MENU"
@@ -62,7 +50,6 @@
       {
         "application": "sistema",
         "id": "anuais",
-        "isNew": false,
         "label": "Declarações anuais",
         "route": "declaracoes-anuais",
         "type": "ITEM_MENU"
@@ -70,18 +57,13 @@
       {
         "application": "sistema",
         "id": "balanco-patrimonial",
-        "isNew": false,
         "label": "Balanço patrimonial",
         "route": "relatorio-contabil/BALANCO",
         "type": "ITEM_MENU"
       }
     ],
-    "icon": "editor/format_list_bulleted",
     "id": "relatorios",
-    "isMobile": false,
-    "isNew": false,
     "label": "Relatórios",
-    "order": 2,
     "route": "",
     "type": "MENU"
   }
