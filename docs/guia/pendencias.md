@@ -1,4 +1,4 @@
-# Pendências e rotinas
+# Pendências, rotinas e atendimento
 
 ## Pendências da empresa
 
@@ -79,3 +79,18 @@ contabilizei  DCTFWeb                                15/10/2026  EM_ABERTO
   realizadas ([ADR-0012](../adr/0012-prazos-e-alertas.md)).
 - `--fail-on-vencidas` (código 4) considera só as rotinas da **empresa**: atraso numa
   obrigação da Contabilizei não é algo que você resolve sozinho.
+
+## Chamados de atendimento
+
+```sh
+ctbz chamados                  # em andamento
+ctbz chamados --finalizados    # já resolvidos
+```
+
+- Colunas: `id`, `assunto`, `status`, `canal`, `criado`, `atualizado`, `previsao_retorno` e
+  `link` (a página do chamado na central de ajuda).
+- Em contas com muitos chamados, a Contabilizei não consegue listar os finalizados (o
+  servidor responde com erro sempre, não adianta repetir). A CLI então mostra os finalizados
+  entre os **100 chamados mais recentes** da empresa e avisa no stderr
+  ([ADR-0013](../adr/0013-sem-retentativa-com-fonte-alternativa.md)). Nessa fonte não há
+  canal, data de atualização nem previsão de retorno.

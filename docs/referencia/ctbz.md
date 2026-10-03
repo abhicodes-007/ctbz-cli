@@ -10,6 +10,7 @@ Dados vão para stdout no formato escolhido com -o; mensagens e progresso vão p
 ## Subcomandos
 
 - [`ctbz api`](ctbz_api.md): Chama uma URL da plataforma com a sessão atual
+- [`ctbz chamados`](ctbz_chamados.md): Lista os chamados de atendimento (em andamento ou finalizados)
 - [`ctbz empresa`](ctbz_empresa.md): Mostra os dados da empresa selecionada
 - [`ctbz empresas`](ctbz_empresas.md): Lista as empresas do usuário, marcando a atual
 - [`ctbz impostos`](ctbz_impostos.md): Lista as guias de impostos a pagar (em atraso, do mês e do próximo mês)

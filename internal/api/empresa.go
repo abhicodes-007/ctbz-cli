@@ -36,6 +36,17 @@ type DadosEmpresa struct {
 		RazaoSocial   string `json:"razaoSocial"`
 		StatusEmpresa string `json:"statusEmpresa"`
 	} `json:"empresas"`
+	Chamados []ChamadoResumo `json:"chamados"`
+}
+
+// ChamadoResumo é um chamado de atendimento como vem em dadosempresa/get (os mais recentes,
+// inclusive os finalizados).
+type ChamadoResumo struct {
+	ID        string `json:"id"`
+	Status    string `json:"status"` // ex.: open, pending, solved, closed (Zendesk)
+	Subject   string `json:"subject"`
+	CreatedAt string `json:"created_at"` // dd/mm/aaaa
+	URL       string `json:"url"`
 }
 
 // BuscarDadosEmpresa lê dadosempresa/get.
