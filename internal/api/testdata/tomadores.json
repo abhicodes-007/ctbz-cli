@@ -1,0 +1,5 @@
+{
+  "emissaoSemTomador": true,
+  "permiteEmissaoExterior": true,
+  "tomadores": []
+}

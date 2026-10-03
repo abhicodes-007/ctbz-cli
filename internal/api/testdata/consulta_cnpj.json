@@ -1,0 +1,24 @@
+{
+  "atividadePrincipal": {
+    "codigo": "6422100",
+    "descricao": "Bancos múltiplos, com carteira comercial"
+  },
+  "bairro": "LOGRADOURO EXEMPLO",
+  "cep": "00000000",
+  "cnpj": "00000000000000",
+  "complemento": "LOGRADOURO EXEMPLO",
+  "dataAbertura": "01/08/1966",
+  "email": "fulano@exemplo.com",
+  "logradouro": "LOGRADOURO EXEMPLO",
+  "municipio": "LOGRADOURO EXEMPLO",
+  "naturezaJuridica": {
+    "descricao": "Sociedade de Economia Mista"
+  },
+  "nomeFantasia": "FULANO DE TAL",
+  "numero": "SN",
+  "optanteSimples": "Não",
+  "razaoSocial": "FULANO DE TAL",
+  "situacaoCadastral": "ATIVA",
+  "telefone": "(00) 00000000",
+  "uf": "DF"
+}
