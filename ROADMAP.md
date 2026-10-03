@@ -19,7 +19,7 @@ Labels usadas: `épico`, `versão: vX.Y`, `contexto: …`, `tipo: funcionalidade
 | Versão | Contexto | Épico | Funcionalidades | Situação |
 |---|---|---|---|---|
 | **v0.1** | Login e dados da empresa | [#1](https://github.com/edusouza/ctbz-cli/issues/1) | 8 | em andamento (7/8) |
-| **v0.2** | Impostos | [#10](https://github.com/edusouza/ctbz-cli/issues/10) | 6 | planejada |
+| **v0.2** | Impostos | [#10](https://github.com/edusouza/ctbz-cli/issues/10) | 6 | concluída |
 | **v0.3** | Pendências, rotinas e atendimento | [#17](https://github.com/edusouza/ctbz-cli/issues/17) | 5 | planejada |
 | **v0.4** | Mensalidade e pagamentos da Contabilizei | [#23](https://github.com/edusouza/ctbz-cli/issues/23) | 4 | planejada |
 | **v0.5** | Notas fiscais | [#28](https://github.com/edusouza/ctbz-cli/issues/28) | 5 | planejada |
@@ -55,12 +55,12 @@ Tudo sobre os impostos da empresa: guias a pagar (atrasadas, do mês e do próxi
 
 | | Issue | Funcionalidade | Tipo |
 |---|---|---|---|
-| ⬜ | [#11](https://github.com/edusouza/ctbz-cli/issues/11) | Listar guias a pagar | funcionalidade |
-| ⬜ | [#12](https://github.com/edusouza/ctbz-cli/issues/12) | Detalhes de uma guia e memória de cálculo | funcionalidade |
-| ⬜ | [#13](https://github.com/edusouza/ctbz-cli/issues/13) | Baixar guias em PDF | funcionalidade |
-| ⬜ | [#14](https://github.com/edusouza/ctbz-cli/issues/14) | Histórico de impostos | funcionalidade |
-| ⬜ | [#15](https://github.com/edusouza/ctbz-cli/issues/15) | Faturamento mensal usado na apuração | funcionalidade |
-| ⬜ | [#16](https://github.com/edusouza/ctbz-cli/issues/16) | Parcelamentos e débitos federais (leitura) | investigação |
+| ✅ | [#11](https://github.com/edusouza/ctbz-cli/issues/11) | Listar guias a pagar | funcionalidade |
+| ✅ | [#12](https://github.com/edusouza/ctbz-cli/issues/12) | Detalhes de uma guia e memória de cálculo | funcionalidade |
+| ✅ | [#13](https://github.com/edusouza/ctbz-cli/issues/13) | Baixar guias em PDF | funcionalidade |
+| ✅ | [#14](https://github.com/edusouza/ctbz-cli/issues/14) | Histórico de impostos | funcionalidade |
+| ✅ | [#15](https://github.com/edusouza/ctbz-cli/issues/15) | Faturamento mensal usado na apuração | funcionalidade |
+| ✅ | [#16](https://github.com/edusouza/ctbz-cli/issues/16) | Parcelamentos e débitos federais (leitura) | investigação |
 
 Fora de escopo: Confirmar pagamento de guia, recálculo e contratação de parcelamento (escrita).
 
