@@ -73,7 +73,7 @@ a = axios.create({ baseURL: "/api/leads/hubspot/", withCredentials: false })
 
 Nos demais módulos as chamadas aparecem como `X["c"].get("dashboard/fatura")`, em que
 `X` é o nome local do módulo importado e a letra indica a base. É nisso que se apoia o
-[gerador de catálogo](../../scripts/extrair-endpoints.py). Alguns serviços guardam o
+[gerador de catálogo](https://github.com/edusouza/ctbz-cli/blob/main/scripts/extrair-endpoints.py). Alguns serviços guardam o
 caminho numa variável antes (`var e="/novo-emissor/listagem/notas"; return u["c"].get(e)`),
 e o gerador trata esse padrão também.
 

@@ -1,6 +1,6 @@
 # CLI (`ctbz`)
 
-Uso e instalação estão no [README principal](../../README.md). Aqui fica o funcionamento
+Uso e instalação estão no [README principal](https://github.com/edusouza/ctbz-cli/blob/main/README.md). Aqui fica o funcionamento
 interno.
 
 ## Estrutura

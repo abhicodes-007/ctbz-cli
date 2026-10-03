@@ -67,7 +67,7 @@ for k, v in re.findall(r'localStorage.setItem\("([^"]*)","([^"]*)"\)', html):
    ```
 
 Os passos 1 a 4 estão automatizados em
-[`scripts/extrair-endpoints.py`](../../scripts/extrair-endpoints.py):
+[`scripts/extrair-endpoints.py`](https://github.com/edusouza/ctbz-cli/blob/main/scripts/extrair-endpoints.py):
 
 ```sh
 ctbz login && scripts/extrair-endpoints.py > docs/api/catalogo.md
