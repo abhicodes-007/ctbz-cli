@@ -16,11 +16,14 @@ resultados diferentes para a mesma data.
   (qualquer situação que não seja de concluído):
   - `vencida`: o prazo é anterior a hoje;
   - `próxima`: o prazo é hoje ou nos próximos **7 dias**;
+  - `crítica`: pendência que o painel marca como crítica (`pendenciasCriticas`), que não tem
+    prazo; usado pelo `ctbz resumo`;
   - vazio (`null` no JSON): sem alerta, item concluído ou sem prazo.
 - "Hoje" é a data local da máquina (`now()` em `internal/cli`, trocável nos testes).
 - Por padrão, listas de pendências mostram só itens abertos; `--todas` inclui os concluídos.
 - `--fail-on-vencidas` faz o comando terminar com código 4 (atenção) quando há item
-  `vencida`, como `--fail-on-atraso` em `ctbz impostos`.
+  `vencida`, como `--fail-on-atraso` em `ctbz impostos`. No `ctbz resumo`, que junta tudo,
+  a flag é `--fail-on-atencao` e considera `vencida` e `crítica`.
 
 ## Consequências
 

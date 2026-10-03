@@ -18,6 +18,9 @@ usa [Versionamento Semântico](https://semver.org/lang/pt-BR/).
 - `ctbz chamados [--finalizados]`: chamados de atendimento com link para a central de ajuda.
   Quando o servidor não consegue listar os finalizados, usa os 100 chamados mais recentes
   de `dadosempresa/get` e avisa no stderr.
+- `ctbz resumo`: numa lista só, impostos em atraso e do mês, pendências, rotinas do mês,
+  mensalidade e pendências críticas do painel, com consultas em paralelo e
+  `--fail-on-atencao` (código 4) para alertas em cron.
 
 ## [0.2.0] - 2026-10-03
 

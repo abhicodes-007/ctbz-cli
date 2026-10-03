@@ -79,6 +79,7 @@ cada `ctbz login` gera um e-mail novo, e só o código mais recente vale.
 ## Comandos
 
 ```sh
+ctbz resumo              # o que precisa de atenção (impostos, pendências, rotinas, mensalidade)
 ctbz status              # dados da sessão e se ela ainda é válida
 ctbz empresa             # resumo da empresa selecionada
 ctbz empresas            # empresas do usuário, marcando a atual
@@ -135,7 +136,8 @@ export CTBZ_OUTPUT=json        # muda o padrão
 
 Códigos de saída: `0` sucesso, `1` erro, `2` uso incorreto (comando, flag ou argumento inválido),
 `3` login pendente (aguardando OTP ou CNPJ), `4` atenção (ex.: impostos em atraso com
-`--fail-on-atraso`, pendências vencidas com `--fail-on-vencidas`).
+`--fail-on-atraso`, pendências vencidas com `--fail-on-vencidas`, algo vencido ou crítico com
+`ctbz resumo --fail-on-atencao`).
 
 Guia de uso por contexto: [`docs/guia`](docs/guia/README.md).
 

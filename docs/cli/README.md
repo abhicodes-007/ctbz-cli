@@ -113,7 +113,11 @@ As credenciais (`CTBZ_USER`, `CTBZ_PASSWORD`) nunca são gravadas.
 - **`url.PathUnescape`** para o `localStorage`, que vem de `encodeURIComponent`
   (`QueryUnescape` trocaria `+` por espaço).
 - **Re-login automático** só com `CTBZ_OTP_CMD`: sem ele, um 401 vira erro com
-  instrução, em vez de pedir um OTP no meio de outro comando.
+  instrução, em vez de pedir um OTP no meio de outro comando. Com chamadas em paralelo
+  (`ctbz resumo`), só a primeira que recebe 401 refaz o login; as outras esperam e usam a
+  sessão nova (um único e-mail de OTP).
+- **Gravação atômica com temporário próprio** (`os.CreateTemp` + `rename`): gravações
+  simultâneas da sessão nunca misturam conteúdo.
 
 ## Saída
 

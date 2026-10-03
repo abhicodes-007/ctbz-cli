@@ -27,6 +27,7 @@ Gerada a partir da própria CLI (`go run ./tools/gendocs`); não edite à mão.
 | [`ctbz logout`](ctbz_logout.md) | Apaga a sessão local |
 | [`ctbz pendencias`](ctbz_pendencias.md) | Lista as pendências da empresa (tipo, detalhe, prazo e situação) |
 | [`ctbz pendencias conciliacao`](ctbz_pendencias_conciliacao.md) | Mostra as pendências de conciliação fiscal (notas e recebimentos) |
+| [`ctbz resumo`](ctbz_resumo.md) | Mostra numa lista só o que precisa de atenção |
 | [`ctbz rotinas`](ctbz_rotinas.md) | Lista as rotinas e obrigações do mês (da empresa e da Contabilizei) |
 | [`ctbz status`](ctbz_status.md) | Mostra a sessão atual e testa se ainda é válida |
 | [`ctbz version`](ctbz_version.md) | Mostra a versão do ctbz |

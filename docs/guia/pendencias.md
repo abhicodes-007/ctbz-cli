@@ -1,5 +1,42 @@
 # Pendências, rotinas e atendimento
 
+## Resumo: o que precisa de atenção
+
+```sh
+ctbz resumo
+```
+
+```text
+Seção        Item                                   Prazo       Valor        Situação     Alerta
+impostos     DARF Unificado 07/2026                 06/10/2026  R$ 1.000,00  RECALCULADA  próxima
+pendencias   Cadastre o PIS para ativar o pró-la…   21/07/2026               Pendente     vencida
+rotinas      Importar extrato bancário de setembro  05/10/2026               EM_ABERTO    próxima
+mensalidade  Mensalidade da Contabilizei            15/10/2026  R$ 15,90     EM_ABERTO
+painel       Certificado digital                                             crítica      crítica
+```
+
+Uma lista só com o que exige ação, montada a partir de três consultas feitas em paralelo:
+
+| Seção | De onde vem |
+|---|---|
+| `impostos` | guias em atraso (sempre `vencida`) e do mês, como em `ctbz impostos` |
+| `pendencias` | pendências abertas, como em `ctbz pendencias` |
+| `rotinas` | rotinas da empresa do mês ainda não realizadas (sem os impostos, que já aparecem acima) |
+| `mensalidade` | a mensalidade do mês, paga ou não |
+| `painel` | indicadores do painel: `crítica` (pendências críticas) ou `aviso` (outras pendências) |
+
+Se nada precisa de atenção, a tabela sai vazia e o stderr diz `Nada precisa de atenção.`
+
+Para um alerta diário em cron, `--fail-on-atencao` termina com **código 4** quando há algo
+`vencida` ou `crítica`:
+
+```sh
+ctbz resumo --fail-on-atencao -o csv > /dev/null || notify-send "Contabilizei precisa de atenção"
+```
+
+Se qualquer uma das consultas falhar, o comando falha (código 1) em vez de mostrar um resumo
+incompleto.
+
 ## Pendências da empresa
 
 ```sh

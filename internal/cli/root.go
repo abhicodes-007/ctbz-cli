@@ -104,6 +104,7 @@ Dados vão para stdout no formato escolhido com -o; mensagens e progresso vão p
 		newPendenciasCmd(),
 		newRotinasCmd(),
 		newChamadosCmd(),
+		newResumoCmd(),
 		newAPICmd(),
 		newLogoutCmd(),
 		newVersionCmd(version),
