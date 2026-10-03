@@ -106,3 +106,22 @@ ctbz impostos debitos                # há débitos federais em aberto?
 - `debitos --fail-on-debitos` termina com código 4 quando há débitos federais.
 - Simular ou contratar parcelamento continua sendo feito pelo painel (a CLI só lê,
   ver [ADR-0002](../adr/0002-somente-leitura-ate-1-0.md)).
+
+## Pagamento recorrente (débito automático)
+
+```sh
+ctbz impostos recorrente             # disponível? ativo? próximo pagamento
+ctbz impostos recorrente historico   # guias pagas pelo recorrente, por competência
+```
+
+- O pagamento recorrente paga as guias de impostos automaticamente no cartão de crédito ou na
+  conta PJ. `recorrente` mostra se ele está disponível e ativo, a competência, as datas do
+  próximo pagamento e da próxima tentativa, e quantos pagamentos estão agendados, concluídos e
+  recusados.
+- Dados de cartão e chaves de pagamento **nunca** aparecem na saída: só a quantidade de
+  cartões salvos.
+- O histórico traz uma linha por guia (nome, situação, valor) e uma linha `Custo de operação`
+  por mês, quando houver. A Contabilizei só devolve um período recente; os meses anteriores
+  estão em `ctbz impostos historico`.
+- Ativar, desativar ou cadastrar cartão continua sendo feito pelo painel
+  ([ADR-0002](../adr/0002-somente-leitura-ate-1-0.md)).

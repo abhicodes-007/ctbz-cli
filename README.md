@@ -95,6 +95,7 @@ ctbz impostos historico --ano 2026             # guias de meses anteriores
 ctbz impostos faturamento                      # faturamento, pró-labore e Fator R (12 meses)
 ctbz impostos parcelamentos                    # parcelamentos de impostos
 ctbz impostos debitos                          # débitos federais em aberto?
+ctbz impostos recorrente [historico]           # pagamento recorrente (débito automático) de impostos
 ctbz pendencias                                # pendências abertas, com alerta de prazo
 ctbz pendencias conciliacao                    # notas e recebimentos a conciliar
 ctbz rotinas --mes 2026-10                     # rotinas e obrigações do mês (empresa e Contabilizei)

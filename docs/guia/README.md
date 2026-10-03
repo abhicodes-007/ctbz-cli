@@ -5,7 +5,7 @@ comando e flag está em [Referência de comandos](../referencia/README.md).
 
 | Contexto | O que dá para fazer |
 |---|---|
-| [Impostos](impostos.md) | Guias a pagar e em atraso |
+| [Impostos](impostos.md) | Guias a pagar e em atraso, histórico, faturamento, parcelamentos e pagamento recorrente |
 | [Pendências, rotinas e atendimento](pendencias.md) | Resumo do que precisa de atenção, pendências, rotinas do mês, conciliação e chamados |
 | [Mensalidade e pagamentos](mensalidade.md) | Mensalidade da Contabilizei |
 
