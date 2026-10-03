@@ -161,6 +161,35 @@ func BuscarCertificadoStatus(ctx context.Context, g Getter) (*CertificadoStatus,
 	return get[CertificadoStatus](ctx, g, PathCertificadoStatus)
 }
 
+const (
+	PathCertificadoProcesso = "certificado/processo-aquisicao/status"
+	PathCertificadoCard     = "dashboard/card-certificado"
+)
+
+// CertificadoProcesso é o andamento da compra ou renovação do certificado pela Contabilizei.
+type CertificadoProcesso struct {
+	EtapaAtual   string `json:"etapaAtual"`   // ex.: PRE_CHECKOUT, verificacaoCnh, agendamentoVideoconferencia
+	FluxoDestino string `json:"fluxoDestino"` // ex.: BASICO
+}
+
+// BuscarCertificadoProcesso lê certificado/processo-aquisicao/status.
+func BuscarCertificadoProcesso(ctx context.Context, g Getter) (*CertificadoProcesso, error) {
+	return get[CertificadoProcesso](ctx, g, PathCertificadoProcesso)
+}
+
+// CertificadoCard é o card de certificado do painel (alerta de vencimento).
+type CertificadoCard struct {
+	TipoCard           any  `json:"tipoCard"` // formato não verificado (vinha null)
+	Prazo              int  `json:"prazo"`
+	CertificadoVencido bool `json:"certificadoVencido"`
+	PrazoFinalizado    bool `json:"prazoFinalizado"`
+}
+
+// BuscarCertificadoCard lê dashboard/card-certificado.
+func BuscarCertificadoCard(ctx context.Context, g Getter) (*CertificadoCard, error) {
+	return get[CertificadoCard](ctx, g, PathCertificadoCard)
+}
+
 // Caminhos no monolito legado (/api/legado/).
 const (
 	PathSocios = "/api/legado/socio/list"

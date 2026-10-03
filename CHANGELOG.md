@@ -11,6 +11,8 @@ usa [Versionamento Semântico](https://semver.org/lang/pt-BR/).
 
 - `ctbz documentos`: tipos da central de documentos com quantidade enviada; `--tipo` lista os
   arquivos enviados (competência, envio, descrição, valor e link).
+- `ctbz certificado`: o mesmo que `ctbz empresa certificado`, que agora mostra também o
+  alerta de vencimento do painel e a etapa da compra ou renovação do certificado.
 
 ## [0.7.0] - 2026-10-03
 

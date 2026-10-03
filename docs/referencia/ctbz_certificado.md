@@ -1,4 +1,4 @@
-# ctbz empresa certificado
+# ctbz certificado
 
 Mostra a situação do certificado digital da empresa e da renovação
 
@@ -12,14 +12,14 @@ A senha e o arquivo do certificado nunca são consultados.
 ## Uso
 
 ```
-ctbz empresa certificado
+ctbz certificado
 ```
 
 ## Exemplos
 
 ```sh
-  ctbz empresa certificado
-  ctbz empresa certificado -o json | jq .dias_para_vencer
+  ctbz certificado
+  ctbz certificado -o json | jq .dias_para_vencer
 ```
 
 ## Flags globais
@@ -29,4 +29,4 @@ ctbz empresa certificado
   -o, --output string   formato de saída: table, json ou csv (padrão: CTBZ_OUTPUT ou table)
 ```
 
-Veja também: [`ctbz empresa`](ctbz_empresa.md).
+Veja também: [`ctbz`](ctbz.md).

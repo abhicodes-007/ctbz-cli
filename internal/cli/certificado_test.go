@@ -29,14 +29,19 @@ func TestCertificadoRecord(t *testing.T) {
 
 func TestEmpresaCertificadoCmd(t *testing.T) {
 	withSession(t, fakeAPI(t, map[string]string{
-		"/api/plataforma/certificado/status": `{"situacao":"VALIDO","dataVencimento":1816282860000,"mensagemErro":null,"valido":true,"aptoRenovacao":false}`,
+		"/api/plataforma/certificado/status":                    `{"situacao":"VALIDO","dataVencimento":1816282860000,"mensagemErro":null,"valido":true,"aptoRenovacao":false}`,
+		"/api/plataforma/certificado/processo-aquisicao/status": fixture(t, "certificado_processo"),
+		"/api/plataforma/dashboard/card-certificado":            fixture(t, "certificado_card"),
 	}))
-	out, stderr, code := execCLI(t, "", "empresa", "certificado", "-o", "csv")
-	if code != ExitOK {
-		t.Fatalf("código %d: %s", code, stderr)
-	}
-	if !strings.HasPrefix(out, "situacao,valido,vencimento,dias_para_vencer,apto_renovacao,mensagem\nVALIDO,true,2027-07-") {
-		t.Errorf("CSV:\n%s", out)
+	for _, args := range [][]string{{"empresa", "certificado"}, {"certificado"}} {
+		out, stderr, code := execCLI(t, "", append(args, "-o", "csv")...)
+		if code != ExitOK {
+			t.Fatalf("%v: código %d: %s", args, code, stderr)
+		}
+		if !strings.HasPrefix(out, "situacao,valido,vencimento,dias_para_vencer,apto_renovacao,mensagem,vencido_no_painel,"+
+			"prazo_finalizado,renovacao_etapa,renovacao_fluxo\nVALIDO,true,2027-07-") || !strings.HasSuffix(out, ",false,false,PRE_CHECKOUT,BASICO\n") {
+			t.Errorf("%v: CSV:\n%s", args, out)
+		}
 	}
 }
 

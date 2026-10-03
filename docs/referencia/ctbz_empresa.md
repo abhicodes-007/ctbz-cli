@@ -23,7 +23,7 @@ ctbz empresa [flags]
 ## Subcomandos
 
 - [`ctbz empresa atividades`](ctbz_empresa_atividades.md): Lista os CNAEs da empresa e os anexos do Simples Nacional
-- [`ctbz empresa certificado`](ctbz_empresa_certificado.md): Mostra a situação do certificado digital da empresa
+- [`ctbz empresa certificado`](ctbz_empresa_certificado.md): Mostra a situação do certificado digital da empresa e da renovação
 - [`ctbz empresa socios`](ctbz_empresa_socios.md): Lista os sócios da empresa
 - [`ctbz empresa usar`](ctbz_empresa_usar.md): Troca a empresa da sessão
 

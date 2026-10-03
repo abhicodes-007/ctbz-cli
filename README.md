@@ -119,6 +119,7 @@ ctbz caixa 2026-09                             # lançamentos do caixa do mês, 
 ctbz extratos --ano 2026 | ctbz contas-bancarias  # extratos por mês e contas cadastradas
 ctbz contas --busca alug                       # plano de contas usado nas classificações
 ctbz documentos [--tipo TIPO]                  # central de documentos: tipos e arquivos enviados
+ctbz certificado                               # certificado digital: validade e renovação
 ctbz api menu/get        # qualquer endpoint; caminho relativo → /api/plataforma/
 ctbz api -X POST -d @corpo.json /api/plataforma/algum/endpoint
 ctbz logout              # apaga a sessão local
