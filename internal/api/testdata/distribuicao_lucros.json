@@ -1,0 +1,12 @@
+{
+  "ano": 0,
+  "dataLimite": null,
+  "exercicioFechado": false,
+  "limitePermitidoDistribuicaoLucros": 1000,
+  "lucrosSocios": [],
+  "motivoNaoPodeAlterar": null,
+  "podeAlterar": false,
+  "saldo": 1000,
+  "totalAdiantamentos": 1000,
+  "totalDistribuido": 1000
+}
