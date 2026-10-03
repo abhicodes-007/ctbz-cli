@@ -1,0 +1,28 @@
+version: 2
+
+project_name: ctbz
+
+builds:
+  - main: ./cmd/ctbz
+    binary: ctbz
+    env:
+      - CGO_ENABLED=0
+    goos: [linux, darwin, windows]
+    goarch: [amd64, arm64]
+    ldflags:
+      - -s -w -X main.version={{ .Tag }}
+
+archives:
+  - formats: [tar.gz]
+    format_overrides:
+      - goos: windows
+        formats: [zip]
+    files:
+      - README.md
+      - CHANGELOG.md
+
+checksum:
+  name_template: checksums.txt
+
+changelog:
+  disable: true # as notas vêm do CHANGELOG.md (go run ./tools/releasenotes)
