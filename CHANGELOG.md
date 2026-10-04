@@ -15,6 +15,8 @@ usa [Versionamento Semântico](https://semver.org/lang/pt-BR/).
   e os sócios do caixa.
 - `ctbz caixa adicionar`: registra um recebimento ou pagamento no caixa de uma competência,
   com as validações do painel, confirmação e `--dry-run`.
+- `ctbz caixa editar`: altera data, valor, tipo, classificação, vínculo ou descrição de um
+  lançamento manual do caixa, mostrando o antes e o depois.
 
 ## [1.1.0] - 2026-10-04
 

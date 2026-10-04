@@ -121,6 +121,17 @@ ID         1000000000000099
   Datas futuras são recusadas.
 - Depois de salvar, a CLI relê o caixa e mostra o lançamento criado.
 
+Para corrigir um lançamento manual, informe só o que muda; o resumo mostra o antes e o depois:
+
+```sh
+ctbz caixa editar 1000000000000002 --competencia 2026-09 --valor 900 --descricao "Venda balcão"
+# Editar o lançamento 1000000000000002 do caixa de 09/2026: valor R$ 1.000,00 → R$ 900,00; descrição "Venda à vista" → "Venda balcão"
+```
+
+- Os ids aparecem em `ctbz caixa 2026-09 -o json`.
+- Lançamentos feitos pelo sistema (coluna "Automático") não podem ser editados, como no painel.
+- Trocar a classificação exige informar de novo o vínculo, quando a nova conta pede um.
+
 ## Classificações aceitas numa competência
 
 Antes de lançar no caixa ou classificar um lançamento do extrato, veja quais classificações
