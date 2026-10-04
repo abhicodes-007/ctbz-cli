@@ -16,6 +16,8 @@ usa [Versionamento Semântico](https://semver.org/lang/pt-BR/).
 - `ctbz prolabore gestao-inteligente ativar|sair`: põe a empresa no cálculo automático do
   pró-labore ou a tira dele.
 - `ctbz prolabore` mostra o `id` de cada sócio, usado em `--socio`.
+- `ctbz lucros distribuir`: registra a distribuição de lucros do exercício, em percentual ou
+  em reais, com a soma conferida em centavos.
 
 ## [1.6.0] - 2026-10-04
 
