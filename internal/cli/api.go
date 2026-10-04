@@ -1,13 +1,16 @@
 package cli
 
 import (
+	"context"
 	"fmt"
 	"io"
+	"net/http"
 	"os"
 	"strings"
 
 	"github.com/spf13/cobra"
 
+	"github.com/edusouza/ctbz-cli/internal/ctbz"
 	"github.com/edusouza/ctbz-cli/internal/output"
 )
 
@@ -21,6 +24,10 @@ func newAPICmd() *cobra.Command {
 
 CAMINHO relativo é resolvido contra o BFF da plataforma (/api/plataforma/);
 caminhos absolutos ("/api/legado/...") alcançam as demais APIs do app.
+
+Com -X diferente de GET, a chamada é uma escrita: a CLI confere a sessão antes e envia uma
+única vez, sem re-login automático nem retentativa depois do envio. Não há confirmação nem
+--dry-run: ctbz api é a ferramenta de baixo nível (ADR-0018).
 
 A resposta sai em JSON formatado (CTBZ_OUTPUT é ignorado). Com -o table ou -o csv,
 listas de objetos viram tabelas. --raw imprime o corpo exatamente como veio.
@@ -40,7 +47,7 @@ Respostas HTTP 4xx/5xx terminam com código de saída 1.`,
 			if err != nil {
 				return err
 			}
-			resp, err := authedAPI(cmd.Context(), s, strings.ToUpper(method), args[0], body)
+			resp, err := callAPI(cmd.Context(), s, strings.ToUpper(method), args[0], body)
 			if err != nil {
 				return err
 			}
@@ -65,6 +72,18 @@ Respostas HTTP 4xx/5xx terminam com código de saída 1.`,
 	f.StringVarP(&data, "data", "d", "", "corpo JSON da requisição (@arquivo lê de um arquivo, @- da entrada padrão)")
 	f.BoolVar(&raw, "raw", false, "imprime o corpo da resposta como veio, sem formatar")
 	return cmd
+}
+
+// callAPI usa a camada de leitura (com re-login) no GET e a de escrita nos demais métodos.
+func callAPI(ctx context.Context, s streams, method, path string, body []byte) (*ctbz.Response, error) {
+	if method == http.MethodGet {
+		return authedAPI(ctx, s, method, path, body)
+	}
+	contentType := ""
+	if body != nil {
+		contentType = "application/json"
+	}
+	return sendOnce(ctx, s, method, path, body, contentType)
 }
 
 func readBody(arg string, stdin io.Reader) ([]byte, error) {

@@ -136,3 +136,21 @@ func TestSenderExpiredSessionBeforeSend(t *testing.T) {
 		t.Errorf("escrita enviada com a sessão expirada")
 	}
 }
+
+func TestAPICommandWriteUsesSender(t *testing.T) {
+	writes := writeServer(t, http.StatusOK, func(w http.ResponseWriter, r *http.Request) {
+		body, _ := io.ReadAll(r.Body)
+		if r.Method != "POST" || string(body) != `{"a":1}` || r.Header.Get("Content-Type") != "application/json" {
+			t.Errorf("requisição inesperada: %s %q %s", r.Method, r.Header.Get("Content-Type"), body)
+		}
+		w.WriteHeader(http.StatusUnauthorized)
+	})
+	t.Setenv("CTBZ_OTP_CMD", "echo 123456")
+	_, stderr, code := execCLI(t, "", "api", "-X", "post", "-d", `{"a":1}`, "caminho/qualquer")
+	if code != ExitError || !strings.Contains(stderr, "a escrita não foi aplicada") {
+		t.Errorf("código %d, stderr %q", code, stderr)
+	}
+	if writes.Load() != 1 {
+		t.Errorf("%d requisições de escrita, quero 1", writes.Load())
+	}
+}

@@ -7,6 +7,10 @@ Chama qualquer endpoint da plataforma com os cookies da sessão.
 CAMINHO relativo é resolvido contra o BFF da plataforma (/api/plataforma/);
 caminhos absolutos ("/api/legado/...") alcançam as demais APIs do app.
 
+Com -X diferente de GET, a chamada é uma escrita: a CLI confere a sessão antes e envia uma
+única vez, sem re-login automático nem retentativa depois do envio. Não há confirmação nem
+--dry-run: ctbz api é a ferramenta de baixo nível (ADR-0018).
+
 A resposta sai em JSON formatado (CTBZ_OUTPUT é ignorado). Com -o table ou -o csv,
 listas de objetos viram tabelas. --raw imprime o corpo exatamente como veio.
 Respostas HTTP 4xx/5xx terminam com código de saída 1.
