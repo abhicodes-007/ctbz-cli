@@ -35,7 +35,7 @@ tomador), use "ctbz notas tomadores consulta CNPJ".`,
 			return output.Write(s.out, f, tomadoresList(t.Tomadores))
 		},
 	}
-	cmd.AddCommand(newNotasTomadoresConsultaCmd())
+	cmd.AddCommand(newNotasTomadoresConsultaCmd(), newTomadoresAdicionarCmd(), newTomadoresEditarCmd())
 	return cmd
 }
 
