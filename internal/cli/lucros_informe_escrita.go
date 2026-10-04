@@ -140,7 +140,7 @@ anterior. Aceita --yes e --dry-run.`,
 			op := operacao{Risco: riscoAlto, ID: fmt.Sprint(ano), Resumo: fmt.Sprintf("Declarar ciência dos débitos federais no informe de %d", ano),
 				Consequencia: "Registra que você está ciente dos débitos federais da empresa; não dá para desfazer."}
 			enviado, err := escrever(cmd, op, func(snd api.Sender) error {
-				return api.AceitarTermoDebitos(cmd.Context(), snd, ano, api.AceiteTermoPrimeiraVez)
+				return erroAdmin(api.AceitarTermoDebitos(cmd.Context(), snd, ano, api.AceiteTermoPrimeiraVez))
 			})
 			if err != nil || !enviado {
 				return err
@@ -168,7 +168,7 @@ func aceitarCartaInforme(cmd *cobra.Command, f output.Format, g api.Getter, ano 
 	op := operacao{Risco: riscoAlto, ID: fmt.Sprint(ano), Resumo: fmt.Sprintf("Aceitar a carta de responsabilidade do informe de %d (texto acima)", ano),
 		Consequencia: "É uma declaração legal; não dá para desfazer."}
 	enviado, err := escrever(cmd, op, func(snd api.Sender) error {
-		return api.AceitarCartaResponsabilidadeInforme(cmd.Context(), snd, ano)
+		return erroAdmin(api.AceitarCartaResponsabilidadeInforme(cmd.Context(), snd, ano))
 	})
 	if err != nil || !enviado {
 		return err
@@ -245,7 +245,7 @@ desfazer. O padrão de --ano é o ano anterior. Aceita --yes e --dry-run.`,
 			}
 			op := operacao{Risco: riscoAlto, ID: fmt.Sprint(ano), Resumo: fmt.Sprintf("%s no informe de %d", d.resumo, ano), Consequencia: d.consequencia}
 			enviado, err := escrever(cmd, op, func(snd api.Sender) error {
-				return api.RegistrarAceiteInforme(cmd.Context(), snd, ano, d.aceite)
+				return erroAdmin(api.RegistrarAceiteInforme(cmd.Context(), snd, ano, d.aceite))
 			})
 			if err != nil || !enviado {
 				return err

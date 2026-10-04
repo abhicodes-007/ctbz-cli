@@ -111,3 +111,12 @@ func TestInformeDecidirRecusas(t *testing.T) {
 		}
 	}
 }
+
+func TestInformeAceiteAdministrador(t *testing.T) {
+	f := informeFake(t, restricoesComTudo)
+	f.status, f.resposta = 403, `{"mensagem":"Acesso negado"}`
+	_, stderr, code := execCLI(t, "", "lucros", "informe", "decidir", "--nao-regularizar-pendencia", "--yes")
+	if code != ExitError || !strings.Contains(stderr, "sessão é de administrador") {
+		t.Errorf("código %d: %s", code, stderr)
+	}
+}
