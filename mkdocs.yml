@@ -82,3 +82,4 @@ nav:
       - "0016 Monitoramento": adr/0016-monitoramento-agendado.md
       - "0017 Contrato da 1.0": adr/0017-contrato-publico-da-1-0.md
       - "0018 Escrita": adr/0018-escrita-com-confirmacao.md
+      - "0019 Camada de escrita": adr/0019-camada-de-escrita.md

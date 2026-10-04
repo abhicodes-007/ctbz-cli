@@ -23,3 +23,4 @@ decisão nova, copie o [modelo](template.md) e use o próximo número (ver [ADR-
 | [0016](0016-monitoramento-agendado.md) | Monitorar a API com um job agendado que abre issue | aceita |
 | [0017](0017-contrato-publico-da-1-0.md) | O que a 1.0 garante (contrato público da CLI) | aceita |
 | [0018](0018-escrita-com-confirmacao.md) | Escrita com confirmação, simulação e sem retentativa | aceita |
+| [0019](0019-camada-de-escrita.md) | Camada de escrita com `Sender`, conferência prévia da sessão e erro traduzido | aceita |
