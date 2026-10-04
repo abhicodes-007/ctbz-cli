@@ -13,6 +13,8 @@ usa [Versionamento Semântico](https://semver.org/lang/pt-BR/).
 - Base dos comandos que alteram dados: resumo e confirmação por risco (`confirmo` no risco
   alto), `--yes` para scripts e `--dry-run` para ver a requisição sem enviar
   ([guia](docs/guia/escrita.md)).
+- `ctbz acoes`: registro local das escritas enviadas (`$CTBZ_HOME/acoes.jsonl`, sem corpos),
+  com `--desde` e `--limite`.
 
 ### Changed
 
