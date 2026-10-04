@@ -5,6 +5,7 @@ Gerada a partir da própria CLI (`go run ./tools/gendocs`); não edite à mão.
 | Comando | Descrição |
 |---|---|
 | [`ctbz`](ctbz.md) | CLI para a Contabilizei |
+| [`ctbz acoes`](ctbz_acoes.md) | Lista as ações de escrita enviadas à Contabilizei por esta CLI |
 | [`ctbz api`](ctbz_api.md) | Chama uma URL da plataforma com a sessão atual |
 | [`ctbz balancete`](ctbz_balancete.md) | Mostra o balancete de verificação de um mês |
 | [`ctbz balanco`](ctbz_balanco.md) | Mostra o balanço patrimonial (ativo, passivo e patrimônio líquido) |
