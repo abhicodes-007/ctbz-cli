@@ -135,6 +135,13 @@ ctbz version             # versão do binário
 Referência completa de cada comando: [`docs/referencia`](docs/referencia/README.md)
 (também em `ctbz COMANDO --help`). Completion de shell: `source <(ctbz completion bash)`.
 
+## Ações que alteram dados
+
+Comandos que alteram dados na Contabilizei (a partir da 1.2) mostram um resumo e pedem
+confirmação (`confirmo` nas ações de risco alto). Em scripts, use `--yes`; sem terminal e sem
+`--yes`, nada é enviado (código `2`). `--dry-run` mostra a requisição sem enviar. Detalhes em
+[docs/guia/escrita.md](docs/guia/escrita.md).
+
 ## Formatos de saída
 
 Todo comando que imprime dados aceita `-o`/`--output` (antes ou depois do comando) ou a
@@ -161,7 +168,8 @@ export CTBZ_OUTPUT=json        # muda o padrão
 - `ctbz api` sai em JSON por padrão e ignora `CTBZ_OUTPUT`. Com `-o table` ou `-o csv`, listas
   de objetos viram tabelas. `--raw` imprime o corpo exatamente como veio.
 
-Códigos de saída: `0` sucesso, `1` erro, `2` uso incorreto (comando, flag ou argumento inválido),
+Códigos de saída: `0` sucesso, `1` erro (inclusive confirmação de escrita recusada), `2` uso
+incorreto (comando, flag ou argumento inválido; escrita sem terminal e sem `--yes`),
 `3` login pendente (aguardando OTP ou CNPJ), `4` atenção (ex.: impostos em atraso com
 `--fail-on-atraso`, pendências vencidas com `--fail-on-vencidas`, algo vencido ou crítico com
 `ctbz resumo --fail-on-atencao`).

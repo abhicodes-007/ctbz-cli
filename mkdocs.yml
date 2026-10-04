@@ -36,6 +36,7 @@ nav:
       - Pró-labore e lucros: guia/prolabore.md
       - Contabilidade: guia/contabil.md
       - Documentos e certificado: guia/documentos.md
+      - Ações que alteram dados: guia/escrita.md
   - Referência de comandos: referencia/README.md
   - Autenticação:
       - Visão geral: autenticacao/README.md
@@ -83,3 +84,4 @@ nav:
       - "0017 Contrato da 1.0": adr/0017-contrato-publico-da-1-0.md
       - "0018 Escrita": adr/0018-escrita-com-confirmacao.md
       - "0019 Camada de escrita": adr/0019-camada-de-escrita.md
+      - "0020 Confirmação e simulação": adr/0020-confirmacao-e-simulacao.md

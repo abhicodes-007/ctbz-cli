@@ -10,6 +10,9 @@ usa [Versionamento Semântico](https://semver.org/lang/pt-BR/).
 ### Added
 
 - `ctbz mensalidade historico`: pagamentos anteriores da mensalidade e situação do débito automático.
+- Base dos comandos que alteram dados: resumo e confirmação por risco (`confirmo` no risco
+  alto), `--yes` para scripts e `--dry-run` para ver a requisição sem enviar
+  ([guia](docs/guia/escrita.md)).
 
 ### Changed
 
