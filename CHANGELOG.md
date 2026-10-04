@@ -9,6 +9,7 @@ usa [Versionamento Semântico](https://semver.org/lang/pt-BR/).
 
 ### Added
 
+- `ctbz caixa` mostra o id de cada lançamento (coluna `id`, no fim).
 - `ctbz caixa contas` e `ctbz extratos contas`: classificações aceitas numa competência, com o
   filtro do painel e o vínculo exigido (guia de imposto ou sócio); `--vinculos` lista as guias
   e os sócios do caixa.

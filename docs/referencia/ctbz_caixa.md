@@ -3,8 +3,8 @@
 Lista os lançamentos do caixa de um mês
 
 Lista os lançamentos do caixa do mês (entradas e saídas classificadas): data, descrição,
-conta de classificação, tipo (receita, despesa…), valor (negativo nas saídas), situação e se
-foi lançado pelo sistema. Na tabela, o total do mês vai para o stderr.
+conta de classificação, tipo (receita, despesa…), valor (negativo nas saídas), situação, se
+foi lançado pelo sistema e o id (usado por ctbz caixa editar e remover). Na tabela, o total do mês vai para o stderr.
 
 O painel pede até 1000 lançamentos por mês; se houver mais, a CLI avisa no stderr.
 

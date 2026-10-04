@@ -64,8 +64,8 @@ ctbz caixa 2026-09 -o csv > caixa-2026-09.csv
 ```
 
 ```text
-Data        Descrição               Conta                         Classificação        Valor  Situação    Automático
-18/09/2026  Pagamento Contabilizei  Mensalidade de contabilidade  DESPESA         -R$ 141,83  CONFIRMADO  sim
+Data        Descrição               Conta                         Classificação        Valor  Situação    Automático  ID
+18/09/2026  Pagamento Contabilizei  Mensalidade de contabilidade  DESPESA         -R$ 141,83  CONFIRMADO  sim         1000000000000001
 Total do mês: -R$ 141,83 em 1 lançamento(s)
 ```
 
