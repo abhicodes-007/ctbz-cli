@@ -26,6 +26,7 @@ ctbz lucros
 
 ## Subcomandos
 
+- [`ctbz lucros distribuir`](ctbz_lucros_distribuir.md): Registra quanto do lucro do exercício cabe a cada sócio
 - [`ctbz lucros informe`](ctbz_lucros_informe.md): Mostra os valores do informe de rendimentos dos sócios (para o IR)
 
 ## Flags globais
