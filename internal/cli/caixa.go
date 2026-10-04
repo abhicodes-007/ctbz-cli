@@ -53,7 +53,7 @@ O painel pede até 1000 lançamentos por mês; se houver mais, a CLI avisa no st
 			return nil
 		},
 	}
-	cmd.AddCommand(newCaixaContasCmd(), newCaixaAdicionarCmd())
+	cmd.AddCommand(newCaixaContasCmd(), newCaixaAdicionarCmd(), newCaixaEditarCmd())
 	return cmd
 }
 

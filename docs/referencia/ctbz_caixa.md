@@ -25,6 +25,7 @@ ctbz caixa AAAA-MM
 
 - [`ctbz caixa adicionar`](ctbz_caixa_adicionar.md): Adiciona um recebimento ou pagamento no caixa de uma competência
 - [`ctbz caixa contas`](ctbz_caixa_contas.md): Lista as classificações aceitas nos lançamentos do caixa de uma competência
+- [`ctbz caixa editar`](ctbz_caixa_editar.md): Altera um lançamento manual do caixa
 
 ## Flags globais
 
