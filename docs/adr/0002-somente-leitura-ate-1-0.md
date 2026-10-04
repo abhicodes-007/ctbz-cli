@@ -1,6 +1,6 @@
 # ADR-0002: Somente leitura até a 1.0
 
-- **Status:** aceita
+- **Status:** substituída por [ADR-0018](0018-escrita-com-confirmacao.md)
 - **Data:** 2026-10-03
 
 ## Contexto

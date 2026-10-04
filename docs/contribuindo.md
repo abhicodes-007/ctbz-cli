@@ -40,7 +40,9 @@ Convenções do dia a dia. Decisões maiores estão nos [ADRs](adr/README.md).
 
 ## Segurança
 
-- Só `GET` nos comandos de domínio ([ADR-0002](adr/0002-somente-leitura-ate-1-0.md)).
+- Comandos de escrita seguem a [ADR-0018](adr/0018-escrita-com-confirmacao.md): confirmação ou `--yes`,
+  `--dry-run`, risco declarado, uma única tentativa e teste de requisição. Escritas nunca são
+  chamadas de verdade em testes ou investigação.
 - Sessão e credenciais nunca vão para logs, testes ou commits.
 
 ## Documentação publicada
