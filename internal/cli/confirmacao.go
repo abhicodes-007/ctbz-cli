@@ -38,6 +38,8 @@ type operacao struct {
 	Resumo string
 	// Consequencia, no risco alto, diz o efeito e se dá para desfazer.
 	Consequencia string
+	// ID identifica o objeto alterado no registro de ações, quando conhecido antes do envio.
+	ID string
 }
 
 // addWriteFlags acrescenta --yes e --dry-run a um comando de escrita.
@@ -68,7 +70,7 @@ func escrever(cmd *cobra.Command, op operacao, enviar func(api.Sender) error) (b
 	if err := confirmar(s, op, yes); err != nil {
 		return false, err
 	}
-	return true, enviar(sessionSender{s})
+	return true, enviar(sessionSender{s: s, origem: origemEscrita{comando: cmd.CommandPath(), id: op.ID}})
 }
 
 // confirmar mostra o resumo e pede a confirmação adequada ao risco.

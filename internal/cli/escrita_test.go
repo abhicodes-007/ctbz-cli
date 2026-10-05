@@ -34,7 +34,7 @@ func writeServer(t *testing.T, appbarStatus int, handler http.HandlerFunc) *atom
 }
 
 func testSender() sessionSender {
-	return sessionSender{streams{in: strings.NewReader(""), out: io.Discard, err: io.Discard}}
+	return sessionSender{s: streams{in: strings.NewReader(""), out: io.Discard, err: io.Discard}, origem: origemEscrita{comando: "teste"}}
 }
 
 func TestSenderJSON(t *testing.T) {

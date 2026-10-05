@@ -33,7 +33,8 @@ go build -o ctbz ./cmd/ctbz
 | `CTBZ_VERBOSE=1`   | mostra as tentativas do `CTBZ_OTP_CMD`                                     |
 
 A sessão (cookies `__C` e `oauth-token`) fica em `$CTBZ_HOME/session.json` com
-permissão `0600`. As credenciais nunca são gravadas em disco.
+permissão `0600`. As credenciais nunca são gravadas em disco. As escritas enviadas ficam
+registradas, sem corpo, em `$CTBZ_HOME/acoes.jsonl` (veja `ctbz acoes`).
 
 ## Login
 
@@ -126,6 +127,7 @@ ctbz extratos --ano 2026 | ctbz contas-bancarias  # extratos por mês e contas c
 ctbz contas --busca alug                       # plano de contas usado nas classificações
 ctbz documentos [--tipo TIPO]                  # central de documentos: tipos e arquivos enviados
 ctbz certificado                               # certificado digital: validade e renovação
+ctbz acoes --desde 2026-10-01                  # escritas enviadas por esta CLI (registro local)
 ctbz api menu/get        # qualquer endpoint; caminho relativo → /api/plataforma/
 ctbz api -X POST -d @corpo.json /api/plataforma/algum/endpoint
 ctbz logout              # apaga a sessão local

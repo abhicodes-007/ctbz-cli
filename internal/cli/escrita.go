@@ -5,6 +5,7 @@ import (
 	"context"
 	"errors"
 	"fmt"
+	"strings"
 
 	"github.com/edusouza/ctbz-cli/internal/api"
 	"github.com/edusouza/ctbz-cli/internal/ctbz"
@@ -12,7 +13,17 @@ import (
 
 // sessionSender implementa api.Sender com a sessão salva: confere a sessão antes e envia
 // cada escrita uma única vez, sem retentativa nem re-login depois do envio (ADR-0018).
-type sessionSender struct{ s streams }
+// Cada envio vira uma linha no registro de ações, com a origem informada.
+type sessionSender struct {
+	s      streams
+	origem origemEscrita
+}
+
+// origemEscrita identifica, no registro de ações, o comando e o objeto de uma escrita.
+type origemEscrita struct {
+	comando string
+	id      string
+}
 
 func (w sessionSender) Send(ctx context.Context, method, path string, body any, v any) error {
 	data, err := api.EncodeBody(body)
@@ -35,7 +46,7 @@ func (w sessionSender) SendMultipart(ctx context.Context, method, path string, c
 }
 
 func (w sessionSender) send(ctx context.Context, method, path string, body []byte, contentType string, v any) error {
-	resp, err := sendOnce(ctx, w.s, method, path, body, contentType)
+	resp, err := sendOnce(ctx, w.s, w.origem, method, path, body, contentType)
 	if err != nil {
 		return err
 	}
@@ -50,8 +61,9 @@ var errExpiredOnSend = errors.New("a sessão expirou antes do envio e a escrita 
 
 // sendOnce confere a sessão com um GET (que pode refazer o login, porque nada foi enviado
 // ainda) e então envia a escrita uma única vez. Respostas HTTP de erro voltam sem erro, para
-// quem chama decidir; erros de rede avisam que o resultado da escrita é incerto.
-func sendOnce(ctx context.Context, s streams, method, path string, body []byte, contentType string) (*ctbz.Response, error) {
+// quem chama decidir; erros de rede avisam que o resultado da escrita é incerto. Todo envio,
+// com ou sem sucesso, é registrado em acoes.jsonl.
+func sendOnce(ctx context.Context, s streams, origem origemEscrita, method, path string, body []byte, contentType string) (*ctbz.Response, error) {
 	if _, err := authedAPI(ctx, s, "GET", api.PathAppBar, nil); err != nil {
 		return nil, fmt.Errorf("conferindo a sessão antes de enviar: %w", err)
 	}
@@ -65,6 +77,7 @@ func sendOnce(ctx context.Context, s streams, method, path string, body []byte, 
 	}
 	c := sess.Client()
 	resp, err := c.Send(ctx, method, path, bytes.NewReader(body), contentType)
+	registrarAcao(store, sess, s, origem, method, path, resp)
 	switch {
 	case errors.Is(err, ctbz.ErrUnauthorized):
 		return nil, errExpiredOnSend
@@ -73,4 +86,37 @@ func sendOnce(ctx context.Context, s streams, method, path string, body []byte, 
 	}
 	saveCookies(store, sess, c, s.err)
 	return resp, nil
+}
+
+// registrarAcao grava a escrita em acoes.jsonl. Uma falha ao gravar só gera aviso: não
+// desfaz nem esconde o resultado da escrita.
+func registrarAcao(store *ctbz.Store, sess *ctbz.Session, s streams, origem origemEscrita, method, path string, resp *ctbz.Response) {
+	a := ctbz.Acao{
+		Data:      now(),
+		CNPJ:      currentCNPJ(sess),
+		Comando:   origem.comando,
+		Metodo:    method,
+		Caminho:   semQuery(ctbz.ResolvePath(path)),
+		Resultado: ctbz.ResultadoSemResposta,
+		ID:        origem.id,
+	}
+	if a.CNPJ == "" {
+		a.CNPJ = sess.CNPJ
+	}
+	if resp != nil {
+		a.Status = resp.Status
+		a.Resultado = ctbz.ResultadoRecusada
+		if resp.Status >= 200 && resp.Status <= 299 {
+			a.Resultado = ctbz.ResultadoEnviada
+		}
+	}
+	if err := store.AppendAcao(a); err != nil {
+		fmt.Fprintln(s.err, "aviso: não foi possível registrar a ação em acoes.jsonl:", err)
+	}
+}
+
+// semQuery tira a query do caminho registrado: ela pode carregar dados pessoais.
+func semQuery(path string) string {
+	p, _, _ := strings.Cut(path, "?")
+	return p
 }

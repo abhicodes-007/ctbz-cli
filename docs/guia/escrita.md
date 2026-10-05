@@ -76,6 +76,31 @@ Depois de enviar, o comando relê o estado quando há como e mostra o resultado.
 o resultado traz sempre as chaves `acao`, `situacao` e `id`, que fazem parte do
 [contrato público](../adr/0017-contrato-publico-da-1-0.md).
 
+## Registro das ações: `ctbz acoes`
+
+Cada escrita enviada (inclusive as que falham, e as de `ctbz api -X`) vira uma linha JSON em
+`$CTBZ_HOME/acoes.jsonl`, com permissão `0600`: data e hora, CNPJ da empresa, comando,
+método, caminho (sem a query), status HTTP, resultado e id do objeto quando conhecido.
+Simulações (`--dry-run`) não entram.
+
+**Corpos de requisição e de resposta nunca são gravados**, porque podem ter dados pessoais ou
+senhas. Se o registro não puder ser gravado, a CLI avisa no stderr e o resultado da escrita
+continua valendo.
+
+```sh
+ctbz acoes                      # as 50 mais recentes
+ctbz acoes --desde 2026-10-01   # a partir de uma data
+ctbz acoes --limite 0 -o csv    # todas, para planilha
+```
+
+| Resultado | Significado |
+|---|---|
+| `enviada` | a Contabilizei aceitou (HTTP 2xx) |
+| `recusada` | a Contabilizei respondeu com erro; nada foi alterado |
+| `sem resposta` | a conexão falhou: a escrita pode ou não ter sido aplicada |
+
+O arquivo só cresce; apague-o ou arquive-o quando quiser recomeçar.
+
 ## Códigos de saída
 
 | Código | Quando |
