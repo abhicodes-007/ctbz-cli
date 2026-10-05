@@ -88,18 +88,21 @@ func (s *Store) LoadAcoes() (acoes []Acao, invalidas int, err error) {
 				break
 			}
 			if errors.Is(readErr, bufio.ErrBufferFull) {
-				// Resto da linha longa: consome até \n (ou EOF) e conta como inválida.
+				// Consome só o resto desta linha longa; o \n encerra o drain
+				// e o loop externo processa as linhas seguintes.
 				for {
 					_, drainErr := br.ReadSlice('\n')
-					if drainErr != nil {
-						if errors.Is(drainErr, io.EOF) {
-							return acoes, invalidas, nil
-						}
-						if !errors.Is(drainErr, bufio.ErrBufferFull) {
-							return acoes, invalidas, fmt.Errorf("lendo o registro de ações: %w", drainErr)
-						}
+					if drainErr == nil {
+						break
+					}
+					if errors.Is(drainErr, io.EOF) {
+						return acoes, invalidas, nil
+					}
+					if !errors.Is(drainErr, bufio.ErrBufferFull) {
+						return acoes, invalidas, fmt.Errorf("lendo o registro de ações: %w", drainErr)
 					}
 				}
+				continue
 			}
 			return acoes, invalidas, fmt.Errorf("lendo o registro de ações: %w", readErr)
 		}
