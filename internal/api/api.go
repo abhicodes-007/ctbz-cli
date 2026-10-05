@@ -1,5 +1,6 @@
-// Package api descreve as leituras da API da Contabilizei usadas pela CLI: o caminho
-// de cada endpoint, o tipo Go da resposta e uma função que busca e decodifica.
+// Package api descreve as leituras e escritas da API da Contabilizei usadas pela CLI: o
+// caminho de cada endpoint, o tipo Go da resposta (ou da requisição, nas escritas) e uma
+// função que busca e decodifica (Getter) ou envia (Sender, em escrita.go).
 //
 // Os tipos são também o contrato verificado por internal/contract: um campo com tag
 // json é obrigatório na resposta, a menos que tenha `contract:"optional"`.

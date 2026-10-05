@@ -117,6 +117,15 @@ func (c *Client) postForm(ctx context.Context, path string, form url.Values) (*R
 // API chama um endpoint JSON autenticado. path pode ser absoluto ("/api/...")
 // ou relativo ao BFF da plataforma ("dadosempresa/get" → "/api/plataforma/dadosempresa/get").
 func (c *Client) API(ctx context.Context, method, path string, body io.Reader) (*Response, error) {
+	contentType := ""
+	if body != nil {
+		contentType = "application/json"
+	}
+	return c.Send(ctx, method, path, body, contentType)
+}
+
+// Send é como API, com o Content-Type do corpo escolhido por quem chama (ex.: multipart).
+func (c *Client) Send(ctx context.Context, method, path string, body io.Reader, contentType string) (*Response, error) {
 	if !strings.HasPrefix(path, "/") && !strings.HasPrefix(path, "http") {
 		path = "/api/plataforma/" + path
 	}
@@ -124,8 +133,8 @@ func (c *Client) API(ctx context.Context, method, path string, body io.Reader) (
 		"Accept":  "application/json, text/plain, */*",
 		"Referer": c.BaseURL + "/painel-de-controle/",
 	}
-	if body != nil {
-		headers["Content-Type"] = "application/json"
+	if contentType != "" {
+		headers["Content-Type"] = contentType
 	}
 	resp, err := c.Do(ctx, method, path, body, headers)
 	if err != nil {

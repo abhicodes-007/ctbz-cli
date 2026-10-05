@@ -11,6 +11,12 @@ usa [Versionamento Semântico](https://semver.org/lang/pt-BR/).
 
 - `ctbz mensalidade historico`: pagamentos anteriores da mensalidade e situação do débito automático.
 
+### Changed
+
+- `ctbz api -X` com método diferente de `GET` confere a sessão antes e envia uma única vez:
+  não refaz o login nem repete a chamada depois do envio, e avisa quando uma falha de
+  conexão deixa o resultado incerto.
+
 ## [1.0.0] - 2026-10-03
 
 Primeira versão estável: comandos, flags, chaves de JSON/CSV e códigos de saída passam a

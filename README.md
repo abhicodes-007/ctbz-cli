@@ -58,7 +58,9 @@ ctbz login --cnpj 00.000.000/0001-00
 Qualquer comando serve: um script IMAP, uma chamada a um webhook etc. Basta imprimir o código.
 
 Com `CTBZ_OTP_CMD` definido, `ctbz empresa` e `ctbz api` também **refazem o login
-sozinhos** quando a sessão expira (HTTP 401) e repetem a chamada.
+sozinhos** quando a sessão expira (HTTP 401) e repetem a chamada. Escritas (incluindo
+`ctbz api -X POST`) nunca são repetidas: a sessão é conferida, e refeita se preciso, antes do
+envio ([ADR-0019](docs/adr/0019-camada-de-escrita.md)).
 
 ### 2. Interativo
 
