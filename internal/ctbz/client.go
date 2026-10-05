@@ -126,9 +126,7 @@ func (c *Client) API(ctx context.Context, method, path string, body io.Reader) (
 
 // Send é como API, com o Content-Type do corpo escolhido por quem chama (ex.: multipart).
 func (c *Client) Send(ctx context.Context, method, path string, body io.Reader, contentType string) (*Response, error) {
-	if !strings.HasPrefix(path, "/") && !strings.HasPrefix(path, "http") {
-		path = "/api/plataforma/" + path
-	}
+	path = ResolvePath(path)
 	headers := map[string]string{
 		"Accept":  "application/json, text/plain, */*",
 		"Referer": c.BaseURL + "/painel-de-controle/",
@@ -144,6 +142,15 @@ func (c *Client) Send(ctx context.Context, method, path string, body io.Reader, 
 		return resp, ErrUnauthorized
 	}
 	return resp, nil
+}
+
+// ResolvePath completa um caminho relativo com o BFF da plataforma
+// ("dadosempresa/get" → "/api/plataforma/dadosempresa/get"); absolutos ficam como estão.
+func ResolvePath(path string) string {
+	if !strings.HasPrefix(path, "/") && !strings.HasPrefix(path, "http") {
+		return "/api/plataforma/" + path
+	}
+	return path
 }
 
 // HTTPError descreve uma resposta inesperada do servidor.

@@ -165,13 +165,18 @@ type streams struct {
 
 func streamsOf(cmd *cobra.Command) streams {
 	in := cmd.InOrStdin()
-	f, ok := in.(*os.File)
 	return streams{
 		in:          in,
 		out:         cmd.OutOrStdout(),
 		err:         cmd.ErrOrStderr(),
-		interactive: ok && term.IsTerminal(int(f.Fd())),
+		interactive: isTerminal(in),
 	}
+}
+
+// isTerminal diz se a entrada é um terminal (trocada nos testes de confirmação).
+var isTerminal = func(in io.Reader) bool {
+	f, ok := in.(*os.File)
+	return ok && term.IsTerminal(int(f.Fd()))
 }
 
 const usageTemplate = `Uso:{{if .Runnable}}

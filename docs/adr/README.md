@@ -24,3 +24,4 @@ decisão nova, copie o [modelo](template.md) e use o próximo número (ver [ADR-
 | [0017](0017-contrato-publico-da-1-0.md) | O que a 1.0 garante (contrato público da CLI) | aceita |
 | [0018](0018-escrita-com-confirmacao.md) | Escrita com confirmação, simulação e sem retentativa | aceita |
 | [0019](0019-camada-de-escrita.md) | Camada de escrita com `Sender`, conferência prévia da sessão e erro traduzido | aceita |
+| [0020](0020-confirmacao-e-simulacao.md) | Confirmação e simulação num helper único, com o `--dry-run` como um `Sender` | aceita |
