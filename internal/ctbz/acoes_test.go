@@ -44,14 +44,13 @@ func TestAcoes(t *testing.T) {
 	}
 }
 
-
 func TestLoadAcoesLongLineAndEmptyObjects(t *testing.T) {
 	s := &Store{Dir: t.TempDir()}
 	good := Acao{
-		Data:    time.Date(2026, 10, 5, 12, 0, 0, 0, time.UTC),
-		Comando: "ctbz api",
-		Metodo:  "POST",
-		Caminho: "/api/plataforma/z",
+		Data:      time.Date(2026, 10, 5, 12, 0, 0, 0, time.UTC),
+		Comando:   "ctbz api",
+		Metodo:    "POST",
+		Caminho:   "/api/plataforma/z",
 		Resultado: ResultadoEnviada,
 	}
 	if err := s.AppendAcao(good); err != nil {
@@ -68,7 +67,7 @@ func TestLoadAcoesLongLineAndEmptyObjects(t *testing.T) {
 	}
 	f.Write(long)
 	f.Write([]byte("\n"))
-	f.WriteString("null\n{}\n{"metodo":"GET"}\n{"caminho":"/x"}\nnot-json\n")
+	f.WriteString("null\n{}\n{\"metodo\":\"GET\"}\n{\"caminho\":\"/x\"}\nnot-json\n")
 	f.Close()
 
 	acoes, invalidas, err := s.LoadAcoes()
