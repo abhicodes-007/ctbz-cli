@@ -49,6 +49,51 @@ declare-o como `json.RawMessage`. O contrato aceita qualquer valor nele, a poda 
 inteiro (a anonimização continua valendo) e o comando o mostra como a API o devolve
 (`output.FromJSON`). Quando houver dados reais, troque por um tipo.
 
+## Requisições de escrita
+
+Para escrita, o risco está na **requisição**: caminho errado, campo com nome errado ou valor
+com o sinal trocado. Como escritas nunca são chamadas de verdade em teste
+([ADR-0018](adr/0018-escrita-com-confirmacao.md)), a verificação é offline:
+
+```sh
+go test ./internal/api -run Requisicoes            # compara com os goldens
+go test ./internal/api -run Requisicoes -update    # regrava (revise o diff!)
+```
+
+Cada escrita registrada em `Escritas()` (`internal/api/escrita.go`) tem uma chamada de
+exemplo com valores fictícios. O teste a executa contra um `httptest.Server`, pela mesma pilha
+da CLI (`api.EncodeBody`/`EncodeMultipart` e `ctbz.Client`), e compara com
+`internal/api/testdata/requisicoes/<nome>.json`:
+
+```json
+[
+  {
+    "metodo": "POST",
+    "caminho": "/api/plataforma/caixa/lancamentousuario/novo/",
+    "content_type": "application/json",
+    "corpo": {"data": "2026-09-15", "valor": -150.25}
+  }
+]
+```
+
+- Multipart é comparado por campo: texto com o valor, arquivo com nome, tipo e tamanho
+  (sem o conteúdo).
+- Corpos enviados como string JSON aparecem como string no golden.
+- `TestRequisicoesCobertura` quebra se uma escrita não tem golden ou se sobrou golden sem
+  escrita.
+- Os goldens são montados a partir do que o front envia (ver [Escrita](api/escrita/README.md)),
+  sem dados pessoais.
+- O modo ao vivo (`CTBZ_CONTRACT_LIVE`) continua só com `GET`: percorre `Endpoints()`, nunca
+  `Escritas()`.
+
+### Adicionar uma escrita
+
+1. Em `internal/api/<contexto>.go`: tipo da requisição (ex.: `NovoLancamentoCaixa`) e função
+   que envia (ex.: `SalvarLancamentoCaixa(ctx, s Sender, req)`).
+2. Registrar em `Escritas()` com um exemplo de valores fictícios.
+3. `go test ./internal/api -run Requisicoes -update`, conferir o golden contra
+   `docs/api/escrita/` e rodar `go test ./...`.
+
 ## Monitoramento
 
 Os contratos ao vivo rodam toda semana no job de monitoramento, que abre uma issue quando

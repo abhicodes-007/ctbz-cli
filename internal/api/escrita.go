@@ -119,3 +119,16 @@ func DecodeResponse(data []byte, v any) error {
 	}
 	return nil
 }
+
+// Escrita liga uma escrita a uma chamada de exemplo, com valores fictícios, para os testes
+// de requisição: a requisição gerada é comparada com testdata/requisicoes/<Name>.json.
+type Escrita struct {
+	Name    string
+	Exemplo func(ctx context.Context, s Sender) error
+}
+
+// Escritas lista todas as escritas tipadas, na ordem do roadmap. Toda escrita nova entra
+// aqui; o teste de cobertura falha se faltar o golden.
+func Escritas() []Escrita {
+	return []Escrita{}
+}

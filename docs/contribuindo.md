@@ -16,6 +16,8 @@ Convenções do dia a dia. Decisões maiores estão nos [ADRs](adr/README.md).
 ## Definição de pronto de um PR
 
 - [ ] Testes cobrindo o comportamento novo (incluindo erro e caso vazio)
+- [ ] Escrita nova registrada em `api.Escritas()` com golden de requisição revisado
+  ([Requisições de escrita](contratos.md#requisicoes-de-escrita))
 - [ ] Documentação de usuário atualizada (`README.md` e/ou página em `docs/`, com entrada no `mkdocs.yml`)
 - [ ] Referência de comandos regenerada, se a CLI mudou (`go run ./tools/gendocs`)
 - [ ] Linha no `CHANGELOG.md` em `[Unreleased]` quando o usuário perceber a mudança ([ADR-0003](adr/0003-versionamento-e-changelog.md))
